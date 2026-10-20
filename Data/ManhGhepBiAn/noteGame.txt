@@ -1,0 +1,23 @@
+- Dùng chung Lớp 2 - 5
+
+- Luyện click chuột chọn khối và gõ bàn phím nhập từ khóa
+
+- Tích hợp liên môn: Toán + Tiếng Việt + Tiếng Anh + Khoa học & Tư duy suy luận tổng hợp.
+	""Mảnh ghép bí ẩn (giải đố đa môn & Đoán từ khóa AI):
+- Bố cục & Khởi tạo:
++ Phía trên là một bức tranh chủ đề bí ẩn bị che kín bởi 4–6 khối vuông (tương ứng với các mảnh ghép).
++ Phía dưới là hàng ô chữ từ khóa chính (Keyword) đang bị ẩn chữ.
++ Mỗi khối vuông gắn nhãn một môn học (Toán, Tiếng Việt, Tiếng Anh, Khoa học...).
+- Core Gameplay:
+1. Chọn khối & Trả lời: Học sinh nhấp chuột vào 1 khối vuông bất kỳ $\rightarrow$ 
+	Cửa sổ câu hỏi mini của môn đó hiện lên (trắc nghiệm hoặc gõ đáp án ngắn).
+2. Mở ô chữ: Trả lời đúng -> Khối vuông tan biến để lộ một góc tranh, đồng thời tự động lật mở 
+	1 chữ cái gợi ý trong hàng ô chữ từ khóa bên dưới.
+3. Dự đoán từ khóa (Guess Early): Bất kỳ lúc nào, học sinh có thể bấm nút ""Dự đoán từ khóa"" 
+	để gõ toàn bộ từ khóa chính. Đoán đúng sớm -> Toàn bộ tranh mở bung ngay lập tức và nhân đôi điểm thưởng.
+- Khả năng AI tích hợp:+ AI Dynamic Question Bank: AI tự động sinh câu hỏi đa môn ngẫu nhiên bám theo chủ đề của từ khóa 
+	(Ví dụ: Từ khóa là ""Mặt trời"" -> Câu hỏi Khoa học về ban ngày/ban đêm, Tiếng Anh hỏi từ ""Sun"").
++ AI NLP Hint (Trợ lý đoán chữ): Khi học sinh bấm nút đoán từ khóa nhưng gõ sai hoặc lúng túng, 
+	AI  không báo sai cứng nhắc mà đọc câu gợi ý ngữ cảnh: ""Từ này có 7 chữ cái, 
+	liên quan đến một hiện tượng tự nhiên chiếu sáng vạn vật đấy!"".
++ AI Nhắc nhở bé liên kết giữa các mảnh tranh đã lộ diện để suy luận ra từ khóa nhanh hơn.

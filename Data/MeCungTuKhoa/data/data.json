@@ -1,0 +1,96 @@
+{
+  "Id": "Word Search Puzzle",
+  "type": "Thám tử thời gian",
+  "title": "Mê Cung Từ Khóa",
+  "Text": "Phát triển vốn từ và khả năng quan sát",
+  "data": [
+    {
+      "Id": 1,
+      "title": "Nhiệm vụ số 01",
+      "location": "Văn Miếu - Quốc Tử Giám (Hà Nội)",
+      "clue": "Tìm tên di tích nổi tiếng gắn với truyền thống hiếu học ở Hà Nội.",
+      "hint": "Hãy nhớ đến nơi các sĩ tử xưa đến học tập và thi cử nhé!",
+      "size": 8,
+      "allowedDirections": ["H", "V", "D_DOWN", "D_UP"],
+      "keywords": [
+        {
+          "word": "VĂN MIẾU",
+          "hint": "Quần thể di tích trường đại học đầu tiên của nước ta thời xưa đó!"
+        },
+        {
+          "word": "HÀ NỘI",
+          "hint": "Thủ đô ngàn năm văn hiến với 36 phố phường và Hồ Gươm thân thương!"
+        },
+        {
+          "word": "TIẾN SĨ",
+          "hint": "Những bậc đỗ đạt cao thời xưa được khắc tên trên bia rùa đá đó!"
+        },
+        {
+          "word": "DI TÍCH",
+          "hint": "Từ chỉ chung những công trình kiến trúc, danh lam mang dấu ấn lịch sử hào hùng."
+        }
+      ]
+    },
+    {
+      "Id": 2,
+      "title": "Nhiệm vụ số 02",
+      "location": "Cố đô Huế",
+      "clue": "Tìm tên kinh đô cổ kính gắn liền với triều Nguyễn bên dòng sông thơ mộng.",
+      "hint": "Kinh đô xưa của vua chúa triều Nguyễn miền Trung với tà áo dài tím!",
+      "size": 10,
+      "allowedDirections": ["H", "V", "D_DOWN", "D_UP"],
+      "keywords": [
+        {
+          "word": "CỐ ĐÔ",
+          "hint": "Nơi từng là trung tâm đầu não của triều đình phong kiến xưa."
+        },
+        {
+          "word": "HUẾ",
+          "hint": "Vùng đất mộng mơ bên bờ sông Hương xứ thần kinh."
+        },
+        {
+          "word": "HOÀNG THÀNH",
+          "altCleanWords": ["HOANGTHANH"],
+          "hint": "Nơi sinh hoạt và thiết triều của hoàng gia triều Nguyễn."
+        },
+        {
+          "word": "SÔNG HƯƠNG",
+          "altCleanWords": ["SONGHUONG"],
+          "hint": "Dòng sông xanh thơ mộng chảy qua lòng thành phố Huế."
+        }
+      ]
+    },
+    {
+      "Id": 3,
+      "title": "Nhiệm vụ số 03",
+      "location": "Vịnh Hạ Long (Quảng Ninh)",
+      "clue": "Tìm tên kỳ quan thiên nhiên thế giới với hàng ngàn đảo đá vôi kỳ vĩ.",
+      "hint": "Kỳ quan thiên nhiên thế giới nổi tiếng tại miền Bắc nước ta!",
+      "size": 12,
+      "allowedDirections": ["H", "V", "D_DOWN", "D_UP"],
+      "keywords": [
+        {
+          "word": "HẠ LONG",
+          "hint": "Vịnh biển với hàng nghìn đảo đá vôi nhấp nhô tuyệt đẹp."
+        },
+        {
+          "word": "QUẢNG NINH",
+          "hint": "Tỉnh thành ven biển miền Bắc nơi có vịnh Hạ Long trứ danh."
+        },
+        {
+          "word": "KỲ QUAN",
+          "hint": "Danh hiệu danh giá thế giới vinh danh vịnh Hạ Long."
+        },
+        {
+          "word": "TRỐNG MÁI",
+          "hint": "Hòn đảo nổi tiếng mang hình dáng đôi gà chọi chụm đầu vào nhau."
+        },
+        {
+          "word": "HANG ĐỘNG",
+          "hint": "Những nơi có vòm đá và nhũ đá kỳ thú bên trong các núi đá vôi."
+        }
+      ]
+    }
+  ],
+  "maxScore": 100
+}

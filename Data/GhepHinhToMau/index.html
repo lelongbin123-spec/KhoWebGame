@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghép Bộ Phận Của Biển</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="app">
+
+    <!-- HEADER & THANH ĐIỀU KHIỂN -->
+    <header class="game-header">
+        <h1 class="game-title">🦀 Ghép Bộ Phận Cua Biển 🌊</h1>
+        <p class="game-description">Kéo thả các bộ phận vào bất kỳ vị trí nào trong khung để hoàn thành chú cua!</p>
+        
+        <div class="game-controls">
+            <div class="stat-box">⏱️ Thời gian: <span>00:00</span></div>
+            <button class="game-button">🔄 Làm lại</button>
+            <div class="score-counter"><span>Đã ghép: 0 / 6</span></div>
+        </div>
+    </header>
+
+    <!-- BỐ CỤC GAME 70% - 30% -->
+    <main class="game-layout">
+        <!-- KHUNG TRÁI 70%: KHUNG LẮP RÁP -->
+        <section class="board-panel">
+            <span class="panel-label">HÌNH MẪU GHÉP SÁU BỘ PHẬN</span>
+            <div class="board-corner-hint reference-board" role="img" aria-label="Hình mẫu gồm sáu bộ phận cua đã ghép">
+                <div class="reference-parts-container"></div>
+            </div>
+            <button type="button" class="submit_result" aria-label="Kiểm tra đáp án">
+                <span class="submit-result-icon" aria-hidden="true">✓</span>
+                <span>Check đáp án</span>
+            </button>
+
+            <div class="assembly-board">
+                <div id="placed-parts-container"></div>
+            </div>
+        </section>
+
+        <!-- KHUNG BÊN PHẢI (PANEL) -->
+        <div class="right-panel">
+            <!-- 1. CÁC NÚT TAB CHUYỂN ĐỔI -->
+            <div class="task-tabs">
+                <button class="tab-btn active" data-tab="task-assembly">
+                    🧩 Ghép Hình
+                </button>
+                <button class="tab-btn" data-tab="task-coloring">
+                    🎨 Tô Màu
+                </button>
+            </div>
+
+            <!-- 2. NỘI DUNG DÀNH CHO CÁC TASK -->
+            <div class="task-content-container">
+                
+                <!-- TASK 1: KHAY BỘ PHẬN RỜI (6 THẺ) -->
+                <div id="task-assembly" class="task-panel active">
+                    <div class="tray-header">
+                        <h3>Bộ Phận Rời (6)</h3>
+                        <span class="sub-text">Kéo thả vào khung</span>
+                    </div>
+                    <div class="puzzle-tray">
+                        <!-- Các thẻ bộ phận sẽ được Render bằng JS tại đây -->
+                    </div>
+                </div>
+
+                <!-- TASK 2: MÀN TÔ MÀU -->
+                <div id="task-coloring" class="task-panel">
+                    <div class="coloring-header">
+                        <h3>Bảng Màu 🎨</h3>
+                        <span class="sub-text">Chọn màu để tô</span>
+                    </div>
+                    <!-- Bảng chọn màu sắc -->
+                    <div class="color-palette">
+                        <!-- Các màu cơ bản phủ lên phần ảnh có alpha trong suốt. -->
+                        <button type="button" class="color-dot active" data-color="#ef4444" style="background: red;" aria-label="Đỏ" title="Đỏ" aria-pressed="true"></button>
+                        <button type="button" class="color-dot" data-color="#22c55e" style="background: green;" aria-label="Xanh lá" title="Xanh lá" aria-pressed="false"></button>
+                        <button type="button" class="color-dot" data-color="#06b6d4" style="background: cyan;" aria-label="Xanh cyan" title="Xanh cyan" aria-pressed="false"></button>
+                        <button type="button" class="color-dot" data-color="#3b82f6" style="background: blue;" aria-label="Xanh dương" title="Xanh dương" aria-pressed="false"></button>
+                        <button type="button" class="color-dot" data-color="#d946ef" style="background: magenta;" aria-label="Tím hồng" title="Tím hồng" aria-pressed="false"></button>
+                        <button type="button" class="color-dot" data-color="#eeff00" style="background: #eeff00;" aria-label="Vàng" title="vàng" aria-pressed="false"></button>
+                        <button type="button" class="color-dot" data-color="#ffa600" style="background: #ffa600;" aria-label="Cam" title="cam" aria-pressed="false"></button>
+                        
+                        <!-- Hoặc tạo hiệu ứng màu Trắng / Đen / Hoài cổ -->
+                        <button type="button" class="color-dot" data-color="#9ca3af" style="background: gray;" aria-label="Xám" title="Xám" aria-pressed="false"></button>
+                        <button type="button" class="color-dot" data-color="#a16207" style="background: brown;" aria-label="Nâu" title="Nâu" aria-pressed="false"></button>
+                    </div>
+                    <!-- Các công cụ hỗ trợ khác (ví dụ: Tẩy/Xóa) -->
+                    <div class="color-tools-container">
+                        <button id="eraser-btn" aria-pressed="false">🧹 Tẩy màu</button>
+                        <button id="clear-color-btn">🔄 Xóa tất cả màu</button>
+                    </div>
+                    <div class="custom-color-picker" aria-label="Bảng chọn màu tùy chỉnh">
+                        <div class="custom-color-field" id="color-field" role="slider" aria-label="Chọn độ đậm nhạt và độ bão hòa" aria-valuetext="#ff0000" tabindex="0">
+                            <span class="color-picker-handle" id="color-picker-handle" style="left: 100%; top: 0%;"></span>
+                        </div>
+                        <label class="hue-control" for="hue-slider">Sắc độ
+                            <input type="range" id="hue-slider" min="0" max="360" value="0">
+                        </label>
+                        <div class="custom-color-current">
+                            <span>Màu đang chọn</span>
+                            <span id="custom-color-preview" class="custom-color-preview"></span>
+                            <output id="custom-color-value">#ff0000</output>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL THÀNH CÔNG -->
+    <div class="success-modal">
+        <div class="success-card pop-anim">
+            <button class="close-modal-btn" aria-label="Đóng" title="Đóng để xem lại kết quả">&times;</button>
+            <div class="success-icon">🎉</div>
+            <h2 class="success-title">Xuất sắc!</h2>
+            <p class="success-description">Lượt chơi đã được chấm điểm và kết thúc.</p>
+            <p class="final-score" id="final-score" aria-live="polite">0.0 / 10</p>
+            <p class="final-score-details" id="final-score-details"></p>
+            <button class="modal-button color-btn replay-button">🔄 Chơi lại</button>
+        </div>
+    </div>
+
+    <!-- TOAST THÔNG BÁO -->
+    <div class="toast-message"></div>
+
+    <script src="js/state.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/coloring.js"></script>
+    <script src="js/answer-check.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

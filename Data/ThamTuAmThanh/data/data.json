@@ -1,0 +1,88 @@
+{
+  "Id": "ThamTuAmThanh",
+  "type": "Thám Tử Âm Thanh",
+  "text": "Game tương tác âm thanh - hình ảnh dành cho học sinh lớp 1-3",
+  "teachableMachineModelUrl": "base_model/",
+  "trainerDatasetUrl": "du-lieu-giong-con-vat.bin",
+  "rounds": [
+    {
+      "id": 1,
+      "label": "Gà trống",
+      "src": "assets/images/con_ga.png",
+      "hint": "Tiếng gáy này báo thức mọi người vào buổi sáng sớm, bé nghe kỹ lại nhé!",
+      "sound": "assets/sound/ga.mp3",
+      "soundPattern": "rooster"
+    },
+    {
+      "id": 2,
+      "label": "Chú chó",
+      "src": "assets/images/con_cho.png",
+      "hint": "Loài vật trung thành này thường canh gác nhà và sủa khi có người lạ, bé nghe lại nhé!",
+      "sound": "assets/sound/cho.mp3",
+      "soundPattern": "dog"
+    },
+    {
+      "id": 3,
+      "label": "Mèo con",
+      "src": "assets/images/con_meo.png",
+      "hint": "Loài vật mềm mại này hay nằm sưởi nắng và kêu meo meo, bé thử nghe lại nhé!",
+      "sound": "assets/sound/meo.mp3",
+      "soundPattern": "cat"
+    },
+    {
+      "id": 4,
+      "label": "Xe cấp cứu",
+      "src": "assets/images/xe_cap_cuu.png",
+      "hint": "Xe này chạy rất nhanh trên đường để cứu người bệnh, bé nghe tiếng còi nhé!",
+      "sound": "assets/sound/xe_cap_cuu.mp3",
+      "soundPattern": "ambulance"
+    },
+    {
+      "id": 5,
+      "label": "Đàn Piano",
+      "src": "assets/images/piano.png",
+      "hint": "Nhạc cụ này có phím trắng và phím đen, âm thanh rất trong trẻo đấy bé ơi!",
+      "sound": "assets/sound/piano.mp3",
+      "soundPattern": "piano"
+    },
+    {
+      "id": 6,
+      "label": "Con vịt",
+      "src": "assets/images/con_vit.png",
+      "hint": "Loài chim biết bơi này sống ở ao hồ và hay kêu cạp cạp, bé nghe lại nhé!",
+      "sound": "assets/sound/vit.mp3",
+      "soundPattern": "duck"
+    }
+  ],
+  "mode2Targets": [
+    {
+      "id": 1,
+      "label": "Mèo con",
+      "src": "assets/images/con_meo.png",
+      "soundPattern": "cat",
+      "modelClass": "Con mèo"
+    },
+    {
+      "id": 2,
+      "label": "Con vịt",
+      "src": "assets/images/con_vit.png",
+      "soundPattern": "duck",
+      "modelClass": "Con vịt"
+    },
+    {
+      "id": 3,
+      "label": "Chú chó",
+      "src": "assets/images/con_cho.png",
+      "soundPattern": "dog",
+      "modelClass": "Con chó"
+    },
+    {
+      "id": 4,
+      "label": "Gà trống",
+      "src": "assets/images/con_ga.png",
+      "soundPattern": "rooster",
+      "modelClass": "Con gà"
+    }
+  ],
+  "maxScore": 100
+}

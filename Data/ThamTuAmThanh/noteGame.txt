@@ -1,0 +1,30 @@
+- Đối tượng Lớp 1 - 3 (Môn Âm nhạc / Tự nhiên & Xã hội)
+
+- Rèn luyện thính giác, khả năng quan sát và phản xạ kết nối âm thanh - hình ảnh
+
+- Nền tảng: Scratch 3 kết hợp Teachable Machine Audio / ML4K Sound Classifier."	"
+Thám tử âm thanh (Sound Classifier & Nhận diện hình ảnh đa giác quan):
+
+- Bối cảnh & Giao diện:
++ Trung tâm là một chiếc ""Loa thần kỳ"" có hiển thị dải sóng âm thanh chuyển động (Audio Waveform).
++ Phía dưới là lưới 3–4 thẻ hình ảnh các con vật/phương tiện/nhạc cụ (Ví dụ: Con gà, Chú chó, Mèo con, Xe cấp cứu).
++ Bạn Trợ lý AI đeo tai nghe đóng vai trò quản trò phát tín hiệu âm thanh.
+
+- Core Gameplay (2 Chiều tương tác Âm thanh $\leftrightarrow$ Hình ảnh):
+1. Chế độ 1 
+- Nghe âm đoán bóng (Audio -> Image):
+- Hệ thống phát một đoạn âm thanh thực tế đặc trưng (Ví dụ: tiếng gáy ""Ò ó o..."", tiếng đàn Piano, tiếng còi tàu hỏa).
+- Học sinh lắng nghe và nhấp chuột chọn thẻ hình tương ứng (ví dụ: click vào hình con gà).
+- Chọn đúng: Hình con gà bung nở màu sắc rực rỡ, phát hoạt ảnh vỗ cánh gáy lại kèm tiếng vỗ tay chúc mừng.
+- Chọn sai: Thẻ rung lắc nhẹ, AI đọc gợi ý: ""Tiếng gáy này báo thức mọi người vào buổi sáng sớm, bé nghe kỹ lại nhé!"".
+
+2. Chế độ 2
+- Thử tài mô phỏng (Voice/Pose -> AI Classifier):
+- Trò chơi đổi chiều: Màn hình hiện hình ảnh Con vịt (hoặc Nốt nhạc Đồ - Rê - Mi).
+- Bé bấm nút Micro trên màn hình và bắt chước tiếng kêu ""Cạp cạp"" hoặc hát đúng nốt nhạc.
+- Mô hình AI nhận dạng âm thanh (Sound Classifier) phân tích tần số âm thanh của bé. 
+Khi độ chính xác (Confidence) đạt trên 75%, nhân vật hoạt hình nhảy múa và cộng sao thưởng.
+
+- Khả năng tích hợp mô hình AI Scratch:
++ Dùng extension Google Teachable Machine (Audio Model) hoặc ML4K (Sounds) đã được huấn luyện sẵn các nhãn âm thanh quen thuộc.
++ Nhúng khối lệnh Scratch: khi nhận diện âm thanh = [Tieng_Ga_Gay] thì [chuyển sang trang phục Gà Trống] và [phát âm thanh Hoan_ho].

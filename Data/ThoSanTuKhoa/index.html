@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thợ Săn Từ Khóa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+
+    <!-- Start Overlay -->
+    <div id="start-overlay">
+        <h1 class="start-title">THỢ SĂN TỪ KHÓA</h1>
+        <p class="start-subtitle">Sẵn sàng để thử tài tinh mắt?</p>
+        <button id="btn-start">BẮT ĐẦU CHƠI</button>
+    </div>
+
+    <!-- PHẦN 1: HEADER (Card riêng) -->
+    <div id="header-section" class="app-card header-card">
+        <div class="header" style="position: relative;">
+            <div class="title-container">
+                <h1 class="title">THỢ SĂN TỪ KHÓA</h1>
+                <p class="subtitle">Tìm đồ vật theo từ khóa robot gợi ý</p>
+            </div>
+            <div class="timer-container">
+                <span class="timer-label">Thời gian thực hiện:</span>
+                <span class="timer-icon">⏱</span> 
+                <span id="timer">60</span>
+            </div>
+            <div class="header-stats">
+                <div class="stat-box score-box">⭐ <span id="score">0</span>/<span id="total-score">0</span></div>
+                <button id="btn-reset" class="reset-button">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                        <path d="M3 3v5h5"></path>
+                    </svg>
+                    Chơi lại
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHẦN 2: GAMEPLAY -->
+    <div id="canvas-wrapper">
+        <div id="wrong-click-indicator"></div>
+    </div>
+    <!-- PHẦN 3: KHO ĐỒ VẬT ĐÃ TÌM THẤY -->
+    <div id="inventory-tray"></div>
+
+    <!-- PHẦN 4: FOOTER (Riêng biệt bên dưới cùng) -->
+    <div id="robot-container">
+            <img id="robot-img" src="assets/images/Robot_happy.jpg" alt="Robot">
+            <div id="robot-bubble">
+                <span id="robot-text">Hãy tìm cho tôi đồ vật bí ẩn nhé!</span>
+            </div>
+        </div>
+
+    <!-- End game -->
+    <section class="end-game-overlay" id="end-game-overlay" aria-hidden="true" style="display: none;">
+        <div class="end-game-card" role="dialog" aria-modal="true" aria-labelledby="end-game-title" style="position: relative;">
+            <button id="btn-close-end-game" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 28px; cursor: pointer; color: #888; line-height: 1;">&times;</button>
+            <span class="end-game-icon" aria-hidden="true"></span>
+            <p class="end-game-eyebrow" id="end-game-eyebrow">NHIỆM VỤ HOÀN THÀNH</p>
+            <h2 id="end-game-title">Tuyệt vời! Bạn đã tìm được tất cả đồ vật!</h2>
+            
+            <div class="final-stats" style="display: flex; justify-content: center; gap: 20px; margin-top: 15px;">
+                <div class="final-time">
+                    <span style="font-size: 13px; font-weight: bold; color: #888; text-transform: uppercase;">Thời Gian</span>
+                    <strong id="final-time" style="display: block; font-size: 40px; color: #ff6d00; margin-top: 5px; text-shadow: 2px 2px 0px #ffe0b2;">0s</strong>
+                </div>
+                <div class="final-score" style="border-left: 2px dashed #ddd; padding-left: 20px;">
+                    <span style="font-size: 13px; font-weight: bold; color: #888; text-transform: uppercase;">Đã Tìm Thấy</span>
+                    <strong id="final-score" style="display: block; font-size: 40px; color: #28a745; margin-top: 5px; text-shadow: 2px 2px 0px #c8e6c9;">0/0</strong>
+                </div>
+            </div>
+
+            <div class="end-game-actions" style="margin-top: 30px;">
+                <button class="end-game-button" id="play-again-btn" type="button" style="background: #03a9f4; color: white; border: none; padding: 15px 30px; font-size: 20px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 5px 0 #0277bd;">Chơi lại</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/game.js"></script>
+</body>
+</html>

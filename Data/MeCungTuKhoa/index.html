@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mê Cung Từ Khóa - Săn chữ vượt vòng thời gian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="screen-wrapper">
+    <!-- Khung chứa trò chơi chính -->
+    <main class="game-container">
+      <!-- Thanh tiêu đề màu xanh navy thẫm -->
+      <header class="game-header">
+        <div class="header-left">
+          <div class="compass-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="9" stroke="#e6b12e" stroke-width="2.2" />
+              <polygon points="12,6 15,12 12,11 9,12" fill="#ffd154" stroke="none" />
+              <polygon points="12,18 15,12 12,13 9,12" fill="#d9991a" stroke="none" />
+              <circle cx="12" cy="12" r="1.5" fill="#0d223a" />
+            </svg>
+          </div>
+          <div class="header-title-box">
+            <h1 class="header-title">MÊ CUNG TỪ KHÓA</h1>
+            <p class="header-subtitle">Săn chữ vượt vòng thời gian</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="score-badge" id="scoreBadge">
+            <span class="star-icon">★</span>
+            <span id="scoreText">0</span>/<span id="maxScoreText">100</span> điểm
+          </div>
+          <button class="restart-btn" id="restartBtn" title="Chơi lại màn này" aria-label="Chơi lại">
+            <svg class="restart-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <polyline points="3 3 3 8 8 8" />
+            </svg>
+            <span class="restart-text">Chơi lại</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Thân trò chơi (Bố cục 2 cột) -->
+      <div class="game-body">
+        <!-- Cột trái: Thám tử, Mật thư, Danh sách từ khóa, Gợi ý thông minh -->
+        <aside class="sidebar-col">
+          <!-- Hồ sơ Thám tử thời gian -->
+          <div class="detective-card">
+            <div class="detective-avatar-wrap">
+              <img src="assets/images/Robot_happy.jpg" alt="Thám tử Robot thời gian" class="detective-avatar" id="detectiveAvatar" onerror="this.src='assets/robot_happy.jpg'">
+              <span class="detective-pulse-dot" title="Thám tử Robot đang hỗ trợ bạn"></span>
+            </div>
+            <div class="detective-info">
+              <h2 class="detective-name">THÁM TỬ THỜI GIAN</h2>
+              <div class="mission-tag" id="missionTag">Nhiệm vụ số 01</div>
+            </div>
+          </div>
+
+          <!-- Thẻ MẬT THƯ chứa câu đố -->
+          <section class="clue-card">
+            <div class="clue-header">
+              <div class="clue-title-wrap">
+                <h3 class="clue-title">MẬT THƯ THỜI GIAN</h3>
+              </div>
+            </div>
+            <p class="clue-description" id="clueDescription">
+              Tìm tên di tích nổi tiếng gắn với truyền thống hiếu học ở Hà Nội.
+            </p>
+          </section>
+
+          <!-- Danh sách từ khóa cần tìm -->
+          <section class="keywords-card">
+            <div class="keywords-header">
+              <div class="keywords-title-wrap">
+                <h3 class="keywords-title">TỪ KHÓA CẦN TÌM</h3>
+              </div>
+              <span class="keywords-counter" id="keywordsCounter">0/4</span>
+            </div>
+            <div class="keywords-progress-track">
+              <div class="keywords-progress-bar" id="keywordsProgressBar" style="width: 0%;"></div>
+            </div>
+            <ul class="keywords-list" id="keywordsList">
+              <!-- Danh sách được nạp động bằng JavaScript -->
+            </ul>
+          </section>
+
+          <!-- Thẻ Gợi ý thông minh của Thám tử AI -->
+          <section class="hint-card" id="hintCard">
+            <div class="hint-header">
+              <div class="hint-title-wrap">
+                <span class="hint-icon">✨</span>
+                <h3 class="hint-title">Gợi ý thông minh</h3>
+              </div>
+            </div>
+            <p class="hint-text" id="hintText">
+              Thám tử đang quan sát. Tự tìm để đạt 100đ tối đa! (Bấm vào đây hoặc quét sai 2 lần để nhận gợi ý -50% điểm)
+            </p>
+          </section>
+        </aside>
+
+        <!-- Cột phải: Bảng mật mã (Ma trận 8x8) -->
+        <section class="board-col">
+          <!-- Tiêu đề Bảng mật mã -->
+          <div class="board-header">
+            <div class="board-title-box">
+              <h2 class="board-title">BẢNG MẬT MÃ</h2>
+              <p class="board-subtitle">Tìm từ khóa theo hàng, cột và đường chéo</p>
+            </div>
+            <div class="matrix-size-badge" id="gridSizeBadge">8 × 8</div>
+          </div>
+
+          <!-- Khung chứa ma trận ô chữ -->
+          <div class="grid-outer-container">
+            <div class="matrix-grid" id="matrixGrid" role="grid" aria-label="Bảng tìm chữ">
+              <!-- Các ô chữ cái được sinh động bằng JavaScript -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Hộp thoại Cánh cổng thời gian (Chiến thắng) -->
+    <div class="modal-backdrop" id="victoryModal" aria-hidden="true">
+      <div class="confetti-container" id="confettiContainer" aria-hidden="true"></div>
+      <div class="modal-card victory-card">
+        <div class="portal-animation">
+          <div class="portal-ring ring-1" id="victoryPortalRing1"></div>
+          <div class="portal-ring ring-2" id="victoryPortalRing2"></div>
+          <div class="portal-core" id="victoryPortalCore">🌀</div>
+        </div>
+        <div class="victory-stars" id="victoryStars"></div>
+        <h2 class="modal-title victory-title" id="victoryTitle">XUẤT SẮC! CÁNH CỔNG THỜI GIAN ĐÃ MỞ!</h2>
+
+        <!-- Khung thông số kết quả sinh động (thống nhất chung 1 form với màn end) -->
+        <div class="victory-stats-grid">
+          <div class="victory-stat-item">
+            <span class="stat-item-icon">⭐</span>
+            <div class="stat-item-info">
+              <span class="stat-item-label">Tổng điểm</span>
+              <span class="stat-item-val"><strong id="finalScore">100</strong>/<span id="finalMaxScore">100</span></span>
+            </div>
+          </div>
+          <div class="victory-stat-item">
+            <span class="stat-item-icon">🔍</span>
+            <div class="stat-item-info">
+              <span class="stat-item-label">Từ khóa đã tìm</span>
+              <span class="stat-item-val" id="finalKeywordsCount">4/12</span>
+            </div>
+          </div>
+          <div class="victory-stat-item">
+            <span class="stat-item-icon">🗺️</span>
+            <div class="stat-item-info">
+              <span class="stat-item-label">Nhiệm vụ hoàn thành</span>
+              <span class="stat-item-val" id="finalMissionsCount">1/3</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danh sách từ khóa đã tìm được (chung 1 form với màn end, không scroll) -->
+        <div class="victory-keywords-box">
+          <div class="victory-keywords-header">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>TỪ KHÓA BẠN ĐÃ TÌM ĐƯỢC</span>
+          </div>
+          <div class="victory-keywords-chips" id="victoryKeywordsChips">
+            <!-- Nạp động qua JavaScript -->
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="nextLevelBtn">Khám phá Nhiệm vụ số 02 ➔</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hộp thoại Kết Thúc Trò Chơi (End Game - Đại Thắng Phá Đảo) -->
+    <div class="modal-backdrop" id="endGameModal" aria-hidden="true">
+      <div class="confetti-container" id="endGameConfettiContainer" aria-hidden="true"></div>
+      <div class="modal-card end-game-card">
+        <!-- Huy hiệu Cúp Vàng & Hào quang chiến thắng (cập nhật theo điểm số) -->
+        <div class="end-game-badge-wrap" id="endGameBadgeWrap">
+          <div class="end-game-trophy" id="endGameTrophy">🏆</div>
+          <div class="end-game-stars" id="endGameStars"></div>
+        </div>
+
+        <h2 class="end-game-title" id="endGameTitle">ĐẠI THẮNG! BẠN ĐÃ PHÁ ĐẢO MÊ CUNG!</h2>
+        <div class="end-game-rank-badge" id="endGameRankBadge">
+          <span class="rank-star">★</span>
+          <span id="endGameRankTitle">SIÊU THÁM TỬ MÊ CUNG TỪ KHÓA</span>
+          <span class="rank-star">★</span>
+        </div>
+
+        <!-- Khung thống kê 3 thông số quan trọng, dễ hiểu cho bạn -->
+        <div class="end-game-stats-grid">
+          <div class="end-game-stat-item">
+            <span class="end-stat-icon">⭐</span>
+            <div class="end-stat-info">
+              <span class="end-stat-label">Tổng điểm</span>
+              <span class="end-stat-val"><strong id="endGameTotalScore">100</strong>/<span id="endGameMaxScore">100</span></span>
+            </div>
+          </div>
+          <div class="end-game-stat-item">
+            <span class="end-stat-icon">🔍</span>
+            <div class="end-stat-info">
+              <span class="end-stat-label">Từ khóa đã tìm</span>
+              <span class="end-stat-val" id="endGameTotalKeywords">12/12</span>
+            </div>
+          </div>
+          <div class="end-game-stat-item">
+            <span class="end-stat-icon">🗺️</span>
+            <div class="end-stat-info">
+              <span class="end-stat-label">Nhiệm vụ hoàn thành</span>
+              <span class="end-stat-val" id="endGameMissionsCount">3/3</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bảng tổng hợp toàn bộ từ khóa các màn chơi (mở rộng, không scroll) -->
+        <div class="end-game-journey-box">
+          <div class="end-game-journey-header">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>TỪ KHÓA BẠN ĐÃ TÌM ĐƯỢC</span>
+          </div>
+          <div class="end-game-missions-list" id="endGameMissionsList">
+            <!-- Nạp động qua JavaScript -->
+          </div>
+        </div>
+
+        <!-- Các nút điều hướng kết thúc game -->
+        <div class="modal-actions end-game-actions">
+          <button class="btn btn-primary btn-grand" id="endGameRestartBtn">Chơi lại từ đầu 🔄</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Các module mã nguồn JavaScript -->
+  <script src="js/sound.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/scoreManager.js"></script>
+  <script src="js/storageManager.js"></script>
+  <script src="js/aiHint.js"></script>
+  <script src="js/grid.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

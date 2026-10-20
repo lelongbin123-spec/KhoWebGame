@@ -1,0 +1,864 @@
+/* ==========================================
+   1. RESET & NỀN CHÍNH
+   ========================================== */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif; 
+}
+
+body.app { 
+    min-height: 100vh; 
+    background: url('../assets/images/BackGround.png') no-repeat center/cover fixed; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    padding: 20px; 
+    color: #2c3e50; 
+    position: relative; 
+}
+
+.hidden { 
+    display: none !important; 
+}
+
+/* ==========================================
+   2. HEADER
+   ========================================== */
+
+.game-header { 
+    text-align: center; 
+    margin-bottom: 15px; 
+    width: 100%; 
+    max-width: 980px; 
+}
+
+.game-title { 
+    font-size: 1.8rem; 
+    color: #0284c7; 
+    font-weight: bold; 
+    margin-bottom: 4px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 8px; 
+}
+
+.game-description { 
+    font-size: 0.9rem; 
+    color: #64748b; 
+    margin-bottom: 15px; 
+}
+
+/* THANH ĐIỀU KHIỂN */
+.game-controls { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 24px;
+    background: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(8px); 
+    padding: 12px 24px;
+    border-radius: 40px; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+    margin: 0 auto; 
+    width: fit-content; 
+}
+
+.stat-box, .score-counter { 
+    background: #fff; 
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 1.15rem; 
+    color: #334155; 
+    border: 1px solid #e2e8f0; 
+}
+
+.stat-box span, .score-counter span { 
+    color: #0284c7; 
+    font-weight: bold; 
+}
+
+.game-button { 
+    background: #0284c7; 
+    color: #fff; 
+    border: none; 
+    padding: 10px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.15rem; 
+    cursor: pointer; 
+    transition: background 0.2s; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+}
+
+.game-button:hover { 
+    background: #0369a1; 
+}
+
+/* ==========================================
+   3. BỐ CỤC KHUNG CHÍNH (LAYOUT 65% - 35%)
+   ========================================== */
+.game-layout { 
+    display: flex; 
+    gap: 20px; 
+    width: 100%; 
+    max-width: 980px; 
+    background: #ffffff; 
+    border-radius: 20px; 
+    padding: 20px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+    border: 1px solid #e2e8f0; 
+}
+
+/* KHUNG BÊN TRÁI (BOARD PANEL) */
+.board-panel { 
+    flex: 0 0 calc(65% - 10px); 
+    max-width: calc(65% - 10px); 
+    background: #f4f8ff; 
+    border: 2px dashed #bfdbfe; 
+    border-radius: 16px; 
+    padding: 15px; 
+    position: relative; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.panel-label { 
+    position: absolute; 
+    top: 12px; 
+    left: 12px; 
+    background: #dbeafe; 
+    color: #2563eb; 
+    padding: 4px 10px; 
+    border-radius: 6px; 
+    font-size: 0.7rem; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px; 
+}
+
+/* Nút kiểm tra nằm cố định ở góc phải phía trên của khung lắp ráp. */
+.submit_result {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 36px;
+    padding: 7px 12px;
+    border: 1px solid #059669;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 3px 8px rgba(5, 150, 105, 0.2);
+    color: #fff;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.submit_result:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    box-shadow: 0 5px 12px rgba(5, 150, 105, 0.28);
+    transform: translateY(-1px);
+}
+
+.submit_result:active {
+    box-shadow: 0 2px 5px rgba(5, 150, 105, 0.2);
+    transform: translateY(0);
+}
+
+.submit_result:focus-visible {
+    outline: 3px solid rgba(16, 185, 129, 0.35);
+    outline-offset: 3px;
+}
+
+.submit-result-icon {
+    display: grid;
+    width: 19px;
+    height: 19px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    font-size: 0.82rem;
+}
+
+/* HÌNH MẪU HOÀN CHỈNH BO VIỀN */
+.board-corner-hint {
+    width: 140px; 
+    height: auto;
+    object-fit: contain; 
+    display: block;
+    margin: 0 auto 10px auto;
+    border: 3px solid #3B82F6;
+    border-radius: 12px;
+    padding: 6px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reference-board {
+    height: 134.8px;
+    aspect-ratio: 832 / 801;
+    position: relative;
+    overflow: hidden;
+}
+
+.reference-parts-container {
+    position: absolute;
+    inset: 0;
+}
+
+.reference-part {
+    position: absolute;
+    max-width: none;
+    pointer-events: none;
+}
+
+.reference-part img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    pointer-events: none;
+}
+
+/* Keep the reference tint mask stretched to the exact sample-piece box. */
+.reference-part::after {
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+
+/* KHUNG LẮP RÁP VIỀN XANH DƯƠNG */
+.assembly-board { 
+    width: 100%; 
+    height: 360px; 
+    border: 2.5px solid #3b82f6; 
+    border-radius: 20px; 
+    position: relative; 
+    background: #f8fafc; 
+    overflow: hidden; 
+}
+
+/* KHUNG CHỨA CÁC BẢN SAO */
+#placed-parts-container { 
+    position: absolute; 
+    inset: 0; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none; 
+    z-index: 10; 
+}
+
+.board-placed-item { 
+    position: absolute; 
+    pointer-events: auto !important; 
+    touch-action: none; 
+    user-select: none;
+    touch-action: none; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border: none;
+    background: transparent; 
+    box-shadow: none; 
+    cursor: grab; 
+    transition: filter 0.2s, transform 0.1s; 
+}
+
+.board-placed-item:hover { 
+    filter: drop-shadow(0 4px 8px rgba(37, 99, 235, 0.4)); 
+}
+
+.board-placed-item:active { 
+    cursor: grabbing; 
+    transform: scale(1.03); 
+}
+
+.board-placed-item img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; 
+    pointer-events: none; 
+}
+
+/* Phủ màu lên phần hình không trong suốt, giữ nét đen trắng bên dưới. */
+.reference-part::after,
+.board-placed-item::after {
+    /* Dùng vùng trong suốt của ảnh làm mask để tô đúng hình dáng bộ phận. */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--part-color, transparent);
+    -webkit-mask-image: var(--part-mask);
+    mask-image: var(--part-mask);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+/* ==========================================
+   4. KHUNG BÊN PHẢI (TRAY PANEL 35%) & TAB SYSTEM
+   ========================================== */
+.right-panel { 
+    flex: 0 0 calc(35% - 10px); 
+    max-width: calc(35% - 10px); 
+    background: #f8fafc; 
+    border: 1px solid #e2e8f0; 
+    border-radius: 16px; 
+    padding: 15px; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+/* THANH TAB CHUYỂN ĐỔI TASK */
+.task-tabs {
+    display: flex;
+    gap: 8px;
+    background: #e2e8f0;
+    padding: 4px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+    background: #ffffff;
+    color: #0284c7;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* QUẢN LÝ ẨN / HIỆN TASK */
+.task-panel {
+    display: none;
+}
+
+.task-panel.active {
+    display: block;
+}
+
+/* TASK 1: LƯỚI THẺ BỘ PHẬN RỜI */
+.tray-header { 
+    margin-bottom: 15px; 
+    text-align: left; 
+}
+
+.puzzle-tray { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 12px; 
+    overflow-y: auto; 
+    max-height: 420px; 
+    padding-right: 2px; 
+}
+
+.puzzle-tray::-webkit-scrollbar { 
+    width: 4px; 
+}
+
+.puzzle-tray::-webkit-scrollbar-thumb { 
+    background: #cbd5e1; 
+    border-radius: 4px; 
+}
+
+.tray-item { 
+    background: #ffffff; 
+    border: 1.5px solid #e2e8f0; 
+    border-radius: 14px; 
+    padding: 10px 8px; 
+    height: 115px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: space-between; 
+    cursor: grab; 
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s; 
+    user-select: none;
+    touch-action: none; 
+}
+
+.tray-item:hover { 
+    transform: translateY(-2px); 
+    border-color: #93c5fd; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+}
+
+.tray-item:active, .tray-item.dragging { 
+    cursor: grabbing; 
+    opacity: 0.8; 
+}
+
+.tray-item img { 
+    width: 100%; 
+    height: 70px; 
+    object-fit: contain; 
+    pointer-events: none; 
+}
+
+.tray-item span { 
+    font-size: 0.75rem; 
+    font-weight: 600; 
+    color: #475569; 
+    text-align: center; 
+}
+
+/* TASK 2: MÀN TÔ MÀU 🎨 */
+.color-palette {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    justify-items: center;
+    padding: 8px 0;
+}
+
+.color-dot {
+    appearance: none;
+    display: block;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    outline: 2px solid #cbd5e1;
+    cursor: pointer;
+    transition: transform 0.2s, outline-color 0.2s;
+}
+
+.color-dot:hover {
+    transform: scale(1.12);
+}
+
+.color-dot.active {
+    outline: 3px solid #0284c7;
+    transform: scale(1.1);
+}
+
+.color-tools-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+    color: #334155;
+    font-size: 0.8rem;
+}
+
+.custom-color-picker {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    margin-top: 12px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.custom-color-field {
+    position: relative;
+    width: 100%;
+    height: 132px;
+    min-width: 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background-color: hsl(0 100% 50%);
+    background-image: linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, transparent);
+    cursor: crosshair;
+    touch-action: none;
+}
+
+.color-picker-handle {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 13px;
+    height: 13px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #1e293b;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.hue-control {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    color: #475569;
+    font-size: 0.75rem;
+}
+
+#hue-slider {
+    width: 100%;
+    min-width: 0;
+    accent-color: #0284c7;
+    cursor: pointer;
+}
+
+.custom-color-current {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-width: 0;
+    color: #475569;
+    font-size: 0.7rem;
+}
+
+.custom-color-preview {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    border: 1px solid #94a3b8;
+    border-radius: 50%;
+    background: #ff0000;
+}
+
+#custom-color-value {
+    color: #1e293b;
+    font-family: monospace;
+    overflow-wrap: anywhere;
+}
+
+#eraser-btn,
+#clear-color-btn {
+    flex: 1;
+    min-width: 90px;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #fff;
+    color: #334155;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+#eraser-btn:hover,
+#clear-color-btn:hover {
+    background: #f1f5f9;
+}
+
+#eraser-btn.active,
+#eraser-btn[aria-pressed="true"] {
+    border-color: #0284c7;
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+/* ==========================================
+   5. MODAL & TOAST
+   ========================================== */
+.success-modal { 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(15,23,42,0.5); 
+    backdrop-filter: blur(4px); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.3s; 
+    z-index: 1000; 
+}
+
+.success-modal.show { 
+    opacity: 1; 
+    pointer-events: auto; 
+}
+
+.success-card { 
+    background: #fff; 
+    padding: 25px; 
+    border-radius: 20px; 
+    text-align: center; 
+    max-width: 380px; 
+    width: 90%; 
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); 
+}
+
+.pop-anim { 
+    transform: scale(0.8); 
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+
+.success-modal.show .pop-anim { 
+    transform: scale(1); 
+}
+
+.success-icon { 
+    font-size: 2.5rem; 
+    margin-bottom: 8px; 
+}
+
+.success-title { 
+    color: #0284c7; 
+    margin-bottom: 6px; 
+}
+
+.success-description { 
+    color: #64748b; 
+    font-size: 0.9rem; 
+    margin-bottom: 18px; 
+}
+
+.modal-actions { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+}
+
+.modal-button { 
+    padding: 10px; 
+    border-radius: 10px; 
+    font-size: 0.9rem; 
+    border: none; 
+    font-weight: bold; 
+    cursor: pointer; 
+}
+
+.modal-button.color-btn { 
+    background: #10b981; 
+    color: #fff; 
+}
+
+.toast-message { 
+    position: fixed; 
+    bottom: 20px; 
+    left: 50%; 
+    transform: translateX(-50%) translateY(100px); 
+    background: #1e293b; 
+    color: #fff; 
+    padding: 8px 16px; 
+    border-radius: 20px; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+    transition: transform 0.3s; 
+    z-index: 1001; 
+    font-size: 0.85rem; 
+}
+
+.toast-message.show { 
+    transform: translateX(-50%) translateY(0); 
+}
+
+/* Chuyển sang bố cục dọc khi không còn đủ chỗ cho hai panel đặt cạnh nhau. */
+@media (max-width: 760px) {
+    body.app {
+        padding: 12px;
+    }
+
+    .game-layout {
+        flex-direction: column;
+        padding: 14px;
+    }
+
+    .board-panel,
+    .right-panel {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: none;
+    }
+
+    .assembly-board {
+        height: min(60vh, 360px);
+        min-height: 240px;
+    }
+
+    .puzzle-tray {
+        max-height: 280px;
+    }
+}
+
+@media (max-width: 420px) {
+    .game-controls {
+        width: 100%;
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .stat-box,
+    .score-counter {
+        padding: 8px 12px;
+        font-size: 0.95rem;
+    }
+
+    .custom-color-picker {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+        padding: 8px;
+    }
+}
+
+
+/* Final score display and locked controls after submission. */
+.final-score { margin: 12px 0 6px; color: #0284c7; font-size: 2.6rem; line-height: 1.1; font-weight: 800; }
+.final-score-details { margin: 0 0 4px; color: #64748b; font-size: 0.9rem; }
+.game-button:disabled, .tab-btn:disabled, .color-dot:disabled, #hue-slider:disabled,
+#eraser-btn:disabled, #clear-color-btn:disabled, .check-btn:disabled,
+.btn-check-answer:disabled, .submit_result:disabled { cursor: not-allowed; opacity: 0.55; filter: grayscale(0.25); }
+body.game-locked .board-placed-item { pointer-events: none; }
+body.game-locked .task-content-container { pointer-events: none; opacity: 0.7; filter: grayscale(0.5); }
+
+
+/* Refined end-of-round result card. */
+.success-modal {
+    padding: 20px;
+    background: rgba(8, 47, 73, 0.58);
+    backdrop-filter: blur(8px);
+}
+.success-card {
+    position: relative;
+    overflow: hidden;
+    max-width: 420px;
+    padding: 34px 32px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 26px;
+    background: linear-gradient(160deg, #ffffff 0%, #f4faff 100%);
+    box-shadow: 0 28px 70px rgba(15, 55, 85, 0.28);
+}
+.success-card::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 7px;
+    background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
+    content: "";
+}
+.success-icon {
+    display: grid;
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 14px;
+    place-items: center;
+    border: 1px solid #dbeafe;
+    border-radius: 24px;
+    background: linear-gradient(145deg, #effaff, #e9edff);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.12);
+    font-size: 2.7rem;
+}
+.success-title {
+    margin: 0 0 8px;
+    color: #123a5a;
+    font-size: clamp(1.45rem, 5vw, 1.8rem);
+    font-weight: 800;
+}
+.success-description {
+    max-width: 310px;
+    margin: 0 auto 20px;
+    color: #64748b;
+    font-size: 0.96rem;
+    line-height: 1.55;
+}
+.final-score {
+    display: flex;
+    min-height: 100px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 12px;
+    padding: 14px 20px;
+    border: 1px solid #cfe8ff;
+    border-radius: 20px;
+    background: radial-gradient(circle at 50% 0%, #ffffff, #eaf6ff 78%);
+    color: #0878bc;
+    font-size: clamp(2.8rem, 12vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    text-shadow: 0 3px 14px rgba(2, 132, 199, 0.12);
+}
+.final-score-details {
+    margin: 0 0 22px;
+    padding: 11px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+    background: #fff;
+    color: #526579;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+.replay-button.modal-button {
+    width: 100%;
+    min-height: 48px;
+    border: 0;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #0284c7, #2563eb);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.22);
+    color: #fff;
+    font-size: 1rem;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.replay-button.modal-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.28);
+}
+.replay-button.modal-button:active { transform: translateY(0); }
+@media (max-width: 480px) {
+    .success-modal { padding: 14px; }
+    .success-card { padding: 30px 22px 22px; border-radius: 22px; }
+    .success-icon { width: 66px; height: 66px; border-radius: 20px; }
+    .final-score-details { font-size: 0.82rem; }
+}
+.close-modal-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #94a3b8;
+    cursor: pointer;
+    line-height: 1;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+.close-modal-btn:hover {
+    background: #f1f5f9;
+    color: #ef4444;
+}
+
+
+
+

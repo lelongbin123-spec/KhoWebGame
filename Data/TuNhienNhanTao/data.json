@@ -1,0 +1,73 @@
+{
+  "type": "QUESTION_TYPES.GROUP",
+  "Text": "Phân biệt giữa tự nhiên và nhân tạo",
+  "rows": [
+    {
+      "Id": 1,
+      "Text": "Chú chim",
+      "src": "assets/img/C0228_cau28_a.png",
+      "correctGroup": 1,
+      "currentGroup": null
+    },
+    {
+      "Id": 2,
+      "Text": "Con sói",
+      "src": "assets/img/C0228_cau28_b.png",
+      "correctGroup": 1,
+      "currentGroup": null
+    },
+    {
+      "Id": 3,
+      "Text": "Đàn vĩ cầm",
+      "src": "assets/img/C0228_cau28_c.png",
+      "correctGroup": 2,
+      "currentGroup": null
+    },
+    {
+      "Id": 4,
+      "Text": "Con sóc",
+      "src": "assets/img/C0228_cau28_h.png",
+      "correctGroup": 1,
+      "currentGroup": null
+    },
+    {
+      "Id": 5,
+      "Text": "Đồng hồ",
+      "src": "assets/img/C0228_cau28_d.png",
+      "correctGroup": 2,
+      "currentGroup": null
+    },
+    {
+      "Id": 7,
+      "Text": "Mặt trời",
+      "src": "assets/img/C0228_cau28_g.png",
+      "correctGroup": 1,
+      "currentGroup": null
+    },
+    {
+      "Id": 6,
+      "Text": "Máy hút bụi",
+      "src": "assets/img/C0228_cau28_e.png",
+      "correctGroup": 2,
+      "currentGroup": null
+    },
+    {
+      "Id": 8,
+      "Text": "Robot",
+      "src": "assets/img/C0228_cau28_f.png",
+      "correctGroup": 2,
+      "currentGroup": null
+    }
+  ],
+  "groups": [
+    {
+      "Id": 1,
+      "name": "Tự nhiên"
+    },
+    {
+      "Id": 2,
+      "name": "Nhân tạo"
+    }
+  ],
+  "maxScore": 80
+}

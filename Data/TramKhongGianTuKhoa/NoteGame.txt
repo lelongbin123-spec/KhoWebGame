@@ -1,0 +1,19 @@
+"Trạm không gian từ khóa (Smart Keyword Radar & NLP Search):
+- Bối cảnh & Giao diện:
++ Một hành tinh không gian ảo gồm các khối tinh thể lơ lửng, mỗi khối mang một từ đơn/từ ghép.
++ Ở trung tâm là một thanh định vị (Search Bar) tích hợp ra-đa quét từ khóa thông minh.
+
+- Core Gameplay:
+1. Nhận nhiệm vụ: Trợ lý AI phát ra một câu lệnh hoặc định nghĩa dạng gợi ý 
+(Ví dụ: ""Hãy tìm các từ chỉ hành động di chuyển của con người"" hoặc ""Tìm từ đồng nghĩa với 'nhanh nhẹn'"").
+2. Thao tác tìm kiếm: Học sinh có thể gõ trực tiếp từ khóa vào ô tìm kiếm HOẶC dùng chuột di chuyển 
+""Radar"" quét qua các khối tinh thể trên màn hình để tìm từ khớp đúng.
+3. Xử lý kết quả: Khi tìm đúng từ -> Khối tinh thể phát sáng rực rỡ, bay về trạm thu thập và tự động nối thành 
+sơ đồ tư duy (Mindmap) trực quan.
+
+- Khả năng AI tích hợp:
++ AI Semantic Search (Tìm kiếm theo ngữ nghĩa): Không chỉ khớp từ chính xác 100%, 
+AI còn hỗ trợ nhận diện các từ đồng nghĩa, từ có liên quan ngữ nghĩa (Ví dụ học sinh gõ ""chạy"", 
+AI vẫn gợi ý và chấp nhận cả từ ""phi"", ""nhảy"" nếu phù hợp với ngữ cảnh chủ đề).
++ Nếu học sinh loay hoay quá 10 giây không tìm thấy, AI sẽ thu hẹp phạm vi quét của Ra-đa xuống còn 3 khối tinh thể 
+gần nhất và đọc to câu gợi ý giúp bé định hướng."

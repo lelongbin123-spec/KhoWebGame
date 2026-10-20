@@ -1,0 +1,580 @@
+/* Background & Reset */
+* {
+    box-sizing: border-box;
+}
+
+body { 
+    font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, sans-serif; 
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px; 
+    height: 100vh;
+    overflow: hidden; /* Cấm cuộn, màn hình full */
+    background-color: #4fc3f7;
+}
+
+.app-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 15px 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 100%;
+    /* Remove max-width for full screen flexibility */
+    border: 3px solid #fbc02d;
+}
+
+/* Header */
+.header-card {
+    position: relative;
+    z-index: 100;
+    padding: 10px 20px; /* Giảm padding của card */
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 0;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.title {
+    font-size: 22px; /* Giảm font-size */
+    font-weight: 900;
+    color: #1565c0;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-shadow: 2px 2px 0px #bbdefb;
+    line-height: 1.1;
+}
+
+.subtitle {
+    margin: 2px 0 0 0; /* Giảm margin */
+    font-size: 13px; /* Giảm font-size */
+    font-weight: 700;
+    color: #546e7a;
+}
+
+.header-stats {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Giảm gap */
+}
+
+.stat-box {
+    background-color: #f8fdff;
+    border: 2px solid #b3e5fc;
+    border-radius: 20px;
+    padding: 4px 14px; /* Giảm padding */
+    font-size: 16px; /* Giảm font-size */
+    font-weight: 800;
+    color: #455a64;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 3px 0 #b3e5fc;
+    transition: transform 0.2s;
+}
+
+.score-box { color: #f57f17; }
+.score-box span { color: #455a64; } /* text of score in default color */
+
+.timer-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8fdff;
+    border: 2px solid #b3e5fc;
+    border-radius: 30px;
+    padding: 6px 20px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #455a64;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 3px 0 #b3e5fc;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.timer-container .timer-label {
+    font-size: 14px;
+    color: #546e7a;
+}
+
+.timer-container .timer-icon {
+    font-size: 18px;
+}
+
+.timer-container #timer {
+    font-size: 20px;
+    color: #d32f2f;
+}
+
+@keyframes timerWarningPulse {
+    0% { transform: translate(-50%, -50%) scale(1); background-color: #ffebee; box-shadow: 0 0 10px rgba(211,47,47,0.5); border-color: #ffcdd2; }
+    50% { transform: translate(-50%, -50%) scale(1.1); background-color: #ffcdd2; box-shadow: 0 0 20px rgba(211,47,47,0.8); border-color: #ef5350; }
+    100% { transform: translate(-50%, -50%) scale(1); background-color: #ffebee; box-shadow: 0 0 10px rgba(211,47,47,0.5); border-color: #ffcdd2; }
+}
+
+.timer-warning {
+    animation: timerWarningPulse 0.5s infinite !important;
+}
+
+.timer-warning .timer-label,
+.timer-warning #timer {
+    color: #b71c1c !important;
+}
+
+.reset-button {
+    background-color: #ffebee;
+    border: 2px solid #ffcdd2;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #c62828;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 3px 0 #ffcdd2;
+    transition: transform 0.2s, background-color 0.2s;
+    cursor: pointer;
+}
+.reset-button:hover {
+    background-color: #ffcdd2;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 #ef9a9a;
+}
+.reset-button:active {
+    transform: translateY(3px);
+    box-shadow: none;
+}
+
+/* Canvas */
+#canvas-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #4fc3f7 url('../assets/images/BG.png') no-repeat center center;
+    background-size: cover;
+    z-index: 1; /* Nằm dưới UI (Header, Robot) */
+    transition: transform 0.5s ease;
+}
+
+.game-item {
+    position: absolute;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s;
+    will-change: transform; /* Tối ưu GPU cho hiệu ứng phóng to */
+}
+
+.game-item:hover {
+    transform: scale(1.15);
+}
+
+.game-item:active {
+    transform: scale(0.95);
+}
+
+.game-item.found {
+    z-index: 50;
+    /* Chuyển sang ảnh đen trắng để đánh dấu là đã tìm thấy (không làm mờ) */
+    filter: grayscale(100%);
+    transform: scale(0.9);
+}
+
+/* Chỉ chạy hiệu ứng phát sáng khi vừa tìm đúng (class này sẽ bị xóa sau 1.5s) */
+.game-item.found-glowing {
+    animation: pulseGlow 0.5s ease-in-out infinite alternate;
+    z-index: 51;
+}
+
+@keyframes pulseGlow {
+    /* Hiệu ứng chớp nháy phát sáng viền Xanh Lá Cây (Neon Green) */
+    0%   { filter: drop-shadow(0 0 3px #b2ff59) drop-shadow(0 0 10px #64dd17); transform: scale(1.15); }
+    100% { filter: drop-shadow(0 0 6px #76ff03) drop-shadow(0 0 20px #00e676) drop-shadow(0 0 40px #00c853); transform: scale(1.25); }
+}
+
+.game-item.hint-glow {
+    animation: hintGlowAnim 1s ease-in-out infinite alternate;
+    z-index: 52;
+}
+
+@keyframes hintGlowAnim {
+    0%   { filter: drop-shadow(0 0 5px #fff9c4) drop-shadow(0 0 10px #fff59d); }
+    100% { filter: drop-shadow(0 0 10px #fff176) drop-shadow(0 0 20px #ffeb3b) drop-shadow(0 0 30px #fdd835); }
+}
+
+/* Hiệu ứng Ngôi sao lấp lánh (Sparkles) */
+.star-sparkle {
+    position: fixed; /* fix để không bị cuộn */
+    width: 40px;
+    height: 40px;
+    /* Mã SVG hình ngôi sao 4 cánh trắng muốt */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23ffffff" d="M256 0c0 141.38-114.62 256-256 256 141.38 0 256 114.62 256 256 0-141.38 114.62-256 256-256-141.38 0-256-114.62-256-256z"/></svg>') no-repeat center center;
+    background-size: contain;
+    z-index: 10000;
+    pointer-events: none;
+    animation: sparkleAnim 1s ease-in-out forwards;
+}
+
+@keyframes sparkleAnim {
+    0% { transform: scale(0) rotate(0deg); opacity: 0; filter: drop-shadow(0 0 5px #64dd17); }
+    50% { transform: scale(1) rotate(90deg); opacity: 1; filter: drop-shadow(0 0 15px #76ff03); }
+    100% { transform: scale(0) rotate(180deg); opacity: 0; filter: drop-shadow(0 0 5px #64dd17); }
+}
+
+/* Hiệu ứng nhấp sai */
+#wrong-click-indicator {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 4px solid red;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 10;
+}
+
+@keyframes shake {
+    0% { transform: translate(-50%, -50%) translateX(0); }
+    25% { transform: translate(-50%, -50%) translateX(-5px); }
+    50% { transform: translate(-50%, -50%) translateX(5px); }
+    75% { transform: translate(-50%, -50%) translateX(-5px); }
+    100% { transform: translate(-50%, -50%) translateX(0); }
+}
+
+.shake-anim {
+    animation: shake 0.3s ease-in-out;
+    opacity: 1 !important;
+    transition: opacity 0.5s;
+}
+
+/* Hiệu ứng bay chữ */
+
+/* Kho đồ vật đã tìm thấy (Inventory Tray) */
+#inventory-tray {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+    max-width: calc(100vw - 350px); /* Chừa chỗ cho robot bên phải */
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.inventory-slot {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 4px solid #00b0ff;
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    height: 65px; /* Tăng chiều cao khung */
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden; /* Để chứa hiệu ứng lướt sáng */
+}
+
+/* Hiệu ứng lướt vệt sáng (Shine) chéo qua khung */
+.inventory-slot::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    20% { left: 200%; }
+    100% { left: 200%; }
+}
+
+.inventory-slot img {
+    height: 42px; /* Tăng kích thước ảnh lên ~40% */
+    width: 42px;
+    object-fit: contain;
+    position: relative;
+    z-index: 2; /* Nổi lên trên vệt sáng */
+}
+
+.inventory-slot span {
+    font-size: 20px; /* Tăng kích thước chữ */
+    font-weight: 900;
+    color: #0277bd;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2; /* Nổi lên trên vệt sáng */
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; border-color: #fff; box-shadow: 0 0 0 transparent; }
+    50% { transform: scale(1.15); opacity: 1; border-color: #00ffcc; box-shadow: 0 0 20px #00ffcc, inset 0 0 10px #00ffcc; }
+    100% { transform: scale(1); opacity: 1; border-color: #00b0ff; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+}
+
+/* Màn hình End Game */
+.confetti {
+    position: fixed;
+    top: -10px;
+    width: 10px;
+    height: 10px;
+    background-color: #f00;
+    opacity: 0.8;
+    z-index: 99999 !important; /* Đảm bảo nổi tuyệt đối trên cùng màn hình End Game */
+    pointer-events: none;
+    border-radius: 2px;
+}
+
+@keyframes fall {
+    0% { top: -10%; transform: rotateZ(0deg) rotateY(0deg); }
+    100% { top: 110%; transform: rotateZ(360deg) rotateY(360deg); }
+}
+
+@keyframes sideWays {
+    0% { margin-left: 0px; }
+    100% { margin-left: 50px; }
+}
+.end-game-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.end-game-overlay.visible {
+    display: flex !important;
+    opacity: 1;
+}
+
+.end-game-card {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    max-width: 450px;
+    width: 90%;
+    transform: scale(0.8);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.end-game-overlay.visible .end-game-card {
+    transform: scale(1);
+}
+
+.end-game-icon {
+    font-size: 45px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.end-game-eyebrow {
+    color: #888;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#end-game-title {
+    color: #28a745;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+#play-again-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 #0277bd;
+}
+
+#play-again-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 0 #0277bd;
+}
+
+
+
+
+/* Robot UI */
+#robot-container {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+    gap: 15px;
+    z-index: 100;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+}
+#robot-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    background-color: white;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+#robot-img.bounce {
+    transform: scale(1.1) translateY(-10px);
+}
+#robot-bubble {
+    background: linear-gradient(135deg, #ffffff 0%, #e1f5fe 100%);
+    padding: 18px 25px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #0277bd;
+    box-shadow: 0 8px 20px rgba(0, 176, 255, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.8);
+    position: relative;
+    border: 3px solid #00b0ff;
+    max-width: 400px;
+    line-height: 1.4;
+}
+
+#robot-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: 25px;
+    right: -10px;
+    width: 16px;
+    height: 16px;
+    background: #e1f5fe;
+    border-top: 3px solid #00b0ff;
+    border-right: 3px solid #00b0ff;
+    transform: rotate(45deg);
+}
+
+#robot-text.correct {
+    color: #2e7d32;
+    text-shadow: 0 2px 4px rgba(46,125,50,0.2);
+}
+
+#robot-text.wrong {
+    color: #c62828;
+    text-shadow: 0 2px 4px rgba(198,40,40,0.2);
+}
+
+#robot-text.normal {
+    color: #0277bd;
+}
+
+/* Start Overlay */
+#start-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: opacity 0.5s ease;
+}
+.start-title {
+    font-size: 60px;
+    font-weight: 900;
+    margin: 0;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    color: #fbc02d;
+    text-transform: uppercase;
+}
+.start-subtitle {
+    font-size: 24px;
+    margin: 10px 0 40px 0;
+}
+#btn-start {
+    padding: 20px 50px;
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(255, 87, 34, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+#btn-start:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 30px rgba(255, 87, 34, 0.6);
+}
+
+/* Custom Cursor */
+body.hide-cursor * {
+    cursor: none !important;
+}
+#custom-cursor {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 48px;
+    height: 48px;
+    background: url('../assets/images/icon_mouse.png') no-repeat top left;
+    background-size: contain;
+    pointer-events: none; /* Để click xuyên qua ảnh */
+    z-index: 9999;
+    will-change: transform;
+    /* Xóa bỏ transition vì nó làm icon bị delay so với vị trí thực của chuột */
+}
+
+body.hide-cursor #custom-cursor {
+    display: block;
+}
+
+/* Click Ripple Effect */
+.click-ripple {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid #00ffcc;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(1);
+    animation: rippleAnim 0.5s ease-out forwards;
+    z-index: 9998;
+}
+@keyframes rippleAnim {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(5); opacity: 0; }
+}

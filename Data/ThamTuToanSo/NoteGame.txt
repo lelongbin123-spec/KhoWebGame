@@ -1,0 +1,20 @@
+"Thám tử an toàn số (Tương tác cùng AI phân biệt dữ liệu cá nhân & Hành vi chuẩn mực):
+
+- Bối cảnh & Giao diện:
++ Mô phỏng cửa sổ trò chuyện bảo mật. Trợ lý AI đóng vai ""Vệ sĩ Không gian mạng"" 
+gửi các tin nhắn mô phỏng tình huống ngẫu nhiên từ người lạ hoặc trên mạng internet.
++ Bên dưới là 2 nút bấm thao tác lớn: Lá chắn xanh (An toàn / Lịch sự) và Bàn tay đỏ (Nguy hiểm / Chặn / Báo người lớn).
+
+- Core Gameplay:
++ Lớp 3 (Giao tiếp văn minh & Bản quyền số):* Tình huống: Nhận diện lời nói thiếu văn minh, 
+bắt nạt trực tuyến (Cyberbullying); dùng tranh vẽ của bạn khác mà không xin phép; share thông tin chưa kiểm chứng.
+* Quy tắc ứng xử: Bấm nút xanh ""Nhắc nhở lịch sự / Xin phép tác giả"" hoặc nút đỏ ""Báo cáo nội dung xấu (Report)"".
++ Lớp 4 - 5 (Phòng chống Lừa đảo Phishing & Dấu chân số - Digital Footprint):
+* Tình huống: Tin nhắn trúng thưởng kim cương trong game yêu cầu bấm vào link lạ (gift-free-login.com); 
+bạn quen qua mạng rủ gặp mặt riêng ngoài đời; tài khoản mạo danh giáo viên xin mã OTP.
+* Quy tắc ứng xử: Phân tích dấu hiệu nhận biết link độc hại, bảo vệ danh tính số và thiết lập mật khẩu mạnh (Strong password).
+
+- Khả năng AI tích hợp:
++ AI Scenario Engine: Tự động bốc ngẫu nhiên tình huống từ kho dữ liệu đạo đức số và an toàn thông tin phù hợp với độ tuổi đã chọn.
++ AI Đưa ra lời khuyên cá nhân hóa sau mỗi quyết định: ""Bé nhớ nhé, mật khẩu giống như chìa khóa nhà, 
+tuyệt đối không đưa cho ai khác ngoài ba mẹ!""."

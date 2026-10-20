@@ -1,0 +1,30 @@
+Vệ sĩ nhí thông thái (Học an toàn số bằng hình ảnh & Giọng nói AI):
+
+- Giao diện không dùng chữ (Visual-First UI):
++ Trung tâm là tranh vẽ hoạt hình tình huống rõ nét (Ví dụ: Một người trùm mũ đen xin chìa khóa/mật khẩu; 
+hoặc người lạ chìa gói kẹo qua màn hình máy tính xin số điện thoại của ba mẹ).
++ Dưới tranh có Icon Loa tự phát âm thanh và 2 nút biểu tượng lớn: Lá chắn xanh (Đồng ý/An toàn) 
+và Bàn tay đỏ giơ lên (Từ chối/Nói KHÔNG). Ở giữa là nút Micro hình bạn Robot.
+
+- Core Gameplay (Nghe - Nhìn - Trả lời giọng nói):
+
+1. Bước 1 (Xem & Nghe): Trợ lý AI tự động đọc to câu hỏi bằng giọng hoạt hình ấm áp 
+(Ví dụ: ""Có một bạn gấu lạ nhắn tin hỏi: 'Bé ơi, nhà bé ở đâu, gửi ảnh phòng ngủ cho mình xem nhé!'. 
+Bé có nên gửi không nào?"").
+
+2. Bước 2 (Thao tác trả lời): Học sinh có thể bấm nhanh vào nút Bàn tay đỏ HOẶC nhấn giữ nút Micro 
+rồi nói to trực tiếp: ""Không được!"" / ""Nguy hiểm!"" / ""Cháu mách mẹ!"".
+
+3. Bước 3 (Phản hồi thị giác & âm thanh):
++ Trả lời đúng: Lá chắn bật sáng bao bọc lấy màn hình, kẻ xấu bị đẩy lùi kèm tiếng vỗ tay chúc mừng 
+""Ting ting!"". AI khen ngợi: ""Bé thông minh lắm! Thông tin nhà ở là bí mật, không được gửi cho người lạ nhé!"".
++ Trả lời sai (hoặc nói đồng ý): Màn hình rung nhẹ, cửa sổ hoạt hình đóng sập lại cảnh báo, 
+AI xuất hiện nhắc nhở nhẹ nhàng bằng giọng nói và chỉ tay vào hình minh họa ba mẹ.
+
+- Khả năng AI tích hợp:
++ Speech-to-Text & Intent Recognition: AI nhận diện các từ khóa khẩu ngữ tự nhiên của trẻ lớp 1–2 
+(""hổng được"", ""không"", ""mách mẹ"", ""sợ lắm"", ""từ chối""...) để chấm điểm chuẩn xác mà 
+không bắt buộc nói đúng 1 câu cố định.
+
++ Text-to-Speech truyền cảm: AI tự động lồng tiếng diễn hoạt câu chuyện theo ngữ điệu vui tươi, 
+dễ tiếp thu cho trẻ chưa thạo mặt chữ.

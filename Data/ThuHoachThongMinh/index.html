@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thu hoạch thông minh - AI Simulator</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Nhạc nền phát lặp lại xuyên suốt trò chơi -->
+    <audio id="bgmSound" src="media/nhacnen.m4a" loop preload="auto"></audio>
+
+    <!-- Nút bật/tắt nhạc nền -->
+    <button id="bgmToggle" class="sound-toggle" type="button" aria-label="Tắt nhạc nền" aria-pressed="false" title="Tắt nhạc nền">
+        <svg id="bgmIcon" class="sound-icon sound-icon-on" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M11 5 6 9H3v6h3l5 4V5Z"></path>
+            <path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"></path>
+        </svg>
+        <svg class="sound-icon sound-icon-off" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M11 5 6 9H3v6h3l5 4V5Z"></path>
+            <path d="m17 9 4 4m0-4-4 4"></path>
+        </svg>
+    </button>
+
+    <h1>🌾 Thu Hoạch Thông Minh</h1>
+    
+    <!-- Bảng thông số: Thời gian, Điểm số và Nút Reset -->
+    <div class="dashboard">
+    <div class="stat-box">⏱️ Thời gian: <span id="timer">00:00s</span></div>
+    <div class="stat-box">🏆 Điểm số: <span id="score">0</span></div>
+    
+    <!-- Thanh % Độ chính xác AI-->
+    <div class="stat-box ai-box">
+        Độ chính xác: <span id="aiAccuracy">0%</span>
+        <div class="ai-progress-bar">
+            <div class="ai-progress-fill" id="aiProgressFill"></div>
+        </div>
+    </div>
+
+    <button class="hint-btn" onclick="showHintModal()">💡 Gợi ý</button>
+    <button class="reset-btn" onclick="initGame()">🔄 Làm lại</button>
+</div>
+
+    <!-- Khu vực các giỏ thu hoạch -->
+    <div class="basket-container">
+        <div class="basket" data-category="Rau củ"><br>Giỏ Rau Củ</div>
+        <div class="basket" data-category="Động vật"><br>Giỏ Động Vật</div>
+        <div class="basket" data-category="Hoa"><br>Giỏ Hoa</div>
+    </div>
+
+    <!-- Khu vực chứa các thẻ cần phân loại -->
+    <div class="card-container" id="cardContainer">
+        <!-- Các thẻ sẽ được tự động sinh ra từ JS -->
+    </div>
+
+    <!-- Popup Hoàn Thành Trò Chơi 🏆 -->
+    <div id="victoryModal" class="modal">
+        <div class="modal-content">
+            <h2>🎉 Chúc Mừng Bạn! 🎉</h2>
+            <p>Bạn đã hoàn thành bài tập phân loại!</p>
+            <div class="modal-stats">
+                <p>⏱️ Thời gian: <span id="modalTime">00:00s</span></p>
+                <p>🏆 Tổng điểm của bạn: <span id="modalScore">0</span> điểm</p>
+                <p> Điểm tối đa: <span id="modalMaxScore">0</span> điểm</p>
+                <p> Độ chính xác: <span id="modalAIAccuracy">0%</span></p>
+                <p id="modalFeedback"></p>
+            </div>
+            <button id="playAgainBtn" class="reset-btn">🔄 Chơi lại</button>
+        </div>
+    </div>
+
+    <!-- Popup gợi ý chơi game -->
+    <div id="hintModal" class="modal">
+        <div class="modal-content">
+            <h2 class="hint-label">💡 Gợi ý</h2>
+            <p id="hintContent" class="hint-content"></p>
+            <h2 class="hint-label">Lưu ý</h2>
+            <p id="noteContent" class="hint-content"></p>
+            <button class="reset-btn" onclick="closeHintModal()">Đóng</button>
+        </div>
+    </div>
+    <script src="script.js" defer></script>
+</body>
+</html>

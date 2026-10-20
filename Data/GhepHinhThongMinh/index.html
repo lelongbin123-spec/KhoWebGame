@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghép Hình Thông Minh</title>
+    
+    <!-- Google Font: Nunito (Tròn trịa, rõ ràng, dễ đọc cho học sinh tiểu học) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="libs/fontawesome/css/all.min.css">
+    
+    <!-- CSS Tối Giản -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- THANH ĐIỀU KHIỂN TRÊN CÙNG -->
+        <header class="top-bar">
+            <!-- Trái: Tên trò chơi -->
+            <div class="header-left">
+                <h1 class="app-title">
+                    <i class="fa-solid fa-puzzle-piece"></i> Ghép Hình Thông Minh
+                </h1>
+                <p class="app-subtitle">Học tập vui vẻ với trò chơi ghép hình thông minh!</p>
+            </div>
+            <!-- Giữa: Đồng hồ đếm thời gian chơi -->
+            <div class="header-center game-timer-container">
+                <div class="game-timer-badge" id="game-timer-badge" title="Thời gian chơi">
+                    <i class="fa-regular fa-clock timer-icon"></i>
+                    <span class="timer-label">Thời gian:</span>
+                    <span class="timer-digits" id="header-timer-digits">00:00</span>
+                </div>
+            </div>
+
+            <!-- Phải: Nút điều khiển -->
+            <div class="header-right action-buttons">
+                <button id="btn-restart" class="btn-ctrl btn-restart" title="Chơi lại">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Chơi lại</span>
+                </button>
+                <button id="btn-sound" class="btn-ctrl btn-sound" title="Bật/Tắt âm thanh">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- KHÔNG GIAN CHƠI CHÍNH (3 CỘT RÕ RÀNG) -->
+        <main class="game-area">
+            <!-- 1. BÊN GÓC TRÁI: TRANH MẪU & AI TRỢ THỦ -->
+            <aside class="side-panel left-panel">
+                <!-- Tranh mẫu thu nhỏ -->
+                <div class="panel-card thumbnail-card">
+                    <div class="card-heading"><i class="fa-solid fa-image"></i> Tranh mẫu</div>
+                    <div class="thumb-frame">
+                        <img id="sample-thumbnail" src="assets/images/Pic1.png" alt="Tranh mẫu">
+                    </div>
+                </div>
+
+                <!-- Thẻ hiển thị Cấp độ hiện tại (không có nút chọn liên tục khi đang chơi) -->
+                <div class="panel-card current-level-card" id="current-level-card">
+                    <div class="card-heading"><i class="fa-solid fa-layer-group"></i> Cấp độ đang chơi</div>
+                    <div class="current-level-content" id="current-level-content">
+                        <div class="current-level-badge" id="current-level-badge">Dễ</div>
+                        <div class="current-level-info" id="current-level-info">4 mảnh ghép (2x2)</div>
+                    </div>
+                </div>
+
+                <!-- AI Trợ thủ thời gian -->
+                <div class="panel-card ai-card">
+                    <div class="card-heading"><i class="fa-solid fa-robot"></i> AI Gợi ý</div>
+                    <div class="ai-profile">
+                        <img id="robot-mascot-img" src="assets/images/Robot_happy.jpg" alt="AI Robot">
+                        <div class="ai-timer-badge" title="Đồng hồ gợi ý tự động">
+                            <i class="fa-regular fa-clock"></i>
+                            <span id="timer-seconds-text">10s</span>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-speech-bubble" id="ai-speech-bubble">
+                        <p id="ai-speech-text">Kéo mảnh ghép vào khung tranh nhé!</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 2. Ở GIỮA: KHUNG LẮP RÁP CÓ LƯỚI Ô BÓNG MỜ -->
+            <section class="center-panel">
+                <!-- THANH TIẾN ĐỘ NẰM TRÊN BỨC TRANH -->
+                <div class="board-progress" id="board-progress">
+                    <div class="progress-info">
+                        <span class="progress-title"><i class="fa-solid fa-star"></i> Tiến độ:</span>
+                        <span class="progress-counter" id="progress-counter">0/4 mảnh</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="puzzle-board" id="puzzle-board">
+                    <!-- Ảnh bóng mờ watermark bên dưới -->
+                    <div class="board-ghost-image" id="board-ghost-image"></div>
+                    
+                    <!-- Lưới các ô bóng mờ lắp ráp -->
+                    <div class="board-slots-grid" id="board-slots-grid"></div>
+
+                    <!-- Lớp chứa các mảnh đã ghép đúng -->
+                    <div class="board-placed-layer" id="board-placed-layer"></div>
+
+                    <!-- Tranh hoàn chỉnh khi chiến thắng -->
+                    <div class="board-complete-image" id="board-complete-image">
+                        <img id="board-complete-img" src="assets/images/Pic1.png" alt="Bức tranh hoàn chỉnh">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. BÊN PHẢI: KHAY CHỨA CÁC MẢNH GHÉP -->
+            <aside class="side-panel right-panel">
+                <div class="panel-card tray-card">
+                    <div class="card-heading"><i class="fa-solid fa-shapes"></i> Khay mảnh ghép</div>
+                    <div class="pieces-tray-grid" id="pieces-tray-grid"></div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- MÀN HÌNH CHỌN CẤP ĐỘ LÚC VÀO GAME (PHÓNG TO CÓ ROBOT) -->
+    <div class="modal-overlay level-select-overlay" id="modal-level-select">
+        <div class="level-select-dialog">
+            <div class="level-select-header">
+                <div class="level-select-robot-wrap">
+                    <img id="level-select-robot-img" src="assets/images/Robot_happy.jpg" alt="Robot Mascot">
+                </div>
+                <div class="level-select-title-box">
+                    <h2 class="level-select-title">🧩 Chọn cấp độ ghép hình</h2>
+                </div>
+            </div>
+
+            <!-- 3 Thẻ cấp độ to rõ ràng, bấm là vào chơi ngay -->
+            <div class="level-cards-grid" id="level-select-cards"></div>
+        </div>
+    </div>
+
+    <!-- HỘP THOẠI CHIẾN THẮNG & BẢNG TỔNG KẾT ĐIỂM -->
+    <div class="modal-overlay" id="modal-victory">
+        <div class="victory-dialog">
+            <h2 id="victory-heading">🎉 Bé Hoàn Thành Xuất Sắc!</h2>
+            
+            <!-- Xếp hạng 3 ngôi sao vàng -->
+            <div class="victory-stars" id="victory-stars">
+                <span class="star-item" data-index="1"><i class="fa-solid fa-star"></i></span>
+                <span class="star-item" data-index="2"><i class="fa-solid fa-star"></i></span>
+                <span class="star-item" data-index="3"><i class="fa-solid fa-star"></i></span>
+            </div>
+
+            <!-- Bức tranh hoàn thành -->
+            <div class="victory-image-frame">
+                <img id="victory-artwork-img" src="assets/images/Pic1.png" alt="Tranh chiến thắng">
+            </div>
+
+            <!-- Thẻ điểm số -->
+            <div class="victory-score-card">
+                <div class="score-main">
+                    <span class="score-label">TỔNG ĐIỂM</span>
+                    <span class="score-number" id="victory-total-score">0</span>
+                </div>
+            </div>
+
+            <!-- Thống kê chi tiết trận chơi -->
+            <div class="victory-stats-grid">
+                <div class="victory-stat-item">
+                    <i class="fa-regular fa-clock"></i>
+                    <div class="stat-text">
+                        <span class="v-label">Thời gian</span>
+                        <strong class="v-val" id="victory-stat-time">0 giây</strong>
+                    </div>
+                </div>
+                <div class="victory-stat-item">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <div class="stat-text">
+                        <span class="v-label">Chính xác</span>
+                        <strong class="v-val" id="victory-stat-accuracy">100%</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialog-actions">
+                <button id="btn-victory-replay" class="btn-dialog btn-replay">
+                    <i class="fa-solid fa-rotate-right"></i> Chơi lại
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Các script tính năng theo từng module -->
+    <script src="js/sound.js"></script>
+    <script src="js/storageManager.js"></script>
+    <script src="js/scoreManager.js"></script>
+    <script src="js/aiHelper.js"></script>
+    <script src="js/puzzle.js"></script>
+    <script src="js/dragdrop.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giải Mã Địa Danh - Mở Khóa Hải Đăng</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo-title">
+            <span class="eyebrow">BẢN ĐỒ NHIỆM VỤ · 05 TRẠM</span>
+            <h1>GIẢI MÃ ĐỊA DANH: HẢI ĐĂNG VIỆT NAM</h1>
+            <p>Thắp sáng những ngọn hải đăng trên dải đất hình chữ S</p>
+        </div>
+        <div class="header-stats">
+            <div class="score-board">
+                <span class="score-label">ĐIỂM</span>
+                <strong><span id="total-score">5</span><small>/5</small></strong>
+                <span class="progress-count"><span id="unlocked-count">0</span>/5 trạm</span>
+                <span class="score-icon">✦</span>
+            </div>
+            <div class="timer-board" role="timer" aria-label="Thời gian chơi">
+                <span class="score-label">THỜI GIAN</span>
+                <strong id="game-timer">00:00</strong>
+                <span class="timer-icon" aria-hidden="true">◷</span>
+            </div>
+            <button class="header-replay-button" id="header-replay-button" type="button" onclick="restartGame()" hidden>
+                <span class="score-label">VÁN MỚI</span>
+                <strong>Chơi lại <span aria-hidden="true">↻</span></strong>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <div class="main-container">
+        
+        <!-- MAP AREA -->
+        <div class="map-container">
+            <div class="map-stage">
+                <img class="map-image" src="Img/Bando1.png" alt="Bản đồ Việt Nam">
+            </div>
+        </div>
+
+        <!-- MODAL INTERACTION -->
+        <div class="modal-overlay" id="modal-overlay">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h2 id="modal-title">🧭 ĐỊA DANH BÍ ẨN</h2>
+                    <button class="close-btn" onclick="closeModal()">&times;</button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- DẠNG CÂU HỎI -->
+                    <div class="question-box" id="question-text">
+                        Hãy chọn một ngọn hải đăng trên bản đồ để tải câu hỏi và bắt đầu giải mã địa danh.
+                    </div>
+
+                    <!-- DANH SÁCH MẢNH GHÉP GỢI Ý -->
+                    <div class="hints-container">
+                        <div class="hint-card hidden" id="hint-1">
+                            💡 <b>Gợi ý 1:</b> <span id="hint-1-text">Gợi ý mặc định</span>
+                        </div>
+                        <div class="hint-card hidden" id="hint-2">
+                            💡 <b>Gợi ý 2:</b> <span></span>
+                        </div>
+                    </div>
+
+                    <div class="failure-badge" id="failure-badge">
+                        <h3>Trạm chưa được giải</h3>
+                        <p>Em đã hết lượt trả lời ở trạm này. Hãy tiếp tục khám phá các trạm khác nhé!</p>
+                    </div>
+
+                    <!-- AI FEEDBACK BOX -->
+                    <div class="ai-feedback" id="ai-feedback">
+                        <span id="ai-icon">🤖</span>
+                        <div id="ai-message">AI đang sẵn sàng hỗ trợ bạn.</div>
+                    </div>
+
+                    <!-- Ô NHẬP ĐÁP ÁN -->
+                    <div class="input-group" id="input-container">
+                        <input type="text" class="answer-input" id="answer-input" placeholder="Nhập tên địa danh..." onkeypress="handleKeyPress(event)">
+                        <button class="submit-btn" onclick="submitAnswer()">Gửi</button>
+                    </div>
+
+                    <!-- VICTORY STATE -->
+                    <div class="victory-badge" id="victory-badge">
+                        <h3>🌟 TRẠM HẢI ĐĂNG ĐÃ PHÁT SÁNG!</h3>
+                        <p>Chúc mừng bạn đã giải mã chính xác địa danh này!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <section class="end-game-overlay" id="end-game-overlay" aria-hidden="true">
+        <div class="end-game-card" role="dialog" aria-modal="true" aria-labelledby="end-game-title">
+            <span class="end-game-icon" aria-hidden="true">🌟</span>
+            <p class="end-game-eyebrow" id="end-game-eyebrow">NHIỆM VỤ HOÀN THÀNH</p>
+            <h2 id="end-game-title">Tất cả hải đăng đã sáng!</h2>
+            <p class="end-game-message" id="end-game-message">Chúc mừng em đã giải mã thành công cả 5 địa danh Việt Nam.</p>
+            <div class="final-score">
+                <span>ĐIỂM CỦA EM</span>
+                <strong id="final-score">5/5</strong>
+            </div>
+            <div class="final-time">
+                <span>THỜI GIAN HOÀN THÀNH</span>
+                <strong id="final-time">00:00</strong>
+            </div>
+            <div class="end-game-actions">
+                <button class="end-game-button secondary" type="button" onclick="closeEndGame()">Xem lại bản đồ</button>
+                <button class="end-game-button" type="button" onclick="restartGame()">Chơi lại</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

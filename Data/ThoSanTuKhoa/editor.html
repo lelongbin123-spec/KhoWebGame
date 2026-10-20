@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor – Thợ Săn Từ Khóa</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── SIDEBAR ── */
+        #sidebar {
+            width: 300px;
+            min-width: 260px;
+            background: #16213e;
+            border-right: 2px solid #0f3460;
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            gap: 14px;
+            overflow-y: auto;
+        }
+
+        #sidebar h1 {
+            font-size: 15px;
+            color: #e94560;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #0f3460;
+            padding-bottom: 10px;
+        }
+
+        .panel {
+            background: #0f3460;
+            border-radius: 10px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .panel h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a0aec0;
+        }
+
+        label { font-size: 12px; color: #cbd5e0; }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            background: #1a1a2e;
+            border: 1px solid #4a5568;
+            border-radius: 6px;
+            color: #fff;
+            padding: 6px 10px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus, input[type="number"]:focus { border-color: #e94560; }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 9px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            justify-content: center;
+            text-align: center;
+        }
+        .btn:hover { opacity: 0.85; }
+        .btn:active { transform: scale(0.97); }
+
+        .btn-primary { background: #e94560; color: #fff; }
+        .btn-success { background: #38a169; color: #fff; }
+        .btn-info    { background: #3182ce; color: #fff; }
+        .btn-danger  { background: #c53030; color: #fff; }
+        .btn-ghost   { background: #2d3748; color: #e2e8f0; }
+        .btn-warning { background: #dd6b20; color: #fff; }
+
+        /* Item list */
+        #item-list { display: flex; flex-direction: column; gap: 6px; }
+
+        .item-row {
+            background: #1a1a2e;
+            border: 1px solid #2d3748;
+            border-radius: 8px;
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            font-size: 12px;
+        }
+        .item-row:hover { border-color: #e94560; }
+        .item-row.selected { border-color: #e94560; background: #2d1b2e; }
+
+        .item-row img {
+            width: 32px; height: 32px;
+            object-fit: contain;
+            border-radius: 4px;
+            background: #2d3748;
+        }
+        .item-row span { flex: 1; font-weight: 600; }
+        .item-row .del-btn {
+            background: none;
+            border: none;
+            color: #c53030;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        .item-row .del-btn:hover { background: #c53030; color: #fff; }
+
+        /* Props panel */
+        .prop-row { display: flex; flex-direction: column; gap: 4px; }
+        .prop-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+        /* Hint */
+        .hint { font-size: 11px; color: #718096; background: #1a1a2e; border-radius: 6px; padding: 7px 9px; }
+
+        /* ── CANVAS AREA ── */
+        #main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #toolbar {
+            background: #16213e;
+            border-bottom: 2px solid #0f3460;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        #toolbar span { font-size: 12px; color: #a0aec0; }
+        #bg-label { font-size: 12px; color: #68d391; }
+
+        #canvas-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        #bg-img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Draggable items on canvas */
+        .canvas-item {
+            position: absolute;
+            cursor: grab;
+            border: 2px dashed transparent;
+            border-radius: 4px;
+            transition: border-color 0.15s;
+            user-select: none;
+        }
+        .canvas-item:hover { border-color: rgba(233,69,96,0.6); }
+        .canvas-item.selected { border-color: #e94560 !important; border-style: solid; }
+
+        .canvas-item img {
+            width: 100%; height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+            display: block;
+        }
+
+        /* Resize handle */
+        .resize-handle {
+            position: absolute;
+            right: -5px; bottom: -5px;
+            width: 12px; height: 12px;
+            background: #e94560;
+            border-radius: 50%;
+            cursor: nwse-resize;
+            border: 2px solid #fff;
+        }
+
+        /* Label on canvas item */
+        .item-label {
+            position: absolute;
+            top: -22px; left: 0;
+            background: #e94560;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px 4px 0 0;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            background: #38a169;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        #toast.show { opacity: 1; transform: translateY(0); }
+        #toast.error { background: #c53030; }
+
+        /* Info bar */
+        #info-bar {
+            background: #0f3460;
+            border-top: 1px solid #1a1a2e;
+            padding: 5px 16px;
+            font-size: 11px;
+            color: #718096;
+            display: flex;
+            gap: 20px;
+        }
+        #info-bar span b { color: #a0aec0; }
+
+        .badge {
+            background: #e94560;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════ SIDEBAR ════════ -->
+<div id="sidebar">
+    <h1>Game Object Editor</h1>
+
+    <!-- Nền -->
+    <div class="panel">
+        <h3>Hình nền</h3>
+        <label>Chọn file BG.png</label>
+        <input type="file" id="bg-upload" accept="image/*" style="font-size:12px;color:#cbd5e0;">
+    </div>
+
+    <!-- Thêm ảnh -->
+    <div class="panel">
+        <h3>Thêm đồ vật</h3>
+        <div class="prop-row">
+            <label>Tên từ khóa (word)</label>
+            <input type="text" id="new-word" placeholder="vd: clock" />
+        </div>
+        <div class="prop-row">
+            <label>Chọn ảnh từ máy tính</label>
+            <input type="file" id="img-upload" accept="image/*" style="font-size:12px;color:#cbd5e0;">
+        </div>
+        <div class="hint">⚠️ Ảnh được lưu theo đường dẫn <b>assets/images/&lt;tên file&gt;</b>. Hãy copy ảnh vào thư mục đó trước.</div>
+        <button class="btn btn-primary" onclick="addItem()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Thêm đồ vật
+        </button>
+    </div>
+
+    <!-- Danh sách -->
+    <div class="panel" style="flex:1;min-height:0;overflow-y:auto;">
+        <h3>Danh sách đồ vật <span class="badge" id="count-badge">0</span></h3>
+        <div id="item-list">
+            <div class="hint">Chưa có đồ vật nào.</div>
+        </div>
+    </div>
+
+    <!-- Thuộc tính đã chọn -->
+    <div class="panel" id="props-panel" style="display:none;">
+        <h3>Thuộc tính đã chọn</h3>
+        <div class="prop-row">
+            <label>Từ khóa (word)</label>
+            <input type="text" id="prop-word" oninput="updateSelectedProp('word', this.value)">
+        </div>
+        <div class="prop-dual">
+            <div class="prop-row">
+                <label>Rộng (px)</label>
+                <input type="number" id="prop-w" min="20" oninput="updateSelectedProp('width', +this.value)">
+            </div>
+            <div class="prop-row">
+                <label>Cao (px)</label>
+                <input type="number" id="prop-h" min="20" oninput="updateSelectedProp('height', +this.value)">
+            </div>
+        </div>
+        <div class="prop-dual">
+            <div class="prop-row">
+                <label>X% màn hình</label>
+                <input type="number" id="prop-x" min="0" max="100" step="0.1" oninput="updateSelectedProp('x_percent', +this.value)">
+            </div>
+            <div class="prop-row">
+                <label>Y% màn hình</label>
+                <input type="number" id="prop-y" min="0" max="100" step="0.1" oninput="updateSelectedProp('y_percent', +this.value)">
+            </div>
+        </div>
+        <button class="btn btn-danger" onclick="deleteSelected()" style="margin-top:4px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+            Xóa đồ vật này
+        </button>
+    </div>
+
+    <!-- Import/Export -->
+    <div class="panel">
+        <h3>Import / Export JSON</h3>
+        <button class="btn btn-info" onclick="importJSON()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Import data
+        </button>
+        <button class="btn btn-success" onclick="exportJSON()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"/><polyline points="7 14 12 9 17 14"/><line x1="12" y1="9" x2="12" y2="21"/></svg>
+            Export ra data
+        </button>
+        <div class="hint">💾 Bấm Export → hộp thoại <b>Save As</b> mở ra, điều hướng tới thư mục <b>data/</b> của dự án rồi bấm Save để lưu thẳng vào đó.</div>
+    </div>
+</div>
+
+<!-- ════════ MAIN CANVAS ════════ -->
+<div id="main">
+    <div id="toolbar">
+        <span id="bg-label">📷 Nền: mặc định (BG.png)</span>
+        <span>|</span>
+        <span>💡 <b>Click</b> để chọn · <b>Kéo</b> để di chuyển · <b>● góc phải dưới</b> để resize</span>
+        <button class="btn btn-ghost" style="margin-left:auto; font-size:12px; padding:5px 12px;" onclick="clearSelection()">Bỏ chọn</button>
+    </div>
+    <div id="canvas-container" onclick="onCanvasClick(event)">
+        <img id="bg-img" src="assets/images/BG.png" alt="Background" onerror="this.style.background='#4fc3f7'">
+    </div>
+    <div id="info-bar">
+        <span><b>Vị trí con trỏ:</b> <span id="cursor-pos">–</span></span>
+        <span><b>Đã chọn:</b> <span id="selected-info">–</span></span>
+        <span><b>Tổng đồ vật:</b> <span id="total-info">0</span></span>
+    </div>
+</div>
+
+<div id="toast">✅ Đã sao chép!</div>
+
+<input type="file" id="json-file-input" accept=".json" style="display:none" onchange="handleJSONImport(event)">
+
+<script>
+// ═══════════════════════════════════════════════
+// TRẠNG THÁI (STATE)
+// ═══════════════════════════════════════════════
+let items = [];       // Danh sách các đồ vật: { word, width, height, src, x_percent, y_percent, el }
+let selectedId = null; // ID của đồ vật đang được chọn trên màn hình
+let existingJSON = null; // Lưu toàn bộ dữ liệu JSON cũ để gộp lại khi export (tránh mất dữ liệu khác)
+
+const container = document.getElementById('canvas-container');
+
+// ═══════════════════════════════════════════════
+// THEO DÕI VỊ TRÍ CHUỘT (CURSOR TRACKING)
+// ═══════════════════════════════════════════════
+// Lắng nghe sự kiện di chuyển chuột để hiển thị tọa độ % hiện tại
+container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    const xPct = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+    const yPct = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+    document.getElementById('cursor-pos').textContent = `X: ${xPct}%  Y: ${yPct}%`;
+});
+
+// ═══════════════════════════════════════════════
+// TẢI ẢNH NỀN LÊN (BACKGROUND UPLOAD)
+// ═══════════════════════════════════════════════
+// Xử lý khi người dùng chọn một file ảnh nền mới từ máy tính
+document.getElementById('bg-upload').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    document.getElementById('bg-img').src = url; // Đổi ảnh nền hiển thị
+    document.getElementById('bg-label').textContent = `📷 Nền: ${file.name}`;
+});
+
+// ═══════════════════════════════════════════════
+// THÊM ĐỒ VẬT MỚI (ADD ITEM)
+// ═══════════════════════════════════════════════
+function addItem() {
+    const word = document.getElementById('new-word').value.trim().toLowerCase();
+    const fileInput = document.getElementById('img-upload');
+    const file = fileInput.files[0];
+
+    // Kiểm tra tính hợp lệ
+    if (!word) { showToast('Vui lòng nhập tên từ khóa!', true); return; }
+    if (!file) { showToast('Vui lòng chọn ảnh!', true); return; }
+
+    const blobUrl = URL.createObjectURL(file);
+    // Lưu ý: Đường dẫn tương đối khi lưu ra data.json, mặc định nằm trong assets/images/
+    const relSrc  = `assets/images/${file.name}`;
+
+    // Khởi tạo đối tượng đồ vật mới
+    const item = {
+        id: Date.now(),
+        word,
+        src: relSrc,
+        blobUrl,
+        width: 150,
+        height: 150,
+        x_percent: 50,
+        y_percent: 50
+    };
+
+    items.push(item);
+    createCanvasElement(item); // Tạo thẻ HTML trên canvas
+    renderSidebar();           // Cập nhật lại danh sách ở thanh bên (sidebar)
+
+    // Reset các ô nhập liệu
+    document.getElementById('new-word').value = '';
+    fileInput.value = '';
+    selectItem(item.id);
+    showToast(`✅ Đã thêm "${word}"`);
+}
+
+// ═══════════════════════════════════════════════
+// TẠO PHẦN TỬ TRÊN KHUNG VẼ (CREATE CANVAS ELEMENT)
+// ═══════════════════════════════════════════════
+function createCanvasElement(item) {
+    const rect = container.getBoundingClientRect();
+
+    const el = document.createElement('div');
+    el.className = 'canvas-item';
+    el.dataset.id = item.id;
+
+    // Label
+    const label = document.createElement('div');
+    label.className = 'item-label';
+    label.textContent = item.word.toUpperCase();
+
+    // Image
+    const img = document.createElement('img');
+    img.src = item.blobUrl || item.src;
+    img.draggable = false;
+
+    // Resize handle
+    const handle = document.createElement('div');
+    handle.className = 'resize-handle';
+
+    el.appendChild(label);
+    el.appendChild(img);
+    el.appendChild(handle);
+    container.appendChild(el);
+
+    item.el = el;
+
+    // Set initial position & size
+    positionElement(item);
+
+    // ── DRAG ──
+    let dragging = false, ox = 0, oy = 0;
+
+    el.addEventListener('mousedown', (e) => {
+        if (e.target === handle) return;
+        e.stopPropagation();
+        selectItem(item.id);
+        dragging = true;
+        const elRect = el.getBoundingClientRect();
+        const cRect  = container.getBoundingClientRect();
+        ox = e.clientX - elRect.left;
+        oy = e.clientY - elRect.top;
+        el.style.cursor = 'grabbing';
+        document.body.style.userSelect = 'none';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!dragging) return;
+        const cRect = container.getBoundingClientRect();
+        let nx = e.clientX - cRect.left - ox;
+        let ny = e.clientY - cRect.top  - oy;
+        nx = Math.max(0, Math.min(nx, cRect.width  - item.width));
+        ny = Math.max(0, Math.min(ny, cRect.height - item.height));
+        item.x_percent = +(nx / cRect.width  * 100).toFixed(2);
+        item.y_percent = +(ny / cRect.height * 100).toFixed(2);
+        el.style.left = nx + 'px';
+        el.style.top  = ny + 'px';
+        updatePropsUI();
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (dragging) {
+            dragging = false;
+            el.style.cursor = 'grab';
+            document.body.style.userSelect = '';
+        }
+    });
+
+    // ── RESIZE ──
+    let resizing = false, rox = 0, roy = 0, initW = 0, initH = 0;
+
+    handle.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+        resizing = true;
+        rox = e.clientX; roy = e.clientY;
+        initW = item.width; initH = item.height;
+        document.body.style.userSelect = 'none';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!resizing) return;
+        const dx = e.clientX - rox;
+        const dy = e.clientY - roy;
+        item.width  = Math.max(30, initW + dx);
+        item.height = Math.max(30, initH + dy);
+        el.style.width  = item.width  + 'px';
+        el.style.height = item.height + 'px';
+        updatePropsUI();
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (resizing) { resizing = false; document.body.style.userSelect = ''; }
+    });
+}
+
+function positionElement(item) {
+    const rect = container.getBoundingClientRect();
+    const w = rect.width  || window.innerWidth - 300;
+    const h = rect.height || window.innerHeight - 80;
+    item.el.style.left   = (item.x_percent / 100 * w) + 'px';
+    item.el.style.top    = (item.y_percent / 100 * h) + 'px';
+    item.el.style.width  = item.width  + 'px';
+    item.el.style.height = item.height + 'px';
+}
+
+// ═══════════════════════════════════════════════
+// CHỌN ĐỒ VẬT (SELECT)
+// ═══════════════════════════════════════════════
+function selectItem(id) {
+    selectedId = id;
+    document.querySelectorAll('.canvas-item').forEach(el => el.classList.remove('selected'));
+    document.querySelectorAll('.item-row').forEach(r => r.classList.remove('selected'));
+    const item = items.find(i => i.id === id);
+    if (item) {
+        item.el.classList.add('selected');
+        document.querySelector(`.item-row[data-id="${id}"]`)?.classList.add('selected');
+        document.getElementById('props-panel').style.display = 'flex';
+        updatePropsUI();
+        document.getElementById('selected-info').textContent = `"${item.word}" (${item.width}×${item.height})`;
+    }
+}
+
+function clearSelection() {
+    selectedId = null;
+    document.querySelectorAll('.canvas-item').forEach(el => el.classList.remove('selected'));
+    document.querySelectorAll('.item-row').forEach(r => r.classList.remove('selected'));
+    document.getElementById('props-panel').style.display = 'none';
+    document.getElementById('selected-info').textContent = '–';
+}
+
+function onCanvasClick(e) {
+    if (e.target === container || e.target === document.getElementById('bg-img')) {
+        clearSelection();
+    }
+}
+
+// ═══════════════════════════════════════════════
+// GIAO DIỆN THUỘC TÍNH (PROPS UI)
+// ═══════════════════════════════════════════════
+function updatePropsUI() {
+    const item = items.find(i => i.id === selectedId);
+    if (!item) return;
+    document.getElementById('prop-word').value = item.word;
+    document.getElementById('prop-w').value    = item.width;
+    document.getElementById('prop-h').value    = item.height;
+    document.getElementById('prop-x').value    = item.x_percent.toFixed(1);
+    document.getElementById('prop-y').value    = item.y_percent.toFixed(1);
+    document.getElementById('selected-info').textContent = `"${item.word}" (${Math.round(item.width)}×${Math.round(item.height)})`;
+}
+
+function updateSelectedProp(key, value) {
+    const item = items.find(i => i.id === selectedId);
+    if (!item) return;
+    item[key] = value;
+    if (['width','height','x_percent','y_percent'].includes(key)) positionElement(item);
+    if (key === 'word') {
+        const label = item.el.querySelector('.item-label');
+        if (label) label.textContent = value.toUpperCase();
+        renderSidebar();
+    }
+}
+
+// ═══════════════════════════════════════════════
+// XÓA ĐỒ VẬT (DELETE)
+// ═══════════════════════════════════════════════
+function deleteItem(id) {
+    const idx = items.findIndex(i => i.id === id);
+    if (idx === -1) return;
+    items[idx].el.remove();
+    items.splice(idx, 1);
+    if (selectedId === id) clearSelection();
+    renderSidebar();
+    showToast('🗑️ Đã xóa đồ vật');
+}
+
+function deleteSelected() { if (selectedId) deleteItem(selectedId); }
+
+// ═══════════════════════════════════════════════
+// CẬP NHẬT GIAO DIỆN CỘT TRÁI (SIDEBAR RENDER)
+// ═══════════════════════════════════════════════
+function renderSidebar() {
+    const list = document.getElementById('item-list');
+    document.getElementById('count-badge').textContent = items.length;
+    document.getElementById('total-info').textContent  = items.length;
+
+    if (items.length === 0) {
+        list.innerHTML = '<div class="hint">Chưa có đồ vật nào.</div>';
+        return;
+    }
+
+    list.innerHTML = items.map(item => `
+        <div class="item-row${selectedId === item.id ? ' selected' : ''}" data-id="${item.id}" onclick="selectItem(${item.id})">
+            <img src="${item.blobUrl || item.src}" alt="">
+            <span>${item.word}</span>
+            <small style="color:#718096;">${Math.round(item.width)}×${Math.round(item.height)}</small>
+            <button class="del-btn" onclick="event.stopPropagation();deleteItem(${item.id})">✕</button>
+        </div>
+    `).join('');
+}
+
+// ═══════════════════════════════════════════════
+// TẢI FILE DỮ LIỆU LÊN (IMPORT JSON)
+// ═══════════════════════════════════════════════
+function importJSON() {
+    document.getElementById('json-file-input').click();
+}
+
+function handleJSONImport(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+        try {
+            const json = JSON.parse(ev.target.result);
+            existingJSON = json;
+
+            // Clear canvas
+            items.forEach(i => i.el && i.el.remove());
+            items = [];
+
+            const objectList = json.objects || json.data || [];
+            objectList.forEach((obj, idx) => {
+                const item = {
+                    id: Date.now() + idx,
+                    word: obj.word || '',
+                    src: obj.imgSrc || obj.src || '',
+                    blobUrl: null,
+                    width:  obj.width  || 150,
+                    height: obj.height || 150,
+                    x_percent: obj.x_percent ?? 20,
+                    y_percent: obj.y_percent ?? 20
+                };
+                items.push(item);
+                createCanvasElement(item);
+            });
+
+            renderSidebar();
+            showToast(`📂 Đã import ${items.length} đồ vật`);
+        } catch (err) {
+            showToast('❌ File JSON không hợp lệ!', true);
+        }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+}
+
+// ═══════════════════════════════════════════════
+// XUẤT RA FILE (EXPORT JSON)
+// ═══════════════════════════════════════════════
+async function exportJSON() {
+    const rect = container.getBoundingClientRect();
+    const editorW = rect.width;
+    const editorH = rect.height;
+
+    const objectList = items.map(item => ({
+        word:      item.word,
+        width:     Math.round(item.width),
+        height:    Math.round(item.height),
+        src:       item.src,
+        x_percent: +item.x_percent.toFixed(2),
+        y_percent: +item.y_percent.toFixed(2)
+    }));
+
+    // Merge với JSON gốc nếu có, giữ các field khác (robot_dialog, v.v.)
+    const base = existingJSON
+        ? { ...existingJSON }
+        : {
+            Id: 1,
+            type: "Thợ Săn Từ Khóa",
+            Text: "Tìm đồ vật theo từ khóa AI Vision",
+            src: "assets/images/BG.png",
+            ai_hint_time: 10,
+            robot_dialog: {
+                wrong_item: "Đó là \"{clicked}\". Hãy tìm \"{target}\"!",
+                wrong_background: "Sai rồi! Không có gì ở đó cả. Tìm lại nhé!",
+                game_complete: "Tuyệt vời! Bạn đã hoàn thành xuất sắc!",
+                next_question: "Hãy tìm cho tôi đồ vật \"{target}\" nhé!",
+                correct_click: "Tuyệt vời! Bạn đã tìm đúng rồi!",
+                already_found: "Bạn đã tìm thấy \"{clicked}\" rồi mà!",
+                hint: "Gợi ý: Tìm đồ vật \"{target}\" ở quanh khu vực được phóng to nhé!"
+            }
+        };
+
+    const output = {
+        ...base,
+        editor_canvas_width:  Math.round(editorW),
+        editor_canvas_height: Math.round(editorH),
+        data: objectList
+    };
+
+    const jsonStr = JSON.stringify(output, null, 4);
+
+    // ── Thử dùng File System Access API (Chrome/Edge) ──
+    if (window.showSaveFilePicker) {
+        try {
+            const fileHandle = await window.showSaveFilePicker({
+                suggestedName: 'data.json',
+                startIn: 'downloads',        // gợi ý vị trí ban đầu
+                types: [{
+                    description: 'JSON File',
+                    accept: { 'application/json': ['.json'] }
+                }]
+            });
+            const writable = await fileHandle.createWritable();
+            await writable.write(jsonStr);
+            await writable.close();
+            showToast(`✅ Đã lưu ${items.length} đồ vật vào data.json!`);
+            return;
+        } catch (err) {
+            // Người dùng bấm Cancel → không làm gì
+            if (err.name === 'AbortError') return;
+            // Lỗi khác → fallback về download
+            console.warn('showSaveFilePicker thất bại, fallback download:', err);
+        }
+    }
+
+    // ── Fallback: tải xuống thông thường ──
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'data.json';
+    a.click();
+    showToast(`✅ Đã export ${items.length} đồ vật ra data.json!`);
+}
+
+// ═══════════════════════════════════════════════
+// THÔNG BÁO GÓC MÀN HÌNH (TOAST)
+// ═══════════════════════════════════════════════
+let toastTimer;
+function showToast(msg, isError = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'show' + (isError ? ' error' : '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.className = ''; }, 2500);
+}
+
+// ═══════════════════════════════════════════════
+// CẬP NHẬT LẠI VỊ TRÍ KHI THAY ĐỔI KÍCH THƯỚC CỬA SỔ (REPOSITION ON WINDOW RESIZE)
+// ═══════════════════════════════════════════════
+window.addEventListener('resize', () => {
+    items.forEach(item => positionElement(item));
+});
+</script>
+</body>
+</html>

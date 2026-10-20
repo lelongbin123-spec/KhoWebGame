@@ -1,0 +1,45 @@
+"- Đối tượng Lớp 1 - 5
+- Rèn luyện khả năng quan sát chi tiết và thao tác rê - trỏ chuột
+- Tích hợp: Tiếng Anh (học từ vựng qua ngữ cảnh không gian thực tế)."	
+"Thợ săn từ khóa (Tìm đồ vật theo từ khóa AI Vision):
+- Bối cảnh & Giao diện: Bức tranh toàn cảnh nhiều chi tiết (phòng học, sở thú, công viên...). 
+Bên dưới hiển thị các ô từ khóa tiếng Anh (ví dụ: Book, Clock, Apple, Chair).
+- Core Gameplay:
++ Học sinh đọc từ vựng hoặc nghe AI đọc gợi ý, sau đó rê chuột tìm đồ vật tương ứng trong tranh 
+và nhấp chuột trái vào đồ vật đó.
++ Nhấp đúng: Đồ vật viền sáng, phóng to nhẹ kèm âm thanh chúc mừng và từ vựng bay vào ô hoàn thành.
++ Nhấp sai: Vòng tròn đỏ rung nhẹ tại điểm nhấp chuột.
+- Khả năng AI tích hợp:
++ AI Định vị & Thị giác máy (Object Segmentation): AI gắn bounding box nhận diện hàng chục vật thể nhỏ trong cùng tranh lớn, 
+hỗ trợ chấm điểm click chính xác.
++ AI phát âm gợi ý: Khi học sinh rê chuột lên ô chữ cái, AI đọc to phát âm; nếu học sinh không tìm thấy sau 10 giây, 
+AI thu hẹp vùng camera tìm kiếm (zoom in) về khu vực quanh đồ vật đó."
+
+
+Updata:
+- UI:
+    Full screen
+    zoom hình vật thể và center
+    bỏ box từ vựng
+    thêm button Bắt đầu -> hiện icon con trỏ chuột re theo -> khi bấm vào vật thể tạo hiệu ứng click
+- Core Gameplay:
+    thêm robot hiện popup yêu cầu chọn vật thể
+    Check đúng hiện robot_happy và popup chúc mừng
+    check sau hiện robot_buon và popup sai rồi
+
+- effect:
+    hiệu ứng bodder box image
+    hiệu ứng check đúng, sai
+
+Update tính điểm số:
+- UI:
+    đồng hồ đếm ngược thời gian thực hiện 60s ở giữa thanh header
+    màn hình end thông báo hoàn thành, thời gian hoàn thành, số vật thể đã tìm thấy
+- công thức:
+    nếu tìm thấy tất cả các vật thể không hơn 60s thì thì được điểm tối đa
+    nếu hết thời gian tìm game tự end và tính điểm bằng số vật tìm thấy/tổng số vật thể cần Tìm
+
+phân tích ngoài game
+- tính năng upload hình ảnh từ thư mục vào game
+- kéo thả và điều chỉnh được kích thước và vị trí tấm ảnh
+- export dữ liệu kích thước vị trí ảnh ra thẻ data file data.json

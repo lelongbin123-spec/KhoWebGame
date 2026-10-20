@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trạm Không Gian Từ Khóa</title>
+    <!-- Google Fonts: Montserrat (Hỗ trợ 100% Tiếng Việt có dấu, chuẩn Sci-Fi hiện đại) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome cho các icon (Offline cục bộ) -->
+    <link rel="stylesheet" href="libs/fontawesome/css/all.min.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Top bar (Chỉ số) -->
+        <header class="top-bar">
+            <!-- Left: Tên game & Nhiệm vụ -->
+            <div class="header-left">
+                <div class="game-logo">
+                    <span class="game-title">Trạm Không Gian Từ Khóa</span>
+                </div>
+                <div class="mission-badge">
+                    <span class="mission">NHIỆM VỤ: 01</span>
+                </div>
+            </div>
+
+            <!-- Center: Trạng thái người chơi (Căn giữa tuyệt đối) -->
+            <div class="header-center">
+                <div class="hud-pill lives-pill">
+                    <div class="lives" id="lives-container">
+                        <i class="fa-solid fa-heart"></i>
+                        <i class="fa-solid fa-heart"></i>
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                </div>
+                <div class="hud-pill score-pill">
+                    <i class="fa-solid fa-star score-icon"></i>
+                    <span class="score" id="score-text">0 XP</span>
+                </div>
+            </div>
+
+            <!-- Right: Nút điều khiển -->
+            <div class="header-right">
+                <button class="reset-btn" id="reset-btn" title="Chơi lại từ đầu">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Chơi lại</span>
+                </button>
+                <button class="sound-toggle-btn sound-toggle" title="Bật/Tắt âm thanh">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Prompt Area (Yêu cầu nhiệm vụ) -->
+        <section class="prompt-area">
+            <img src="assets/images/Robot_happy.jpg" alt="AI Robot" class="bot-icon">
+            <div class="prompt-text">"Hãy tìm các từ chỉ hành động di chuyển của con người"</div>
+        </section>
+
+        <!-- Main Game Area (Không gian / Radar) -->
+        <main class="game-area">
+            <!-- Bầu trời sao lấp lánh (Starfield) -->
+            <div id="stars-field"></div>
+
+            <!-- Floating Keywords (Các từ khóa bay lơ lửng sẽ được render bằng JS) -->
+            <div id="keywords-container"></div>
+
+            <!-- Radar và Vùng quét -->
+            <div class="radar-center">
+                <div class="radar-text">RADAR</div>
+                <!-- Hiệu ứng tia quét ngang nằm đè hoặc dưới radar -->
+                <div class="radar-scan-wrapper">
+                    <div class="radar-scan-zone">
+                        <div class="scan-line"></div>
+                    </div>
+                </div>
+                <!-- Khớp nối đường viền thấu kính phát xạ giữa radar và tia quét -->
+                <div class="radar-emitter-joint"></div>
+            </div>
+        </main>
+
+        <!-- Bottom UI (Menu điều khiển dưới) -->
+        <footer class="bottom-bar">
+            <!-- Khu vực Tìm kiếm gõ từ khóa -->
+            <div class="search-wrapper">
+                <label for="search-input" class="search-label">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i> TÌM KIẾM:
+                </label>
+                <input type="text" class="search-input" id="search-input" placeholder="Nhập từ khóa..." autocomplete="off">
+            </div>
+
+            <!-- Nút Mindmap -->
+            <div class="mindmap-wrapper">
+                <button class="mindmap-btn" id="open-mindmap">
+                    <i class="fa-solid fa-network-wired"></i> MINDMAP
+                </button>
+                <div class="mindmap-label"></div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Mindmap Modal -->
+    <div id="mindmap-modal" class="modal-overlay hidden">
+        <div class="modal-content mindmap-content">
+            <button class="close-btn" id="close-mindmap"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-title"><i class="fa-solid fa-network-wired"></i> SƠ ĐỒ TƯ DUY</h2>
+            <div id="mindmap-container">
+                <!-- Nội dung mindmap sẽ được render ở đây -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Endgame Modal (Màn kết thúc: Hoàn thành nhiệm vụ / Hết lượt) -->
+    <div id="endgame-modal" class="modal-overlay hidden">
+        <div class="modal-content endgame-content">
+            <h2 class="modal-title endgame-title" id="endgame-title">NHIỆM VỤ HOÀN THÀNH!</h2>
+            <p class="endgame-subtitle" id="endgame-subtitle">Bạn đã giải mã xuất sắc toàn bộ Trạm Không Gian Từ Khóa!</p>
+
+            <!-- Khung thống kê điểm số & sao -->
+            <div class="endgame-stats">
+                <div class="endgame-stars" id="endgame-stars">
+                    <i class="fa-solid fa-star star-filled"></i>
+                    <i class="fa-solid fa-star star-filled"></i>
+                    <i class="fa-solid fa-star star-filled"></i>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label"><i class="fa-solid fa-star"></i> TỔNG ĐIỂM</div>
+                        <div class="stat-value" id="endgame-score">0 XP</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label"><i class="fa-solid fa-heart"></i> LƯỢT CÒN LẠI</div>
+                        <div class="stat-value" id="endgame-lives">3 / 3</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label"><i class="fa-solid fa-gem"></i> TỪ THU THẬP</div>
+                        <div class="stat-value" id="endgame-keywords">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Các nút hành động -->
+            <div class="endgame-actions">
+                <button class="endgame-btn restart-btn" id="endgame-restart-btn">
+                    <i class="fa-solid fa-rotate-right"></i> CHƠI LẠI
+                </button>
+                <button class="endgame-btn view-mindmap-btn" id="endgame-mindmap-btn">
+                    <i class="fa-solid fa-network-wired"></i> XEM MINDMAP
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/sound.js"></script>
+    <script src="js/keyword.js"></script>
+    <script src="js/question.js"></script>
+    <script src="js/radar.js"></script>
+    <script src="js/mindmap.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

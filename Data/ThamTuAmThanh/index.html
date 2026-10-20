@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thám tử âm thanh</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Thư viện AI Google Teachable Machine Audio (chạy Offline 100% không cần Internet) -->
+  <script src="libs/tf.min.js"></script>
+  <script src="libs/speech-commands.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <main class="app-shell">
+    <!-- Thanh trên cùng -->
+    <header class="topbar">
+      <a class="brand" href="#" id="homeBtn" aria-label="Về màn hình chính">
+        <span class="brand-icon">🎧</span>
+        <span class="brand-main">THÁM TỬ <strong>ÂM THANH</strong></span>
+      </a>
+      <div class="top-stats">
+        <button type="button" class="top-nav-trainer-btn" id="openTrainerHeaderBtn" title="Xưởng Huấn Luyện AI - Dạy tiếng kêu cho con vật">
+          <span class="trainer-btn-icon">🎙️</span>
+          <span class="trainer-btn-text">Tự luyện AI</span>
+        </button>
+        <div class="stat-pill score-pill" id="scorePill">
+          <span class="star-icon">⭐</span>
+          <strong id="topScore">0</strong>
+          <div class="score-popup-container" id="scorePopupContainer" aria-hidden="true"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MÀN HÌNH 1: TRANG CHỦ -->
+    <section class="screen active" id="homeScreen" aria-labelledby="mainTitle">
+      <div class="hero-box">
+        <div class="assistant-row">
+          <div class="assistant-avatar" aria-hidden="true">
+            <img src="assets/images/Robot_happy.jpg" alt="Trợ lý AI" class="assistant-photo" id="homeRobotImg">
+          </div>
+          <div class="speech-bubble">
+            <strong>Chào bạn nhỏ! 👋</strong><br>
+            Hãy chọn trò chơi để bắt đầu khám phá nhé!
+          </div>
+        </div>
+      </div>
+
+      <div class="mode-grid">
+        <!-- Chế độ 1: Đồng bộ với Mode Nghe âm đoán hình -->
+        <button class="mode-card mode-listen" data-mode="listen" type="button">
+          <div class="mode-badge-pill">Chế độ 1 🎧</div>
+          <div class="mode-art" aria-hidden="true">
+            <span class="art-main">🔊</span>
+          </div>
+          <div class="mode-body">
+            <h2 class="mode-title">Nghe âm đoán hình</h2>
+            <p class="mode-desc">Lắng nghe âm thanh và chọn hình con vật thật chuẩn xác!</p>
+            <div class="mode-cta">Bắt đầu chơi ▶</div>
+          </div>
+        </button>
+
+        <!-- Chế độ 2: Đồng bộ với Mode Thử tài bắt chước -->
+        <button class="mode-card mode-copy" data-mode="copy" type="button">
+          <div class="mode-badge-pill">Chế độ 2 🤖</div>
+          <div class="mode-art" aria-hidden="true">
+            <span class="art-main">🎙️</span>
+          </div>
+          <div class="mode-body">
+            <h2 class="mode-title">Thử tài bắt chước</h2>
+            <p class="mode-desc">Kêu thật to và rõ tiếng để bạn AI chấm điểm bé nhé!</p>
+            <div class="mode-cta">Bắt đầu chơi ▶</div>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- MÀN HÌNH 2: NGHE ÂM ĐOÁN HÌNH -->
+    <section class="screen game-screen" id="listenScreen" aria-labelledby="listenTitle">
+      <div class="game-heading">
+        <h2 id="listenTitle">Nghe âm đoán hình</h2>
+        <div class="progress-box">
+          <span id="questionCounter">1 / 6</span>
+          <div class="progress-track">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="play-area">
+        <!-- Cột trái: Loa phát âm thanh & Dải sóng -->
+        <div class="sound-panel">
+          <div class="speaker-stage">
+            <div class="sound-orb" id="soundOrb" role="button" aria-label="Phát âm thanh" tabindex="0">
+              <span class="speaker-emoji" aria-hidden="true">🔊</span>
+            </div>
+          </div>
+
+          <!-- Dải sóng âm thanh chuyển động -->
+          <div class="waveform-container" aria-label="Sóng âm thanh">
+            <div class="waveform-bars" id="waveformBars" aria-hidden="true">
+              <div class="wf-bar" style="--h: 25%"></div>
+              <div class="wf-bar" style="--h: 55%"></div>
+              <div class="wf-bar" style="--h: 80%"></div>
+              <div class="wf-bar" style="--h: 40%"></div>
+              <div class="wf-bar" style="--h: 90%"></div>
+              <div class="wf-bar" style="--h: 65%"></div>
+              <div class="wf-bar" style="--h: 30%"></div>
+              <div class="wf-bar" style="--h: 75%"></div>
+              <div class="wf-bar" style="--h: 85%"></div>
+              <div class="wf-bar" style="--h: 45%"></div>
+              <div class="wf-bar" style="--h: 60%"></div>
+              <div class="wf-bar" style="--h: 95%"></div>
+              <div class="wf-bar" style="--h: 50%"></div>
+              <div class="wf-bar" style="--h: 30%"></div>
+            </div>
+          </div>
+
+          <button class="primary-btn play-btn" id="playSoundBtn" type="button">
+            <span class="btn-icon">▶</span> Nghe âm thanh
+          </button>
+          <p id="listenInstruction" class="sr-only">Bấm nút để nghe âm thanh rồi chọn hình phù hợp</p>
+        </div>
+
+        <!-- Cột phải: Robot AI & 4 Thẻ đáp án -->
+        <div class="answer-panel">
+          <!-- Trợ lý Robot AI phản hồi -->
+          <div class="mascot-companion-card">
+            <div class="mascot-avatar-wrap">
+              <img src="assets/images/Robot_happy.jpg" alt="Trợ lý AI" class="mascot-img" id="mascotCompanionImg">
+            </div>
+            <div class="mascot-bubble">
+              <p id="mascotMessage">Bé nghe thấy tiếng gì?</p>
+            </div>
+          </div>
+
+          <!-- 4 Thẻ lựa chọn -->
+          <div class="answer-grid" id="answerGrid"></div>
+
+          <!-- Khu vực phản hồi & Nút qua câu cùng hàng (không bị scroll) -->
+          <div class="feedback-action-row">
+            <div class="feedback" id="listenFeedback" role="status" aria-live="polite">
+              <span class="feedback-icon">💡</span>
+              <span class="feedback-text">Bấm nghe rồi chọn hình nhé!</span>
+            </div>
+
+            <!-- Nút qua câu -->
+            <button class="primary-btn next-btn" id="nextQuestionBtn" type="button" hidden>
+              Câu tiếp theo →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MÀN HÌNH 3: THỬ TÀI BẮT CHƯỚC -->
+    <section class="screen game-screen" id="copyScreen" aria-labelledby="copyTitle">
+      <div class="game-heading">
+        <h2 id="copyTitle">Thử tài bắt chước</h2>
+        
+        <div class="progress-box">
+          <span id="challengeCounter">1 / 4</span>
+          <div class="progress-track">
+            <div id="challengeProgressFill" class="progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="copy-panel">
+        <div class="character-box">
+          <div class="copy-character" id="copyCharacter" aria-hidden="true"></div>
+        </div>
+        <div class="copy-content">
+          <h3 id="copyChallenge">Con vịt</h3>
+
+          <!-- Thanh đo độ chính xác AI Sound Classifier (mốc chuẩn 75%) -->
+          <div class="confidence-meter-wrap" id="confidenceMeterWrap">
+            <div class="confidence-meter-label">
+              <span class="confidence-title">
+                <span class="ai-sparkle">🤖</span> Độ chính xác:
+              </span>
+              <strong id="aiConfidenceText">0%</strong>
+            </div>
+            <div class="confidence-meter-track">
+              <div class="confidence-meter-fill" id="aiConfidenceFill"></div>
+              <!-- Vạch mốc chuẩn 75% -->
+              <div class="confidence-target-line"></div>
+              <div class="confidence-target-tag">Mục tiêu 75% ⭐</div>
+            </div>
+            <div class="confidence-hint" id="aiConfidenceHint">Bấm "Bắt đầu nói" rồi bắt chước tiếng kêu thật to và rõ nhé!</div>
+          </div>
+
+          <!-- Thanh đo cường độ âm thanh micro -->
+          <div class="voice-meter-wrap" id="voiceMeterWrap">
+            <div class="voice-meter-label">
+              <span>Cường độ giọng nói:</span>
+              <strong id="voiceLevelText">0%</strong>
+            </div>
+            <div class="voice-meter-track">
+              <div class="voice-meter-fill" id="voiceMeterFill"></div>
+            </div>
+          </div>
+
+          <div class="mic-action-row">
+            <button class="primary-btn mic-btn" id="micBtn" type="button">
+              <span class="mic-icon">🎙️</span> Bắt đầu nói
+            </button>
+            <button class="secondary-btn switch-btn" id="nextChallengeBtn" type="button">
+              Đổi con vật ↻
+            </button>
+          </div>
+
+          <div class="mic-status" id="micStatus" role="status" aria-live="polite">Micro đang tắt</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MÀN HÌNH 4: KẾT QUẢ -->
+    <section class="screen result-screen" id="resultScreen" aria-labelledby="resultTitle">
+      <div class="result-party-box">
+        <div class="result-medal" aria-hidden="true">🏆</div>
+        <h2 id="resultTitle">Hoàn thành!</h2>
+        <p id="resultMessage" class="result-msg">Bé giỏi lắm!</p>
+
+        <!-- 3 Sao đánh giá -->
+        <div class="star-rating-box" id="starRatingBox" aria-label="Xếp hạng">
+          <span class="rating-star">⭐</span>
+          <span class="rating-star">⭐</span>
+          <span class="rating-star">⭐</span>
+        </div>
+
+        <div class="result-score-card">
+          <div class="result-score">
+            <span class="score-star-icon">⭐</span>
+            <strong id="finalScore">0</strong>
+            <small>điểm</small>
+          </div>
+          <p class="result-detail" id="resultDetail">Đúng 0/6 câu</p>
+        </div>
+
+        <div class="result-actions">
+          <button class="primary-btn btn-large" id="replayBtn" type="button">
+            ↻ Chơi lại
+          </button>
+          <button class="secondary-btn btn-large" id="homeFromResultBtn" type="button">
+            ⌂ Trang chủ
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- MODAL CẤU HÌNH GOOGLE TEACHABLE MACHINE -->
+    <div class="tm-modal tm-trainer-modal" id="tmTrainerModal" hidden>
+      <div class="tm-modal-backdrop" id="tmTrainerModalBackdrop"></div>
+      <div class="tm-modal-content trainer-modal-content" role="dialog" aria-labelledby="tmTrainerModalTitle">
+        <div class="tm-modal-header">
+          <div class="trainer-header-title">
+            <h3 id="tmTrainerModalTitle">🎙️ Xưởng Tự Luyện AI - Cập Nhật Mô Hình</h3>
+            <span class="trainer-subtitle">Bé hoặc cô giáo có thể thu âm để tự động cập nhật trực tiếp vào mô hình đã có sẵn!</span>
+          </div>
+          <button type="button" class="tm-modal-close" id="tmTrainerModalClose" aria-label="Đóng">✕</button>
+        </div>
+
+        <div class="tm-modal-body trainer-modal-body">
+
+          <!-- Thanh thêm nhãn mới -->
+          <div class="add-label-row">
+            <div class="add-label-input-wrap">
+              <input type="text" id="trainerNewLabelInput" class="trainer-new-input" placeholder="Thêm tiếng con vật mới (ví dụ: Con bò, Chú lợn...)" spellcheck="false" maxlength="30" />
+            </div>
+            <button type="button" class="primary-btn btn-sm" id="trainerAddLabelBtn">+ Thêm nhãn</button>
+          </div>
+
+          <!-- Danh sách thẻ nhãn thu âm -->
+          <div class="trainer-cards-grid" id="trainerCardsGrid">
+            <!-- Render động qua JavaScript -->
+          </div>
+
+          <!-- Khu vực tiến trình huấn luyện (hiện khi đang train) -->
+          <div class="trainer-progress-panel" id="trainerProgressPanel" hidden>
+            <div class="trainer-progress-header">
+              <span class="trainer-progress-title" id="trainerProgressTitle">⚡ Đang cập nhật mô hình AI...</span>
+              <span class="trainer-progress-percent" id="trainerProgressPercent">0%</span>
+            </div>
+            <div class="trainer-progress-track">
+              <div class="trainer-progress-bar" id="trainerProgressBar"></div>
+            </div>
+            <div class="trainer-progress-detail" id="trainerProgressDetail">
+              Đang phân tích phổ âm thanh và cập nhật mạng nơ-ron...
+            </div>
+          </div>
+
+          <!-- Thông báo trạng thái trainer -->
+          <div class="trainer-status-alert" id="trainerStatusAlert">
+            <span class="trainer-status-icon" id="trainerStatusIcon">💡</span>
+            <span class="trainer-status-msg" id="trainerStatusMsg">Mô hình sẽ tự động cập nhật trực tiếp vào trò chơi, không cần tải tệp mới!</span>
+          </div>
+        </div>
+
+        <div class="tm-modal-footer trainer-modal-footer">
+          <div class="footer-left">
+            <input type="file" id="trainerDatasetInput" accept=".bin,application/octet-stream" hidden />
+            <button type="button" class="danger-outline-btn btn-sm" id="trainerClearAllBtn" title="Xóa toàn bộ các mẫu âm thanh đã thu">
+              Xóa hết mẫu
+            </button>
+            <button type="button" class="secondary-btn btn-sm" id="trainerImportDatasetBtn" title="Nạp và cộng dồn bộ mẫu .bin">
+              Nạp mẫu
+            </button>
+            <button type="button" class="secondary-btn btn-sm" id="trainerExportDatasetBtn" title="Tải bộ mẫu .bin về máy">
+              Xuất mẫu
+            </button>
+          </div>
+          <div class="footer-right">
+            <button type="button" class="primary-btn trainer-cta-btn" id="trainerStartTrainBtn">
+              Cập Nhật Vào Mô Hình
+            </button>
+            <button type="button" class="success-btn trainer-cta-btn" id="trainerApplyPlayBtn" hidden>
+              Chơi ngay với mô hình đã cập nhật
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

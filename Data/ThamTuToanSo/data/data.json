@@ -1,0 +1,169 @@
+{
+  "Id": 20,
+  "type": "Thám Tử An Toàn Số",
+  "text": "Game tương tác an toàn mạng",
+  "aiCharacter": "Vệ sĩ Không gian mạng",
+  "grade": "grade3",
+  "missions": [
+      "Đọc kỹ tin nhắn Người lạ gửi",
+      "Bấm NÚT XANH nếu an toàn, ngoan ngoãn",
+      "Bấm NÚT ĐỎ nếu nguy hiểm, sai trái",
+      "Vượt qua tất cả để nhận huy hiệu!"
+  ],
+  "grades": [
+    {
+      "Id": "grade3",
+      "label": "Lớp 3",
+      "topic": "Ứng xử chuẩn & Tôn trọng tác giả",
+      "scenarios": [
+        {
+          "Id": "g3_s1",
+          "type": "Bắt nạt trực tuyến",
+          "text": "Haha bài dễ ẹc cũng sai. Lêu lêu đồ ngốc! 😜",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Sai rồi! Trêu chọc bạn là xấu tính, phải báo cáo ngay.",
+            "red": "Chuẩn! Gặp kẻ bắt nạt là phải nhấn báo cáo."
+          }
+        },
+        {
+          "Id": "g3_s2",
+          "type": "Bắt nạt trực tuyến",
+          "text": "Chỉ bài cho tao mau! Ko tao méc cô vụ hôm qua! 😡",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Nguy hiểm! Bị đe dọa thì đừng im lặng làm theo.",
+            "red": "Giỏi lắm! Bị đe dọa phải nói với ba mẹ ngay."
+          }
+        },
+        {
+          "Id": "g3_s3",
+          "type": "Bản quyền số",
+          "text": "Tranh bạn Linh vẽ xịn ghê, chôm up tóp tóp câu like liền! 😎",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Ơ kìa! Lấy đồ người khác phải xin phép chứ!",
+            "red": "Đúng rồi! Đăng tranh của ai thì phải xin phép người đó."
+          }
+        },
+        {
+          "Id": "g3_s4",
+          "type": "Bản quyền số",
+          "text": "Tớ mới tải lậu bài này hay lắm, nghe thử ko? 🤫",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Cẩn thận! Xài nhạc lậu là vi phạm bản quyền đó.",
+            "red": "Khôn ngoan! Nói không với đồ lậu nha."
+          }
+        },
+        {
+          "Id": "g3_s5",
+          "type": "Thông tin sai lệch",
+          "text": "Sốc 😲! Uống nước chanh thông minh gấp đôi. Share gấp lớp ơi!",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Khoan! Tin bịp đấy, chia sẻ bậy bạ là không tốt.",
+            "red": "Thám tử tài ba! Cậu không hề mắc lừa tin vịt."
+          }
+        },
+        {
+          "Id": "g3_s6",
+          "type": "Giao tiếp văn minh",
+          "text": "Chào cậu, cậu chỉ tớ cách nộp bài tập toán với nhé! 🥺",
+          "correctAction": "green",
+          "feedback": {
+            "green": "Tuyệt! Bạn nói chuyện rất ngoan, hãy giúp bạn nhé!",
+            "red": "Nhầm rồi! Bạn nhờ vả rất lịch sự mà."
+          }
+        }
+      ]
+    },
+    {
+      "Id": "grade45",
+      "label": "Lớp 4-5",
+      "topic": "Lừa đảo mạng & Bảo mật thông tin",
+      "scenarios": [
+        {
+          "Id": "g45_s1",
+          "type": "Lừa đảo Phishing",
+          "text": "Bấm vô linknhanqua-free.com nhận 10K kim cương liền! Lẹ lẹ!",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Báo động! Bấm link lạ là mất nick như chơi đó!",
+            "red": "Siêu đỉnh! Không bao giờ tò mò bấm link lạ."
+          }
+        },
+        {
+          "Id": "g45_s2",
+          "type": "Lừa đảo Phishing",
+          "text": "Cô giáo đây. Đọc mã OTP trong điện thoại mẹ cho cô gấp nhé!",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Dừng lại! Thầy cô thật không bao giờ đòi mã OTP.",
+            "red": "Quá tỉnh táo! Mã OTP là bí mật quốc gia!"
+          }
+        },
+        {
+          "Id": "g45_s3",
+          "type": "Nguy hiểm từ người lạ",
+          "text": "Chiều nay ra công viên gặp anh nhé, đừng nói ba mẹ nha! 🤫",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Quá nguy hiểm! Tuyệt đối không gặp người lạ trên mạng.",
+            "red": "Xuất sắc! Phải méc ba mẹ vụ rủ rê mờ ám này ngay!"
+          }
+        },
+        {
+          "Id": "g45_s4",
+          "type": "Dấu chân số",
+          "text": "Check-in đang ở nhà 1 mình tại số 123 đường ABC. Chán quá!",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Hớ hênh quá! Kẻ xấu biết nhà là rất nguy hiểm.",
+            "red": "Chuẩn! Cần nhắc bạn xóa ngay địa chỉ nhà trên mạng."
+          }
+        },
+        {
+          "Id": "g45_s5",
+          "type": "Bảo mật",
+          "text": "Ê cho mượn pass vô nick học làm bài xíu. Thề ko đổi pass! 🙏",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Sai bét! Pass là chìa khóa nhà, cấm đưa cho bất kỳ ai!",
+            "red": "Tuyệt vời! Mật khẩu nick chỉ mình mình biết thôi."
+          }
+        },
+        {
+          "Id": "g45_s6",
+          "type": "Lừa đảo Phishing",
+          "text": "🏆 Đăng nhập web roblox-skin-vip.net nhận đồ VIP free 100%!",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Cú lừa đó! Đăng nhập bậy bạ là bay nick luôn.",
+            "red": "Giỏi! Web lừa đảo không qua mắt được cậu."
+          }
+        },
+        {
+          "Id": "g45_s7",
+          "type": "Dấu chân số",
+          "text": "Đăng ảnh lớp đi chơi ở Thảo Cầm Viên lên mạng luôn cho nóng!",
+          "correctAction": "red",
+          "feedback": {
+            "green": "Từ từ! Đăng ảnh lộ vị trí của cả lớp là không an toàn.",
+            "red": "Chuẩn xác! Khoe vị trí tập thể là tạo cơ hội cho kẻ xấu."
+          }
+        },
+        {
+          "Id": "g45_s8",
+          "type": "Giao tiếp an toàn",
+          "text": "Các em vào web trường (truongabc.edu.vn) lấy tài liệu ôn thi nhé!",
+          "correctAction": "green",
+          "feedback": {
+            "green": "Đúng rồi! Đuôi .edu.vn là web giáo dục chính thống.",
+            "red": "Nhầm nha! Web trường học là nơi rất an toàn mà."
+          }
+        }
+      ]
+    }
+  ]
+}

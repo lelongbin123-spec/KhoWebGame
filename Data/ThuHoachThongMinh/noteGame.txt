@@ -1,0 +1,25 @@
+thiết kế giao diện:
+	- giao diện game
+	- UI
+	- hình ảnh item
+logic:
+	- check đúng sai
+	- check thời gian kéo và thả đúng
+	- 
+end:
+	- tính độ chính xác
+	- tính thời gian hoàn thành nhanh nhất
+	- thông báo hoàn thành
+	- âm thanh khen ngợi
+
+dragDuration = (dragEndtime-dragStarttime)/1000
+
+thời gian kéo dưới 1.5s được 100đ
+
+2 yếu tố
+
+	1: điểm chính xác (accuracyScore): (số thẻ đúng/tổng số thẻ đã kéo)x100
+	2: Điểm tốc độ (seedScore): 100 - (thời gian TB - 1.5) x 20
+công thức tổng hợp:
+	aiAccuracy = (accuracyScore x 70) + (seedScore x 30)
+	kéo sai trừ 15%

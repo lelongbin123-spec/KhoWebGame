@@ -1,0 +1,52 @@
+{
+  "Id": "ghep-hinh-thong-minh",
+  "Type": "Ghép Hình Thông Minh",
+  "Text": "Rèn luyện thao tác Kéo - Thả chuột, nhận diện tọa độ không gian và tư duy thị giác cho học sinh Lớp 1 - 3",
+  "mascotImage": "assets/images/Robot_happy.jpg",
+  "src": "assets/images/Pic3.png",
+  "settings": {
+    "hintTimeout": 10,
+    "snapDistance": 60,
+    "autoVoice": true,
+    "allowRotation": false
+  },
+  "data": [
+    {
+      "level": 1,
+      "name": "Cấp độ 1 - Khởi động",
+      "badge": "Dễ",
+      "rows": 2,
+      "cols": 2,
+      "totalPieces": 4,
+      "allowRotation": false,
+      "description": "Lưới 2x2 (4 mảnh ghép) - Dành cho bé bắt đầu làm quen"
+    },
+    {
+      "level": 2,
+      "name": "Cấp độ 2 - Thử thách",
+      "badge": "Vừa",
+      "rows": 2,
+      "cols": 3,
+      "totalPieces": 6,
+      "allowRotation": true,
+      "description": "Lưới 2x3 (6 mảnh ghép) - Dành cho bé đã quen với ghép hình"
+    },
+    {
+      "level": 3,
+      "name": "Cấp độ 3 - Thách thức",
+      "badge": "Khó",
+      "rows": 3,
+      "cols": 3,
+      "totalPieces": 9,
+      "allowRotation": true,
+      "description": "Lưới 3x3 (9 mảnh ghép) - Có xoay mảnh ghép, thử thách trí thông minh"
+    }
+  ],
+
+  "voiceLines": {
+    "hint": "Bé ơi, thử ghép mảnh này vào đây xem nhé!",
+    "rotateHint": "Bé hãy bấm vào mảnh ghép để xoay cho đúng chiều nhé!",
+    "correct": ["Bé giỏi lắm!", "Chính xác rồi!", "Tuyệt vời!", "Chuẩn không cần chỉnh!"],
+    "congrats": "Chúc mừng bé đã hoàn thành bức tranh tuyệt đẹp!"
+  }
+}

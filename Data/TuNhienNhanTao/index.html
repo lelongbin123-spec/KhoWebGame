@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Phân biệt tự nhiên và nhân tạo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            color: #333;
+            user-select: none;
+        }
+
+        .game {
+            width: 100%;
+            min-height: 100vh;
+            padding: 28px 70px;
+            position: relative;
+        }
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        .title {
+            font-size: 25px;
+            font-weight: bold;
+            margin-left: 20px;
+            margin-bottom: 38px;
+        }
+
+        /* =========================
+           RESET
+        ========================= */
+
+        .reset-btn,
+        #showResultButton {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background: linear-gradient(
+                135deg,
+                #62d1fd,
+                #0084ff
+            );
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .reset-btn {
+            min-width: 150px;
+            margin: 0 auto 23px;
+            font-size: 16px;
+        }
+
+        .reset-btn:hover,
+        #showResultButton:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, .2);
+        }
+
+        .reset-btn:active,
+        #showResultButton:not(:disabled):active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 7px rgba(0, 0, 0, .15);
+        }
+
+        /* =========================
+           SHOW RESULT
+        ========================= */
+
+        #showResultButton {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 30px;
+            font-size: 17px;
+        }
+
+        #showResultButton:disabled {
+            background: #cbd5e1;
+            color: #f8fafc;
+
+            cursor: not-allowed;
+
+            box-shadow: none;
+            opacity: 0.7;
+        }
+
+        #resultText {
+            margin-top: 20px;
+            padding: 15px;
+
+            font-size: 17px;
+            line-height: 1.8;
+
+            text-align: center;
+        }
+
+        .result-title {
+            font-size: 24px;
+            font-weight: bold;
+
+            text-align: center;
+
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            padding: 6px 10px;
+
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-correct {
+            color: green;
+            font-weight: bold;
+        }
+
+        .result-wrong {
+            color: red;
+            font-weight: bold;
+        }
+
+        .correct-answer-text {
+            color: #333;
+            font-weight: normal;
+
+            margin-left: 20px;
+        }
+
+        /* =========================
+           GAME AREA
+        ========================= */
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 55px repeat(3, 260px) 55px;
+            align-items: center;
+            justify-content: center;
+            gap: 45px;
+            margin-top: 10px;
+        }
+
+        /* =========================
+           ITEM SLOT
+        ========================= */
+        .item-slot,
+        .drop-box {
+            width: 260px;
+            height: 220px;
+        }
+
+        .item-slot {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        /*
+            KHUNG TRẮNG CỐ ĐỊNH Ở GIỮA
+
+            Khung này KHÔNG di chuyển.
+            Khi hình được kéo sang trái/phải,
+            khung vẫn nằm ở giữa.
+        */
+
+        .center-placeholder { 
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #4da9d8; 
+            border-radius: 15px; 
+            background: white; 
+            pointer-events: none; 
+            z-index: 0; 
+        }
+
+        /* =========================
+           ARROW
+        ========================= */
+
+        .arrow {
+            width: 50px;
+            height: 50px;
+
+            border: 1px solid #ddd;
+            border-radius: 50%;
+
+            background: white;
+
+            font-size: 30px;
+            color: #333;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow:
+                0 1px 4px rgba(0, 0, 0, .08);
+
+            transition: .2s;
+        }
+
+        .arrow:hover {
+            background: #f3f8ff;
+            transform: scale(1.05);
+        }
+
+        .arrow:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+        /* =========================
+           DROP BOX
+        ========================= */
+
+        .drop-box {
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: .2s;
+            overflow: hidden;
+        }
+
+        .drop-box h2 {
+            margin: 25px 0 40px;
+
+            color: #0875d1;
+
+            font-size: 21px;
+
+            flex-shrink: 0;
+        }
+
+        .drop-box .hint {
+            color: #888;
+
+            font-size: 14px;
+
+            font-style: italic;
+
+            transition: .2s;
+        }
+
+        /* =========================
+           DRAG OVER
+        ========================= */
+
+        .drop-box.drag-over {
+            border: 2px dashed #087be8;
+
+            background: #f0f8ff;
+
+            transform: scale(1.03);
+        }
+
+        /* =========================
+           HAS ITEM
+        ========================= */
+
+        .drop-box.has-item .hint {
+            display: none;
+        }
+
+        /* =========================
+           CORRECT / WRONG
+        ========================= */
+
+        .drop-box.correct-answer {
+            border: 2px solid #18a558;
+
+            background: #f0fff6;
+        }
+
+        .drop-box.wrong-answer {
+            border: 2px solid #e53935;
+
+            background: #fff3f3;
+        }
+
+        /* =========================
+           ITEM
+        ========================= */
+
+        .item-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid #4da9d8;
+            border-radius: 15px;
+
+            cursor: grab;
+            background: white;
+            transition: .2s;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .item-container:hover {
+            transform: scale(1.03);
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+        }
+
+        .item-container:active {
+            cursor: grabbing;
+        }
+
+        .item-container.disabled {
+            cursor: default;
+        }
+
+        /* =========================
+           ITEM INSIDE DROP BOX
+        ========================= */
+
+        .drop-box .item-container {
+            width: 160px;
+            height: 125px;
+
+            border: none;
+
+            cursor: default;
+
+            margin-top: -25px;
+
+            box-shadow: none;
+
+            transform: none;
+        }
+
+        .drop-box .item-container:hover {
+            transform: none;
+
+            box-shadow: none;
+        }
+
+        /* =========================
+           ITEM CONTENT
+        ========================= */
+
+        .item {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+        }
+
+        /* =========================
+           IMAGE
+        ========================= */
+
+        .item-image {
+            width: 110px;
+            height: 110px;
+
+            object-fit: contain;
+
+            display: block;
+        }
+
+        /* Image trong drop box */
+
+        .drop-box .item-image {
+            width: 70px;
+            height: 70px;
+        }
+
+        /* =========================
+           ITEM NAME
+        ========================= */
+
+        .item-name {
+            margin-top: 15px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            max-width: 170px;
+        }
+
+        .drop-box .item-name {
+            margin-top: 5px;
+
+            font-size: 14px;
+
+            max-width: 140px;
+        }
+
+        /* =========================
+           TEXT RESULT
+        ========================= */
+
+        .correct {
+            color: #18a558;
+        }
+
+        .wrong {
+            color: #e53935;
+        }
+
+        /* =========================
+           COMPLETION
+        ========================= */
+
+        #completionMessage {
+            margin-top: 8px;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            text-align: center;
+
+            min-height: 24px;
+        }
+
+        /* =========================
+           PROGRESS
+        ========================= */
+
+        .progress {
+            text-align: center;
+
+            margin-top: 15px;
+
+            color: #777;
+        }
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .loading {
+            text-align: center;
+            color: #888;
+        }
+
+        /* =========================
+           MOBILE
+
+        ========================= */
+
+        @media(max-width: 900px) {
+
+            .game {
+                padding: 20px;
+            }
+
+            .game-area {
+                grid-template-columns:
+                    55px 260px 260px 260px 55px;
+
+                column-gap: 15px;
+            }
+
+            .drop-box {
+                width: 260px;
+                height: 220px;
+            }
+
+            .item-slot {
+                width: 260px;
+                height: 220px;
+            }
+
+            .item-container {
+                width: 220px;
+                height: 220px;
+            }
+
+            .center-placeholder {
+                width: 260px;
+                height: 220px;
+            }
+        }
+
+        @media(max-width: 650px) {
+
+            .game {
+                padding: 20px 10px;
+            }
+
+            .title {
+                margin-left: 0;
+                text-align: center;
+                font-size: 21px;
+            }
+
+            .game-area {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .arrow {
+                display: none;
+            }
+
+            .drop-box {
+                width: 260px;
+                height: 220px;
+            }
+
+            .item-slot {
+                width: 260px;
+                height: 220px;
+            }
+
+            .center-placeholder {
+                width: 260px;
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="game" id="game">
+
+        <!-- =========================
+             TITLE
+        ========================== -->
+
+        <div
+            class="title"
+            id="questionTitle"
+        >
+            Đang tải...
+        </div>
+
+        <!-- =========================
+             RESET
+        ========================== -->
+
+        <button
+            class="reset-btn"
+            id="resetButton"
+        >
+            🔄 Làm lại
+        </button>
+
+        <!-- =========================
+             GAME AREA
+        ========================== -->
+
+        <div class="game-area">
+
+            <!-- PREVIOUS -->
+
+            <button
+                class="arrow"
+                id="previousButton"
+                type="button"
+            >
+                ‹
+            </button>
+
+            <!-- =====================
+                 NATURAL
+            ====================== -->
+
+            <div
+                class="drop-box"
+                id="natural"
+                data-group="1"
+            >
+
+                <h2>
+                    Tự nhiên
+                </h2>
+
+                <div class="hint">
+                    Thả hình vào đây
+                </div>
+
+            </div>
+
+            <!-- =====================
+                 CENTER ITEM
+            ====================== -->
+
+            <div
+                class="item-slot"
+                id="itemSlot"
+            >
+
+                <!-- KHUNG TRẮNG CỐ ĐỊNH -->
+
+                <div
+                    class="center-placeholder"
+                    id="centerPlaceholder"
+                ></div>
+
+                <!-- ITEM -->
+
+                <div
+                    class="item-container"
+                    id="item"
+                    draggable="true"
+                >
+
+                    <div class="item">
+
+                        <img
+                            class="item-image"
+                            id="itemImage"
+                            src=""
+                            alt=""
+                            draggable="false"
+                        >
+
+                        <div
+                            class="item-name"
+                            id="itemName"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================
+                 ARTIFICIAL
+            ====================== -->
+
+            <div
+                class="drop-box"
+                id="artificial"
+                data-group="2"
+            >
+
+                <h2>
+                    Nhân tạo
+                </h2>
+
+                <div class="hint">
+                    Thả hình vào đây
+                </div>
+
+            </div>
+
+
+            <!-- NEXT -->
+
+            <button
+                class="arrow"
+                id="nextButton"
+                type="button"
+            >
+                ›
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             PROGRESS
+        ========================= -->
+
+        <div class="progress">
+
+            Câu
+
+            <span id="currentQuestion">
+                0
+            </span>
+
+            /
+
+            <span id="totalQuestion">
+                0
+            </span>
+
+        </div>
+
+
+        <div id="completionMessage"></div>
+
+
+        <!-- =========================
+             SHOW RESULT
+        ========================= -->
+
+        <button
+            id="showResultButton"
+            disabled
+        >
+            📋 Xem kết quả
+        </button>
+
+
+        <div id="resultText"></div>
+
+    </div>
+
+
+<script>
+
+    // =====================================================
+    // GAME VARIABLES
+    // =====================================================
+
+    let gameData = null;
+
+    let currentIndex = 0;
+
+    let answered = false;
+
+    let nextTimer = null;
+
+    let correctCount = 0;
+
+    let wrongCount = 0;
+
+    let totalCount = 0;
+
+    let draggedItem = null;
+
+
+    // =====================================================
+    // ELEMENTS
+    // =====================================================
+
+    const item =
+        document.getElementById("item");
+
+    const itemImage =
+        document.getElementById("itemImage");
+
+    const itemName =
+        document.getElementById("itemName");
+
+    const naturalBox =
+        document.getElementById("natural");
+
+    const artificialBox =
+        document.getElementById("artificial");
+
+    const questionTitle =
+        document.getElementById("questionTitle");
+
+    const currentQuestion =
+        document.getElementById("currentQuestion");
+
+    const totalQuestion =
+        document.getElementById("totalQuestion");
+
+    const resetButton =
+        document.getElementById("resetButton");
+
+    const previousButton =
+        document.getElementById("previousButton");
+
+    const nextButton =
+        document.getElementById("nextButton");
+
+    const showResultButton =
+        document.getElementById("showResultButton");
+
+    const resultText =
+        document.getElementById("resultText");
+
+    const itemSlot =
+        document.getElementById("itemSlot");
+
+    const centerPlaceholder =
+        document.getElementById("centerPlaceholder");
+
+    const completionMessage =
+        document.getElementById("completionMessage");
+
+    const boxes = [naturalBox, artificialBox];
+
+
+    // =====================================================
+    // LOAD DATA.JSON
+    // =====================================================
+
+    async function loadGameData() {
+
+        try {
+
+            const response =
+                await fetch("./data.json");
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `Không tìm thấy data.json. HTTP status: ${response.status}`
+                );
+
+            }
+
+            const data =
+                await response.json();
+
+            return data;
+
+        } catch (error) {
+
+            console.error(
+                "❌ Không thể đọc data.json:",
+                error
+            );
+
+            questionTitle.textContent =
+                "Không thể tải dữ liệu trò chơi.";
+
+            return null;
+        }
+    }
+
+
+    // =====================================================
+    // INIT GAME
+    // =====================================================
+
+    function initGame() {
+
+        if (!gameData) {
+            return;
+        }
+
+        if (!Array.isArray(gameData.rows)) {
+
+            console.error(
+                "❌ gameData.rows không phải Array"
+            );
+
+            return;
+        }
+
+        currentIndex = 0;
+
+        correctCount = 0;
+
+        wrongCount = 0;
+
+        totalCount =
+            gameData.rows.length;
+
+
+        // TITLE
+
+        questionTitle.textContent =
+            gameData.Text ||
+            "Phân biệt tự nhiên và nhân tạo";
+
+
+        // TOTAL
+
+        totalQuestion.textContent =
+            totalCount;
+
+
+        // RESET DATA
+
+        gameData.rows.forEach(
+            row => {
+                row.currentGroup = null;
+            }
+        );
+
+
+        // RESET UI
+
+        resetBoxes();
+
+        moveItemToCenter();
+
+        showResultButton.disabled =
+            true;
+
+        resultText.textContent = "";
+
+
+        // LOAD FIRST QUESTION
+
+        loadQuestion();
+    }
+
+
+    // =====================================================
+    // RESET BOXES
+    // =====================================================
+
+    function resetBoxes() {
+
+        boxes.forEach(box => box.classList.remove(
+            "drag-over", "correct-answer", "wrong-answer", "has-item"
+        ));
+    }
+
+    // =====================================================
+    // MOVE ITEM TO CENTER
+    // =====================================================
+
+    function moveItemToCenter() {
+
+        // Đưa hình về giữa
+        itemSlot.appendChild(item);
+
+        // Khi hình ở giữa:
+        // ẩn khung placeholder để không bị 2 lớp
+        centerPlaceholder.style.display = "none";
+
+        item.style.display = "flex";
+        item.style.opacity = "1";
+
+        item.classList.remove("disabled");
+
+        item.draggable = true;
+
+        draggedItem = null;
+    }
+
+    // =====================================================
+    // LOAD QUESTION
+    // =====================================================
+
+    function loadQuestion() {
+
+        if (!gameData) {
+            return;
+        }
+
+        if (!Array.isArray(gameData.rows)) {
+            return;
+        }
+
+        const row =
+            gameData.rows[currentIndex];
+
+        if (!row) {
+
+            console.error(
+                "❌ Không tìm thấy row:",
+                currentIndex
+            );
+
+            return;
+        }
+
+
+        clearTimeout(nextTimer);
+
+
+        // RESET BOX
+
+        resetBoxes();
+
+
+        // IMAGE
+
+        if (!row.src) {
+
+            console.error(
+                "❌ row.src rỗng hoặc undefined"
+            );
+
+            itemImage.src = "";
+
+        } else {
+
+            itemImage.src =
+                row.src;
+
+            itemImage.alt =
+                row.Text || "";
+
+
+        }
+
+
+        // TEXT
+
+        itemName.textContent =
+            row.Text || "";
+
+
+        // QUESTION NUMBER
+
+        currentQuestion.textContent =
+            currentIndex + 1;
+
+
+        // CHECK ANSWERED
+
+        answered =
+            row.currentGroup !== null;
+
+
+        // BUTTONS
+
+        previousButton.disabled =
+            currentIndex === 0;
+
+        nextButton.disabled =
+            currentIndex ===
+            gameData.rows.length - 1;
+
+
+        // SHOW ITEM
+
+        item.style.display =
+            "flex";
+
+        item.style.opacity =
+            "1";
+
+
+        // PREVIOUS ANSWER
+
+        if (answered) {
+
+            showPreviousAnswer(row);
+
+        } else {
+
+            moveItemToCenter();
+        }
+
+
+    }
+
+
+    // =====================================================
+    // SHOW PREVIOUS ANSWER
+    // =====================================================
+
+    function showPreviousAnswer(row) {
+
+        const group =
+            Number(row.currentGroup);
+
+
+        const targetBox =
+            group === 1
+                ? naturalBox
+                : artificialBox;
+
+
+        // IMPORTANT:
+        // centerPlaceholder vẫn nằm ở giữa.
+        // Chỉ chuyển item sang box.
+        // Hiện khung giữa
+        centerPlaceholder.style.display = "block";
+
+        targetBox.appendChild(item);
+
+        // BOX STATE
+
+        targetBox.classList.add(
+            "has-item"
+        );
+
+        // ITEM STATE
+
+        item.style.display =
+            "flex";
+
+        item.style.opacity =
+            "1";
+
+        item.classList.add(
+            "disabled"
+        );
+
+        item.draggable = false;
+
+        // CHECK RESULT
+
+        const correct =
+            Number(row.correctGroup) ===
+            Number(row.currentGroup);
+
+
+        if (correct) {
+
+            targetBox.classList.add(
+                "correct-answer"
+            );
+
+        } else {
+
+            targetBox.classList.add(
+                "wrong-answer"
+            );
+        }
+    }
+
+
+    // =====================================================
+    // CHECK GAME COMPLETED
+    // =====================================================
+
+    function checkGameCompleted() {
+
+        if (
+            !gameData ||
+            !Array.isArray(gameData.rows)
+        ) {
+
+            return false;
+        }
+
+        return gameData.rows.every(
+            row =>
+                row.currentGroup !== null
+        );
+    }
+
+
+    // =====================================================
+    // DRAG START
+    // =====================================================
+
+    item.addEventListener(
+        "dragstart",
+        function(event) {
+
+            if (answered) {
+
+                event.preventDefault();
+
+                return;
+            }
+            draggedItem =
+                item;
+
+            event.dataTransfer.effectAllowed =
+                "move";
+
+            event.dataTransfer.setData(
+                "text/plain",
+                String(currentIndex)
+            );
+
+            item.style.opacity =
+                "0.5";
+        }
+    );
+
+    // =====================================================
+    // DRAG END
+    // =====================================================
+
+    item.addEventListener(
+        "dragend",
+        function() {
+
+            item.style.opacity =
+                "1";
+        }
+    );
+
+    // =====================================================
+    // DROP BOXES
+    // =====================================================
+
+    boxes.forEach(
+        function(box) {
+
+            // ---------------------------------------------
+            // DRAG OVER
+            // ---------------------------------------------
+
+            box.addEventListener(
+                "dragover",
+                function(event) {
+
+                    event.preventDefault();
+
+                    if (answered) {
+                        return;
+                    }
+
+                    if (!draggedItem) {
+                        return;
+                    }
+
+                    box.classList.add(
+                        "drag-over"
+                    );
+                }
+            );
+
+            // ---------------------------------------------
+            // DRAG LEAVE
+            // ---------------------------------------------
+
+            box.addEventListener(
+                "dragleave",
+                function() {
+
+                    box.classList.remove(
+                        "drag-over"
+                    );
+                }
+            );
+
+            // ---------------------------------------------
+            // DROP
+            // ---------------------------------------------
+            box.addEventListener(
+                "drop",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    box.classList.remove(
+                        "drag-over"
+                    );
+
+                    if (answered) {
+                        return;
+                    }
+
+                    if (!draggedItem) {
+                        return;
+                    }
+
+                    // GROUP
+                    const groupId =
+                        Number(
+                            box.dataset.group
+                        );
+
+                    /*
+                        Chỉ chuyển ITEM.
+                        
+                        centerPlaceholder không bị chuyển.
+                        Vì vậy khung trắng giữa vẫn còn.
+                    */
+
+                    box.appendChild(
+                        draggedItem
+                    );
+
+                    // Hiện lại khung trắng ở giữa
+                    centerPlaceholder.style.display = "block";
+
+                    draggedItem.style.opacity =
+                        "1";
+
+                    draggedItem.style.display =
+                        "flex";
+
+                    // BOX HAS ITEM
+
+                    box.classList.add(
+                        "has-item"
+                    );
+
+                    // CHECK ANSWER
+
+                    checkAnswer(
+                        groupId
+                    );
+
+                    draggedItem = null;
+                }
+            );
+        }
+    );
+
+    // =====================================================
+    // CHECK ANSWER
+    // =====================================================
+
+    function checkAnswer(groupId) {
+
+        if (!gameData) {
+            return;
+        }
+
+        const row =
+            gameData.rows[currentIndex];
+
+        if (!row) {
+            return;
+        }
+
+        // Không cho trả lời lại
+
+        if (
+            row.currentGroup !== null
+        ) {
+
+            return;
+        }
+
+        // SAVE ANSWER
+
+        row.currentGroup =
+            Number(groupId);
+
+        answered = true;
+
+        item.classList.add(
+            "disabled"
+        );
+
+        item.draggable = false;
+
+
+        // CURRENT BOX
+
+        const currentBox =
+            Number(groupId) === 1
+                ? naturalBox
+                : artificialBox;
+
+
+        currentBox.classList.add(
+            "has-item"
+        );
+
+
+        // CHECK CORRECT
+
+        const correct =
+            Number(row.correctGroup) ===
+            Number(row.currentGroup);
+
+
+        if (correct) {
+
+            // CORRECT
+
+            correctCount++;
+
+            currentBox.classList.add(
+                "correct-answer"
+            );
+
+        } else {
+
+            // WRONG
+
+            wrongCount++;
+
+            currentBox.classList.add(
+                "wrong-answer"
+            );
+        }
+
+
+        // GAME COMPLETED
+
+        if (
+            checkGameCompleted()
+        ) {
+
+            finishGame();
+
+            return;
+        }
+
+        // NEXT QUESTION
+
+        nextTimer =
+            setTimeout(
+                function() {
+
+                    nextQuestion();
+
+                },
+                700
+            );
+    }
+
+    // =====================================================
+    // NEXT QUESTION
+    // =====================================================
+
+    function nextQuestion() {
+
+        if (!gameData) {
+            return;
+        }
+
+        clearTimeout(
+            nextTimer
+        );
+
+        if (
+            currentIndex >=
+            gameData.rows.length - 1
+        ) {
+
+            finishGame();
+
+            return;
+        }
+
+        currentIndex++;
+
+        loadQuestion();
+    }
+
+    // =====================================================
+    // PREVIOUS QUESTION
+    // =====================================================
+
+    function previousQuestion() {
+
+        if (!gameData) {
+            return;
+        }
+
+        clearTimeout(
+            nextTimer
+        );
+
+        if (currentIndex <= 0) {
+            return;
+        }
+
+        currentIndex--;
+
+        loadQuestion();
+    }
+
+    // =====================================================
+    // FINISH GAME
+    // =====================================================
+
+    function finishGame() {
+
+        clearTimeout(
+            nextTimer
+        );
+
+        // Giữ hình câu cuối cùng trong box
+
+        item.style.display =
+            "flex";
+
+        // Không cho kéo lại
+
+        item.draggable = false;
+
+
+        previousButton.disabled =
+            true;
+
+        nextButton.disabled =
+            true;
+
+        currentQuestion.textContent =
+            gameData.rows.length;
+
+        totalCount =
+            gameData.rows.length;
+
+        // ENABLE RESULT
+
+        showResultButton.disabled =
+            false;
+
+        completionMessage.textContent =
+            "🎉 Bạn đã hoàn thành!";
+    }
+
+    // ====================================================
+    // SHOW RESULT
+    // =====================================================
+
+    function showResult() {
+
+        if (!gameData) {
+            return;
+        }
+
+        const total =
+            gameData.rows.length;
+
+        const percentage =
+            total > 0
+                ? Math.round(
+                    (correctCount / total) * 100
+                )
+                : 0;
+
+        let html = `
+            <div class="result-title">
+                Kết quả: ${correctCount}/${total}
+                (${percentage}%)
+            </div>
+        `;
+
+        gameData.rows.forEach(
+            function(row, index) {
+
+                const selectedGroup =
+                    Number(row.currentGroup);
+
+                const correctGroup =
+                    Number(row.correctGroup);
+
+
+                const selectedText =
+                    selectedGroup === 1
+                        ? "Tự nhiên"
+                        : "Nhân tạo";
+
+
+                const correctText =
+                    correctGroup === 1
+                        ? "Tự nhiên"
+                        : "Nhân tạo";
+
+
+                const isCorrect =
+                    selectedGroup === correctGroup;
+
+
+                if (isCorrect) {
+
+                    html += `
+                        <div class="result-item result-correct">
+                            Hình ${index + 1}:
+                            Chọn "${selectedText}"
+                            → Đúng ✅
+                        </div>
+                    `;
+
+                } else {
+
+                    html += `
+                        <div class="result-item result-wrong">
+                            Hình ${index + 1}:
+                            Chọn "${selectedText}"
+                            → Sai ❌
+
+                            <br>
+
+                            <span class="correct-answer-text">
+                                Đáp án đúng: "${correctText}"
+                            </span>
+                        </div>
+                    `;
+                }
+
+            }
+        );
+
+        resultText.innerHTML =
+            html;
+    }
+
+    // =====================================================
+    // RESET GAME
+    // =====================================================
+
+    function resetGame() {
+
+        if (!gameData) {
+            return;
+        }
+
+        clearTimeout(
+            nextTimer
+        );
+
+        currentIndex = 0;
+
+        answered = false;
+
+        correctCount = 0;
+
+        wrongCount = 0;
+
+        completionMessage.textContent =
+            "";
+
+        // RESET DATA
+
+        gameData.rows.forEach(
+            row => {
+
+                row.currentGroup =
+                    null;
+            }
+        );
+
+        // RESET ITEM
+
+        item.style.display =
+            "flex";
+
+        item.draggable =
+            true;
+
+        item.classList.remove(
+            "disabled"
+        );
+
+        item.style.opacity =
+            "1";
+
+        // RESET RESULT
+
+        resultText.innerHTML =
+            "";
+
+        showResultButton.disabled =
+            true;
+
+        // RESET BOXES
+
+        resetBoxes();
+
+        // MOVE ITEM CENTER
+
+        moveItemToCenter();
+
+        // LOAD FIRST QUESTION
+
+        loadQuestion();
+    }
+
+    // =====================================================
+    // BUTTON EVENTS
+    // =====================================================
+
+    resetButton.addEventListener(
+        "click",
+        resetGame
+    );
+
+    previousButton.addEventListener(
+        "click",
+        previousQuestion
+    );
+
+    nextButton.addEventListener(
+        "click",
+        nextQuestion
+    );
+
+    showResultButton.addEventListener(
+        "click",
+        showResult
+    );
+
+    // =====================================================
+    // START GAME
+    // =====================================================
+
+    async function startGame() {
+
+        gameData =
+            await loadGameData();
+
+        if (!gameData) {
+
+            console.error(
+                "❌ Không thể load gameData"
+            );
+
+            return;
+        }
+
+        initGame();
+    }
+
+    // =====================================================
+    // START
+    // =====================================================
+
+    startGame();
+
+</script>
+
+</body>
+</html>

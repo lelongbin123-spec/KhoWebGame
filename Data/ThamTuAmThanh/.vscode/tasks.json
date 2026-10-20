@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Serve app for browser checks",
+			"type": "shell",
+			"command": "node",
+			"args": [".vscode/serve.js"],
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}

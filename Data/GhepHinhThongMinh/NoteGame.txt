@@ -1,0 +1,27 @@
+- Bộ sách Lớp 1 - 3
+- Rèn thao tác: Kéo - thả chuột (Drag & Drop), nhận diện tọa độ không gian
+- Tích hợp: Mỹ thuật, Quan sát hình ảnh, Tư duy thị giác và tính kiên nhẫn."	"
+Ghép hình thông minh (Jigsaw Puzzle & AI Trợ thủ thời gian):
+
+- Bố cục màn hình:
++ Bên góc trái: 1 tranh mẫu thu nhỏ hoàn chỉnh (Thumbnail).
++ Ở giữa: Khung lắp ráp có lưới ô bóng mờ (4, 6 hoặc 9 mảnh tùy cấp độ).
++ Bên phải/dưới: Khay chứa các mảnh ghép bị xáo trộn vị trí và xoay chiều.
+
+- Core Gameplay:
++ Học sinh nhấn giữ chuột trái để kéo mảnh ghép từ khay và thả vào vị trí tương ứng trên khung tranh.
++ Mảnh ghép đưa gần đúng vị trí sẽ tự động hút vào khớp (Magnet Snap) kèm âm thanh ""Tách!"" và phát sáng nhẹ.
++ Kéo sai vị trí: Mảnh ghép tự động trượt lùi về khay chứa ban đầu.
+
+- Quy tắc đếm thời gian & AI gợi ý (10s Rule):
++ Hệ thống kích hoạt đồng hồ đếm ngược. Nếu sau 10 giây học sinh không thực hiện được lượt ghép đúng nào:
+1. AI xuất hiện nháy mắt kèm âm thanh nhắc nhở thân thiện: ""Bé ơi, thử ghép mảnh này vào đây xem nhé!"".
+2. Tự động kích hoạt hiệu ứng Highlight cặp tương ứng: 1 mảnh ghép trên khay phát hào quang màu vàng, 
+đồng thời ô lưới đích trên khung tranh cũng nhấp nháy viền vàng rực rỡ để dẫn đường trực quan.
+3. Sau khi học sinh ghép đúng mảnh AI vừa gợi ý, đồng hồ 10 giây lập tức được đặt lại (Reset timer) 
+để tiếp tục thử thách bé tự tư duy ở mảnh kế tiếp.
+
+- Hoàn thành màn chơi: Toàn bộ bức tranh ghép hoàn chỉnh bung nở hiệu ứng hoạt họa chuyển động (Animation sinh động) 
+và AI  vỗ tay chúc mừng.
+
+- Lưu local storage

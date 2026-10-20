@@ -1,0 +1,64 @@
+{
+    "Id": 20,
+    "type": "Mãnh ghép bí ẩn",
+    "Text": "Chọn mảnh ghép để nhận câu hỏi đa môn.",
+    "keyword": "ĐẠI DƯƠNG",
+    "hints": {
+        "initial": "Gợi ý: Một vùng nước rộng lớn, xanh biếc và đầy sự sống.",
+        "afterFirstReveal": "Con vừa khám phá thêm một mảnh tranh. Hãy quan sát màu sắc và những gì đang hiện ra nhé!",
+        "afterSeveralReveals": "Các mảnh tranh đang cùng kể về một vùng nước rộng lớn. Con đoán ra từ khóa chưa?",
+        "afterWrongGuess": "Con hãy nối các manh mối: cá, san hô và vùng nước xanh rộng lớn.",
+        "firstWrongGuess": "Từ khóa có 8 chữ cái, gọi tên vùng nước mênh mông có cá, san hô và nhiều sinh vật.",
+        "laterWrongGuess": "Gợi ý: Từ khóa gồm hai tiếng. Tiếng đầu bắt đầu bằng Đ, tiếng sau là “dương”.",
+        "solved": "Tuyệt vời! Con đã kết nối các manh mối và giải mã được từ khóa."
+    },
+    "subjects": {
+        "math": { "name": "TOÁN HỌC", "label": "Toán", "icon": "🔢" },
+        "viet": { "name": "TIẾNG VIỆT", "label": "Tiếng Việt", "icon": "📖" },
+        "english": { "name": "TIẾNG ANH", "label": "Tiếng Anh", "icon": "🔤" },
+        "science": { "name": "KHOA HỌC", "label": "Khoa học", "icon": "🔬" },
+        "logic": { "name": "TƯ DUY SUY LUẬN", "label": "Tư duy", "icon": "💡" }
+    },
+    "data": [
+        {
+        "subject": "math",
+        "answerType": "choice",
+        "text": "Có 3 chú cá. Mỗi chú có 2 chiếc vây bên hông. Có tất cả bao nhiêu chiếc vây?",
+        "options": ["5 chiếc", "6 chiếc", "8 chiếc"],
+        "answer": 1
+        },
+        {
+        "subject": "viet",
+        "answerType": "choice",
+        "text": "Từ nào miêu tả màu nước biển trong một ngày nắng đẹp?",
+        "options": ["Xanh biếc", "Ồn ào", "Thơm ngon"],
+        "answer": 0
+        },
+        {
+        "subject": "english",
+        "answerType": "text",
+        "text": "Từ tiếng Anh nào có nghĩa là “biển”?",
+        "answer": "Sea"
+        },
+        {
+        "subject": "science",
+        "answerType": "choice",
+        "text": "Vì sao nước biển thường có vị mặn?",
+        "options": ["Vì có muối hòa tan", "Vì có nhiều cát", "Vì được ánh nắng làm nóng"],
+        "answer": 0
+        },
+        {
+        "subject": "logic",
+        "answerType": "choice",
+        "text": "Cá, san hô và sóng biển cùng gợi nhắc đến chủ đề nào?",
+        "options": ["Sa mạc", "Đại dương", "Rừng núi"],
+        "answer": 1
+        },
+        {
+        "subject": "math",
+        "answerType": "text",
+        "text": "Bạn An nhặt được 4 vỏ ốc. Mỗi vỏ ốc có 3 đường vân. Hỏi có tất cả bao nhiêu đường vân trên các vỏ ốc đó?",
+        "answer": "12"
+        }
+    ]
+}

@@ -1,0 +1,70 @@
+{
+  "Id": "smart-keyword-radar",
+  "Type": "Trạm Không Gian Từ Khóa",
+  "Text": "Tìm những từ phù hợp với yêu cầu của nhiệm vụ.",
+  "targetGrades": [3, 4, 5],
+  "settings": {
+    "scorePerCorrect": 10,
+    "scorePerWrong": 0,
+    "hintAfterSeconds": 10
+  },
+  "questions": [
+    {
+      "Id": 1,
+      "subject": "Tiếng Việt",
+      "topic": "Động từ di chuyển",
+      "question": "Hãy tìm các từ chỉ hành động di chuyển của con người.",
+      "hint": {
+        "text": "Đó là những hành động giúp con người di chuyển từ nơi này đến nơi khác như chạy, nhảy, đi..."
+      },
+      "keywords": [
+        { "Id": 1, "text": "Chạy", "correct": true },
+        { "Id": 2, "text": "Nhảy", "correct": true },
+        { "Id": 3, "text": "Đi", "correct": true },
+        { "Id": 4, "text": "Cái bàn", "correct": false },
+        { "Id": 5, "text": "Quyển sách", "correct": false },
+        { "Id": 6, "text": "Cái cặp", "correct": false },
+        { "Id": 7, "text": "Cười", "correct": false }
+      ]
+    },
+    {
+      "Id": 2,
+      "subject": "Tiếng Việt",
+      "topic": "Đồ vật",
+      "question": "Hãy tìm các từ chỉ đồ vật quen thuộc.",
+      "hint": {
+        "text": "Đó là những vật dụng xung quanh mà con người có thể nhìn thấy và sử dụng."
+      },
+      "keywords": [
+        { "Id": 1, "text": "Bàn", "correct": true },
+        { "Id": 2, "text": "Ghế", "correct": true },
+        { "Id": 3, "text": "Bút", "correct": true },
+        { "Id": 4, "text": "Sách", "correct": true },
+        { "Id": 5, "text": "Đèn", "correct": true },
+        { "Id": 6, "text": "Cười", "correct": false },
+        { "Id": 7, "text": "Đi", "correct": false },
+        { "Id": 8, "text": "Chạy", "correct": false },
+        { "Id": 9, "text": "Nhảy", "correct": false }
+      ]
+    },
+    {
+      "Id": 3,
+      "subject": "Tiếng Việt",
+      "topic": "Hành động con người",
+      "question": "Hãy tìm các từ chỉ hoạt động học tập, sáng tạo của con người.",
+      "hint": {
+        "text": "Đó là những hoạt động diễn ra khi con người học tập, ca hát hoặc sáng tác."
+      },
+      "keywords": [
+        { "Id": 1, "text": "Đọc", "correct": true},
+        { "Id": 2, "text": "Viết", "correct": true },
+        { "Id": 3, "text": "Hát", "correct": true },
+        { "Id": 4, "text": "Múa", "correct": true },
+        { "Id": 5, "text": "Con mèo", "correct": false },
+        { "Id": 6, "text": "Quả bóng", "correct": false },
+        { "Id": 7, "text": "Bàn", "correct": false },
+        { "Id": 8, "text": "Ghế", "correct": false }
+      ]
+    }
+  ]
+}

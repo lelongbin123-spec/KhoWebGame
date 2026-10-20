@@ -1,0 +1,88 @@
+ 
+[
+    {
+        "Id": 0,
+        "type": "Trạm Hoàng sa",
+        "Text": "Quần đảo này nằm giữa Biển Đông, gồm nhiều đảo, bãi đá và rạn san hô. Đây là một trong hai quần đảo xa bờ gắn liền với chủ quyền biển đảo Việt Nam.",
+        "primaryAnswer": "Hoàng Sa",
+        "synonyms": ["Quần đảo Hoàng Sa", "Hoang Sa"],
+        "keywords": ["hoàng sa"],
+        "hint1": "Tên quần đảo gồm hai tiếng: tiếng đầu gợi màu vàng, tiếng sau là bãi cát.",
+        "hint2": "Tên gọi bắt đầu bằng ‘Hoàng’, thường được nhắc cùng quần đảo Trường Sa.",
+        "lighthouse": {
+            "label": "1. Hoàng Sa",
+            "ariaLabel": "Mở trạm Hoàng Sa",
+            "position": { "left": "75%", "top": "43%" }
+        },
+        "unlocked": false,
+        "attempts": 0
+    },
+    {
+        "Id": 1,
+        "type": "Trạm Hồ Ba Bể",
+        "Text": "Đây là hồ nước ngọt tự nhiên nằm giữa vùng núi đá vôi của tỉnh Bắc Kạn, trong Vườn quốc gia mang cùng tên. Tên gọi của hồ gợi đến ba hồ nhỏ hợp thành.",
+        "primaryAnswer": "Hồ Ba Bể",
+        "synonyms": ["Ba Bể", "Hồ Ba Bể Bắc Kạn"],
+        "keywords": ["ba bể"],
+        "hint1": "Hồ nằm giữa núi rừng Đông Bắc, thuộc Vườn quốc gia cùng tên.",
+        "hint2": "Tên hồ bắt đầu bằng chữ B và có nghĩa gắn với ba hồ.",
+        "lighthouse": {
+            "label": "2. Ba Bể",
+            "ariaLabel": "Mở trạm Ba Bể",
+            "position": { "left": "43%", "top": "10%" }
+        },
+        "unlocked": false,
+        "attempts": 0
+    },
+    {
+        "Id": 2,
+        "type": "Trạm Trường Sa",
+        "Text": "Quần đảo này nằm ở phía Nam Biển Đông, gồm nhiều đảo, bãi đá và rạn san hô. Đây là một trong hai quần đảo xa bờ gắn liền với chủ quyền biển đảo Việt Nam.",
+        "primaryAnswer": "Trường Sa",
+        "synonyms": ["Quần đảo Trường Sa", "Truong Sa"],
+        "keywords": ["trường sa"],
+        "hint1": "Tên quần đảo gồm hai tiếng, tiếng đầu gợi đến sự rộng dài.",
+        "hint2": "Tên gọi bắt đầu bằng ‘Trường’, thường được nhắc cùng quần đảo Hoàng Sa.",
+        "lighthouse": {
+            "label": "3. Trường Sa",
+            "ariaLabel": "Mở trạm Trường Sa",
+            "position": { "left": "82%", "top": "82%" }
+        },
+        "unlocked": false,
+        "attempts": 0
+    },
+    {
+        "Id": 3,
+        "type": "Trạm Sông Cửu Long",
+        "Text": "Đây là tên gọi đoạn hạ lưu của Mekong ở Việt Nam. Dòng sông chia thành nhiều nhánh, bồi đắp nên vùng đồng bằng rộng lớn ở phía Nam.",
+        "primaryAnswer": "Sông Cửu Long",
+        "synonyms": ["Sông Mê Kông", "Cửu Long", "Mê Kông"],
+        "keywords": ["cửu long", "mê kông"],
+        "hint1": "Dòng sông này chảy qua đồng bằng rộng lớn ở miền Tây Nam Bộ.",
+        "hint2": "Tên gọi có nghĩa là ‘chín rồng’, gắn với vùng đồng bằng cùng tên.",
+        "lighthouse": {
+            "label": "4. Cửu Long",
+            "ariaLabel": "Mở trạm Cửu Long",
+            "position": { "left": "43%", "top": "86%" }
+        },
+        "unlocked": false,
+        "attempts": 0
+    },
+    {
+        "Id": 4,
+        "type": "Trạm Đất Mũi Cà Mau",
+        "Text": "Mũi đất nằm ở xã Đất Mũi, tỉnh Cà Mau, thuộc vùng cực Nam của Việt Nam. Khu vực này nổi bật với rừng ngập mặn, đặc biệt là rừng đước.",
+        "primaryAnswer": "Mũi Cà Mau",
+        "synonyms": ["Cà Mau", "Đất Mũi", "Đất Mũi Cà Mau"],
+        "keywords": ["cà mau", "mũi cà mau"],
+        "hint1": "Địa danh này nằm ở xã Đất Mũi, giữa vùng rừng đước và rừng ngập mặn.",
+        "hint2": "Tên mũi đất có hai tiếng: tiếng đầu là ‘Mũi’, tiếng sau cũng là tên tỉnh cực Nam.",
+        "lighthouse": {
+            "label": "5. Cà Mau",
+            "ariaLabel": "Mở trạm Cà Mau",
+            "position": { "left": "38%", "top": "93%" }
+        },
+        "unlocked": false,
+        "attempts": 0
+    }
+]

@@ -1,0 +1,25 @@
+{
+    "Id": 20,
+    "type": "Ghép Bộ Phận Cua Biển",
+    "Text": "Kéo thả các bộ phận vào bất kỳ vị trí nào trong khung để hoàn thành chú cua!",
+    "referenceLayout": {
+        "width": 832,
+        "height": 801,
+        "parts": [
+            { "id": "left-legs", "x": 70, "y": 550, "width": 250, "height": 230, "src": "assets/images/left_legs.png" },
+            { "id": "right-legs", "x": 500, "y": 560, "width": 250, "height": 230, "src": "assets/images/right_legs.png" },
+            { "id": "left-claw", "x": 53, "y": 130, "width": 194, "height": 357, "src": "assets/images/left_claw.png" },
+            { "id": "right-claw", "x": 550, "y": 15, "width": 257, "height": 480, "src": "assets/images/right_claw.png" },
+            { "id": "body-crab", "x": 158, "y": 350, "width": 516, "height": 323, "src": "assets/images/body_crab.png" },
+            { "id": "eyes", "x": 259, "y": 210, "width": 314, "height": 205, "src": "assets/images/eyes.png" }
+        ]
+    },
+    "data": [
+        { "Id": "body-crab", "name": "Thân Cua", "src": "assets/images/body_crab.png", "result": "1" },
+        { "Id": "eyes", "name": "Cặp Mắt", "src": "assets/images/eyes.png", "result": "2" },
+        { "Id": "left-claw", "name": "Càng Trái", "src": "assets/images/left_claw.png", "result": "3" },
+        { "Id": "right-claw", "name": "Càng Phải", "src": "assets/images/right_claw.png", "result": "4" },
+        { "Id": "left-legs", "name": "Chân Trái", "src": "assets/images/left_legs.png", "result": "5" },
+        { "Id": "right-legs", "name": "Chân Phải", "src": "assets/images/right_legs.png", "result": "6" }
+    ]
+}

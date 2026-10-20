@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thám Tử An Toàn Số</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!--  MÀN HÌNH 1: CHÀO MỪNG   -->
+    <div id="start-screen" class="screen active">
+        <div class="bubble b1"></div>
+        <div class="bubble b2"></div>
+        <div class="bubble b3"></div>
+        <div class="bubble b4"></div>
+
+        <div class="start-card">
+            <div class="hero-icon">🕵️</div>
+            <h1>Thám Tử An Toàn Số</h1>
+            <p class="start-subtitle">Chọn lớp và bắt đầu nhiệm vụ!</p>
+
+            <!-- Combobox chọn lớp -->
+            <select class="grade-select-combo" id="grade-combo">
+                <option value="grade3">🌱 Lớp 3 – Văn minh & Bản quyền số</option>
+                <option value="grade45">🚀 Lớp 4–5 – Phishing & Dấu chân số</option>
+            </select>
+
+            <!-- Danh sách nhiệm vụ – điền tự động từ JS -->
+            <div class="mission-box">
+                <div class="mission-title">📋 Nhiệm vụ của bạn:</div>
+                <ul class="mission-list" id="mission-list"></ul>
+            </div>
+
+            <!-- Nút bắt đầu -->
+            <button class="btn-start" onclick="startGame()">
+                🚀 Bắt đầu nhiệm vụ!
+            </button>
+        </div>
+    </div>
+
+    <!--  MÀN HÌNH 2: GAME CHAT    -->
+    <div id="chat-screen" class="screen">
+        <!-- THANH TIÊU ĐỀ TRÊN -->
+        <header class="game-header">
+            <div class="score-box" style="display: flex; align-items: center; gap: 6px;">
+                <span>⭐</span>
+                <span><span id="score-display">0</span>&nbsp;điểm</span>
+            </div>
+
+            <div class="header-center">
+                <span class="header-avatar"><img src="assets/images/Robot_happy.jpg" class="robot-avatar-small"></span>
+                <div>
+                    <div class="header-title">Vệ sĩ Không gian mạng</div>
+                    <div class="header-sub" id="grade-label">Đang tải...</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="btn-back" onclick="replayGame()">🔄 Chơi lại</button>
+            </div>
+        </header>
+
+        <!-- THÂN GAME: 2 CỘT (Chat + Panel) -->
+        <div class="game-body">
+
+            <!-- CỘT TRÁI: KHUNG CHAT -->
+            <div class="chat-panel">
+
+                <!-- Laptop chứa Zalo chat -->
+                <div class="laptop-wrap">
+                    <div class="lp-screen-frame">
+                        <div class="lp-display">
+                            <!-- Zalo App UI -->
+                            <div class="zalo-app">
+                                <!-- Sidebar Zalo -->
+                                <div class="zalo-sidebar">
+                                    <div class="z-avatar"><img src="assets/images/Robot_avatar.png" class="robot-avatar-small"></div>
+                                    <div class="z-icons">
+                                        <div class="z-icon active">💬</div>
+                                        <div class="z-icon">📇</div>
+                                        <div class="z-icon">☁️</div>
+                                        <div class="z-icon" style="margin-top:auto;">⚙️</div>
+                                    </div>
+                                </div>
+
+                                <!-- Cột chính Zalo -->
+                                <div class="zalo-main">
+                                    <!-- Thanh header Zalo -->
+                                    <div class="zalo-header">
+                                        <div class="z-header-info">
+                                            <div class="z-header-avatar" id="scenario-avatar">👤</div>
+                                            <div>
+                                                <div class="z-name" id="z-contact-name">Tin nhắn từ Người lạ</div>
+                                                <div class="z-status">Vừa mới truy cập</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Vùng chat messages -->
+                                    <div class="chat-box" id="chat-box">
+                                        <!-- Lời chào cố định -->
+                                        <div class="bubble-row ai-row">
+                                            <div class="bubble-avatar"><img src="assets/images/Robot_avatar.png" class="robot-avatar-small"></div>
+                                            <div class="chat-bubble ai-bubble intro-bubble">
+                                                Xin chào thám tử nhỏ! 👋<br>
+                                                Đọc kỹ tin nhắn bên dưới và bấm nút phán quyết của bạn nhé!
+                                            </div>
+                                        </div>
+
+                                        <!-- Tin nhắn tình huống -->
+                                        <div class="bubble-row scenario-row" id="scenario-row">
+                                            <div class="bubble-avatar scenario-avatar" id="scenario-avatar">👤</div>
+                                            <div class="chat-bubble scenario-bubble" id="scenario-bubble">
+                                                Đang tải tình huống...
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lp-logo">KID-BOOK</div>
+                    </div>
+                    <div class="lp-base"><div class="lp-touchpad"></div></div>
+                </div>
+
+                <!-- Gợi ý dưới chat (NGOÀI laptop) -->
+                <div class="chat-hint">
+                    💡 Đọc kỹ rồi bấm nút bên phải để đưa ra phán quyết!
+                </div>
+            </div>
+
+            <!-- CỘT PHẢI: PANEL THAO TÁC -->
+            <div class="action-panel">
+
+                <!-- Tiến độ -->
+                <div class="progress-card">
+                    <div class="progress-label">Tiến độ: <span id="progress-text">0 / 0</span></div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <!-- 2 NÚT BẤM LỚN -->
+                <div class="big-buttons">
+                    <button class="big-btn btn-safe" id="btn-green" onclick="handleChoice('green')">
+                        <span class="btn-icon">🛡️</span>
+                        <span class="btn-label">AN TOÀN<br><small>Lịch sự / Xin phép</small></span>
+                    </button>
+                    <button class="big-btn btn-danger" id="btn-red" onclick="handleChoice('red')">
+                        <span class="btn-icon">✋</span>
+                        <span class="btn-label">NGUY HIỂM<br><small>Chặn / Báo người lớn</small></span>
+                    </button>
+                </div>
+
+                <!-- Thống kê -->
+                <div class="stat-row">
+                    <div class="stat-box correct-stat">
+                        <div class="stat-num" id="correct-count">0</div>
+                        <div class="stat-lbl">✅ Đúng</div>
+                    </div>
+                    <div class="stat-box wrong-stat">
+                        <div class="stat-num" id="wrong-count">0</div>
+                        <div class="stat-lbl">❌ Sai</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  POPUP PHẢN HỒI KẾT QUẢ  -->
+    <div id="feedback-overlay" class="overlay hidden">
+        <div class="feedback-modal">
+            <img class="feedback-icon robot-avatar" id="feedback-icon" src="assets/images/Robot_happy.jpg" alt="Feedback Icon" style="display: block; margin: 0 auto 1rem;">
+            <h2 class="feedback-title" id="feedback-title">Tuyệt vời!</h2>
+            <p class="feedback-text" id="feedback-text">Lời khuyên của AI sẽ hiện ở đây.</p>
+            <button class="btn-next" onclick="nextScenario()">Câu tiếp theo ➜</button>
+        </div>
+    </div>
+
+    <!--  POPUP KẾT THÚC GAME      -->
+    <div id="end-overlay" class="overlay hidden">
+        <div class="end-modal">
+            <div class="end-icon">🏆</div>
+            <h2>Hoàn thành!</h2>
+            <p id="end-message">Bạn đã hoàn thành tất cả tình huống!</p>
+            <div class="end-score" id="end-score-display">
+                0
+            </div>
+            <div class="end-badge" id="end-badge">🕵️ Thám tử xuất sắc</div>
+            <div class="end-buttons">
+                <button class="btn-replay" onclick="replayGame()">🔄 Chơi lại</button>
+                <button class="btn-home" onclick="goBack()">🏠 Về trang chủ</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

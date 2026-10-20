@@ -1,0 +1,60 @@
+{
+    "Id": 20,
+    "type": "Thợ Săn Từ Khóa",
+    "Text": "Tìm đồ vật theo từ khóa AI Vision",
+    "src": "assets/images/BG.png",
+    "ai_hint_time": 10,
+    "robot_dialog": {
+        "wrong_item": "Đó là \"{clicked}\". Hãy tìm \"{target}\"!",
+        "wrong_background": "Sai rồi! Không có gì ở đó cả. Tìm lại nhé!",
+        "game_complete": "Tuyệt vời! Bạn đã hoàn thành xuất sắc!",
+        "next_question": "Hãy tìm cho tôi đồ vật \"{target}\" nhé!",
+        "correct_click": "Tuyệt vời! Bạn đã tìm đúng rồi!",
+        "already_found": "Bạn đã tìm thấy \"{clicked}\" rồi mà!",
+        "hint": "Gợi ý: Tìm đồ vật \"{target}\" ở quanh khu vực được phóng to nhé!"
+    },
+    "data": [
+        {
+            "word": "bag",
+            "width": 116,
+            "height": 117,
+            "src": "assets/images/bag.png",
+            "x_percent": 16.77,
+            "y_percent": 50
+        },
+        {
+            "word": "clock",
+            "width": 105,
+            "height": 100,
+            "src": "assets/images/clock.png",
+            "x_percent": 51.46,
+            "y_percent": 14.3
+        },
+        {
+            "word": "pen",
+            "width": 131,
+            "height": 107,
+            "src": "assets/images/pen.png",
+            "x_percent": 38.23,
+            "y_percent": 68.21
+        },
+        {
+            "word": "book",
+            "width": 119,
+            "height": 100,
+            "src": "assets/images/book.png",
+            "x_percent": 70.85,
+            "y_percent": 57.54
+        },
+        {
+            "word": "earth",
+            "width": 119,
+            "height": 121,
+            "src": "assets/images/earth.png",
+            "x_percent": 47,
+            "y_percent": 47.15
+        }
+    ],
+    "editor_canvas_width": 1300,
+    "editor_canvas_height": 701
+}

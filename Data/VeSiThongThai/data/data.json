@@ -1,0 +1,78 @@
+{
+  "Id": 20,
+  "type": "Vệ sĩ nhí thông thái",
+  "text": "Game tương tác an toàn mạng",
+  "aiCharacter": "Vệ sĩ Không gian mạng",
+  "data": [
+    {
+      "Id": 1,
+      "title": "Người lạ cho kẹo",
+      "dialogue": "Chú lạ cho kẹo và rủ bé đi. Bé làm gì?",
+      "image": "assets/images/Pic1.jpg",
+      "imageAlt": "Người lạ đưa kẹo, em nhỏ giơ tay từ chối",
+      "safeKeywords": ["không", "không đi theo", "mách mẹ", "mách ba", "báo cô", "la lên"],
+      "correctFeedback": "Giỏi lắm! Không đi theo người lạ. Hãy kể với ba mẹ nhé!",
+      "wrongFeedback": "Không nhận quà, không đi theo. Hãy báo ba mẹ hoặc cô giáo nhé!"
+    },
+    {
+      "Id": 2,
+      "title": "Người lạ đón về",
+      "dialogue": "Cô lạ nói: 'Ba nhờ cô đón'. Bé có đi theo không?",
+      "image": "assets/images/Pic2.jpg",
+      "imageAlt": "Người lạ đứng cạnh xe ở cổng trường, em nhỏ không đi theo",
+      "safeKeywords": ["không", "không đi theo", "mách mẹ", "mách ba", "báo cô", "la lên"],
+      "correctFeedback": "Đúng rồi! Chỉ đi với người nhà đã hẹn trước. Hãy báo cô giáo!",
+      "wrongFeedback": "Không đi theo. Hãy ở cạnh cô giáo và gọi ba mẹ nhé!"
+    },
+    {
+      "Id": 3,
+      "title": "Bảo vệ cơ thể",
+      "dialogue": "Có người chạm vào chỗ đồ bơi của bé. Bé làm gì?",
+      "image": "assets/images/Pic3.jpg",
+      "imageAlt": "Em nhỏ mặc đồ bơi giơ tay đặt ranh giới an toàn",
+      "safeKeywords": ["không", "bỏ ra", "đừng chạm", "mách mẹ", "mách ba", "báo cô", "la lên"],
+      "correctFeedback": "Đúng rồi! Nói 'Không!', đi ra và kể với người lớn bé tin nhé!",
+      "wrongFeedback": "Cơ thể bé là của bé. Nói 'Không!', đi ra và kể với ba mẹ nhé!"
+    },
+    {
+      "Id": 4,
+      "title": "Người lạ gõ cửa",
+      "dialogue": "Chú lạ gõ cửa khi bé ở nhà. Bé có mở cửa không?",
+      "image": "assets/images/Pic4.png",
+      "imageAlt": "Em nhỏ ở trong nhà giữ cửa khóa khi người lạ đứng bên ngoài",
+      "safeKeywords": ["không", "không mở cửa", "mách mẹ", "mách ba", "gọi mẹ", "gọi ba"],
+      "correctFeedback": "Giỏi lắm! Không mở cửa. Hãy gọi ba mẹ nhé!",
+      "wrongFeedback": "Không mở cửa cho người lạ. Gọi ba mẹ hoặc người lớn bé tin nhé!"
+    },
+    {
+      "Id": 5,
+      "title": "Giữ kín địa chỉ nhà",
+      "dialogue": "Bạn lạ trên mạng hỏi nhà bé ở đâu. Bé có nói không?",
+      "image": "assets/images/Pic5.png",
+      "imageAlt": "Người lạ hỏi địa chỉ qua màn hình, em nhỏ từ chối chia sẻ",
+      "safeKeywords": ["không", "không gửi", "không nói", "mách mẹ", "mách ba", "báo mẹ", "báo ba"],
+      "correctFeedback": "Đúng rồi! Địa chỉ nhà là bí mật. Hãy kể với ba mẹ!",
+      "wrongFeedback": "Không gửi địa chỉ nhà. Đóng tin nhắn và báo ba mẹ nhé!"
+    },
+    {
+      "Id": 6,
+      "title": "Không gửi ảnh phòng ngủ",
+      "dialogue": "Bạn lạ xin ảnh phòng ngủ. Bé có gửi ảnh không?",
+      "image": "assets/images/Pic6.png",
+      "imageAlt": "Người lạ xin ảnh qua máy tính, em nhỏ giơ tay từ chối",
+      "safeKeywords": ["không", "không gửi", "không chụp", "mách mẹ", "mách ba", "báo mẹ", "báo ba"],
+      "correctFeedback": "Giỏi lắm! Không gửi ảnh riêng. Hãy báo ba mẹ nhé!",
+      "wrongFeedback": "Đừng gửi ảnh cho người lạ. Đóng tin nhắn và kể với ba mẹ!"
+    },
+    {
+      "Id": 7,
+      "title": "Bí mật mật khẩu",
+      "dialogue": "Bạn lạ hứa tặng quà để xin mật khẩu. Bé có cho không?",
+      "image": "assets/images/Pic7.png",
+      "imageAlt": "Người lạ xin mật khẩu trên mạng, em nhỏ bảo vệ tài khoản bằng lá chắn",
+      "safeKeywords": ["không", "không nói", "không cho", "không gửi", "giữ bí mật", "mách mẹ", "mách ba", "báo mẹ", "báo ba"],
+      "correctFeedback": "Đúng rồi! Mật khẩu là bí mật. Không cho ai nhé!",
+      "wrongFeedback": "Không nói mật khẩu cho người lạ. Hãy kể với ba mẹ!"
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "id": 1,
+    "title": "Vệ sĩ nhí thông thái",
+    "description": "Học an toàn số bằng hình ảnh và giọng nói AI",
+    "tag": "Bảo mật",
+    "icon": "🛡️",
+    "url": "Data/VeSiThongThai/index.html"
+  },
+  {
+    "id": 2,
+    "title": "Giải mã địa danh",
+    "description": "Mở khóa 5 trạm hải đăng và tìm hiểu những địa danh nổi bật của Việt Nam.",
+    "tag": "Khám phá",
+    "icon": "🧭",
+    "url": "Data/GiaiMaDiaDanh/index.html"
+  },
+  {
+    "id": 3,
+    "title": "Thu hoạch thông minh",
+    "description": "Kéo các vật phẩm vào đúng giỏ: rau củ, động vật hay hoa.",
+    "tag": "Phân loại",
+    "icon": "🌾",
+    "url": "Data/ThuHoachThongMinh/index.html"
+  },
+  {
+    "id": 4,
+    "title": "Tự nhiên và nhân tạo",
+    "description": "Quan sát hình ảnh và phân biệt những gì thuộc về tự nhiên hay do con người tạo ra.",
+    "tag": "Khoa học",
+    "icon": "🌿",
+    "url": "Data/TuNhienNhanTao/index.html"
+  },
+  {
+    "id": 5,
+    "title": "Ghép hình tô màu",
+    "description": "Kéo thả các bộ phận để ghép chú cua biển, sau đó chọn màu để hoàn thiện bức tranh.",
+    "tag": "Sáng tạo",
+    "icon": "🧩",
+    "url": "Data/GhepHinhToMau/index.html"
+  },
+  {
+    "id": 6,
+    "title": "Thắp sáng bóng đèn",
+    "description": "Nhấn giữ chuột kéo đầu dây dẫn từ cực pin chạm vào chuôi bóng đèn.",
+    "tag": "Tự nhiên và xã hội",
+    "icon": "ϟ",
+    "url": "Data/ThapSangBongDen/index.html"
+  },
+  {
+    "id": 7,
+    "title": "Mảnh ghép bí ẩn",
+    "description": "Mảnh ghép bí ẩn (giải đố đa môn & Đoán từ khóa AI)",
+    "tag": "Giải đố liên môn",
+    "icon": "🧩",
+    "url": "Data/ManhGhepBiAn/index.html"
+  },
+  {
+    "id": 8,
+    "title": "Thợ săn từ khóa",
+    "description": "Tìm kiếm và khám phá các từ khóa bí ẩn.",
+    "tag": "Tìm kiếm",
+    "icon": "🔍",
+    "url": "Data/ThoSanTuKhoa/index.html"
+  },
+  {
+    "id": 9,
+    "title": "Thám tử an toàn số",
+    "description": "Tìm kiếm và khám phá các từ khóa bí ẩn.",
+    "tag": "Bảo mật",
+    "icon": "🛡️",
+    "url": "Data/ThamTuToanSo/index.html"
+  },
+  {
+    "id": 10,
+    "title": "Trạm không gian từ khóa",
+    "description": "Hãy tìm các từ khóa liên quan đến không gian.",
+    "tag": "Vũ trụ",
+    "icon": "🤖",
+    "url": "Data/TramKhongGianTuKhoa/index.html"
+  },
+  {
+    "id": 11,
+    "title": "Ghép hình thông minh",
+    "description": "Học tập vui vẻ với trò chơi ghép hình thông minh!",
+    "tag": "Tư duy",
+    "icon": "🧩",
+    "url": "Data/GhepHinhThongMinh/index.html"
+  },
+  {
+    "id": 12,
+    "title": "Thám tử thời gian",
+    "description": "Săn chữ vượt vòng thời gian",
+    "tag": "Quan sát",
+    "icon": "🔍",
+    "url": "Data/MeCungTuKhoa/index.html"
+  },
+  {
+    "id": 13,
+    "title": "Thám tử âm thanh",
+    "description": "Quan sát và phản xạ kết nối âm thanh - hình ảnh",
+    "tag": "Môn Âm nhạc / Tự nhiên & Xã hội",
+    "icon": "🎧",
+    "url": "Data/ThamTuAmThanh/index.html"
+  }
+]

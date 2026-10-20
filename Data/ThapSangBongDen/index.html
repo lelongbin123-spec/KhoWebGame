@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <!-- Khai báo ngôn ngữ, hiển thị trên thiết bị di động và màu thanh trình duyệt. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1e1050" />
+    <meta name="description" content="Kéo dây nối pin với bóng đèn và khám phá mạch điện." />
+    <title>Thắp sáng bóng đèn</title>
+    <!-- Google Fonts: Baloo 2 – font duy nhất, tròn vui, dễ đọc cho học sinh -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Nạp giao diện trước, sau đó chạy logic trò chơi khi tài liệu đã sẵn sàng. -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/game.js" defer></script>
+  </head>
+  <body>
+    <!-- Bóng đèn trang trí nền -->
+    <div class="bg-deco" aria-hidden="true">
+      <span class="bg-star s1">★</span>
+      <span class="bg-star s2">✦</span>
+      <span class="bg-star s3">⚡</span>
+      <span class="bg-star s4">★</span>
+      <span class="bg-star s5">✦</span>
+    </div>
+
+    <main class="game-shell">
+      <!-- Thanh tiêu đề: nhận tên game từ JSON và cung cấp nút chơi lại. -->
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-icon" aria-hidden="true">⚡</span>
+          <div class="brand-copy">
+            <h1 id="game-title">Thắp sáng bóng đèn</h1>
+            <p>Thí nghiệm: Mạch điện 1 chạm</p>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button id="restart-button" class="restart-button" type="button" aria-label="Làm lại trò chơi">
+            <span class="restart-icon" aria-hidden="true">⟳</span>
+            <span>Làm lại</span>
+          </button>
+          <button id="mute-button" class="icon-button" type="button" aria-label="Bật/Tắt âm thanh">
+            <span class="mute-icon" id="mute-icon" aria-hidden="true">🔊</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Khu vực trợ lý hiển thị hướng dẫn và thời gian còn lại trước gợi ý. -->
+      <section class="assistant-panel" aria-label="Trợ lý STEM AI">
+        <div class="assistant-avatar">
+          <span class="assistant-icon" aria-hidden="true">🤖</span>
+          <span class="assistant-pulse" aria-hidden="true"></span>
+        </div>
+        <div class="assistant-copy">
+          <span class="assistant-label">✨ TRỢ LÝ AI</span>
+          <p id="game-instruction">Nhấn giữ chuột kéo đầu dây dẫn từ cực pin chạm vào chuôi bóng đèn!</p>
+        </div>
+        <span id="hint-countdown" class="hint-countdown"><span aria-hidden="true">◷</span> Chờ (6s)</span>
+      </section>
+
+      <!-- Màn chơi Canvas nơi pin, bóng đèn và dây dẫn được vẽ. -->
+      <section class="game-panel" aria-label="Trò chơi nối pin với bóng đèn">
+        <canvas id="game-canvas" width="960" height="540" aria-label="Kéo đầu dây đỏ đến chuôi đèn"></canvas>
+      </section>
+
+      <!-- Dải nhãn học thuật bên dưới -->
+      <div class="edu-strip">
+        <span>⚡ Điện học</span>
+        <span>🔋 Pin &amp; Bóng đèn</span>
+        <span>🔌 Mạch điện kín</span>
+        <span>💡 Năng lượng điện</span>
+      </div>
+    </main>
+  </body>
+</html>

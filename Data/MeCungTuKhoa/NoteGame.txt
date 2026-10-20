@@ -1,0 +1,15 @@
+- Đối tượng Lớp  4 - 5
+- Luyện kỹ năng rê - quét - chọn vùng chuột (Drag-select)
+
+- Tích hợp: Lịch sử & Địa lý tích hợp (phát triển vốn từ và khả năng quan sát)."	"
+Mê cung từ khóa (Săn chữ vượt vòng Địa lý - Lịch sử):
+
+- Một bảng ma trận chữ cái (Word Search Puzzle) chứa các từ khóa ẩn về di tích lịch sử 
+hoặc danh lam thắng cảnh.
+
+- Học sinh rê chuột nhấn giữ và kéo (Drag-select) nối các chữ cái liền kề để 
+tìm đúng từ theo câu hỏi bên cạnh; tìm đủ từ sẽ mở khóa cánh cổng thời gian sang màn tiếp theo.
+
+- Khả năng AI: AI đóng vai ""Thám tử thời gian"", theo dõi vùng rê chuột của học sinh. 
+Nếu học sinh kéo sai nhiều lần, AI làm sáng lấp lánh chữ cái đầu tiên của từ khóa (Visual Hint) 
+kèm câu gợi ý hài hước để kích hoạt tư duy liên tưởng."

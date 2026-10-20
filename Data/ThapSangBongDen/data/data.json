@@ -1,0 +1,26 @@
+{
+    "Id": 20,
+    "type": "Thắp sáng bóng đèn",
+    "Text": "Nhấn giữ chuột kéo đầu dây dẫn từ cực pin chạm vào chuôi bóng đèn!",
+    "objects": {
+        "pin": {
+            "Id": "pin",
+            "src": "./assets/images/pin.png",
+            "x": 65,
+            "y": 130,
+            "width": 300,
+            "height": 377,
+            "positiveTerminal": { "x": 215, "y": 146 }
+        },
+        "bulb": {
+            "Id": "den",
+            "src": "./assets/images/den.png",
+            "x": 560,
+            "y": 140,
+            "width": 236,
+            "height": 320,
+            "socket": { "x": 678, "y": 450 }
+        },
+        "wireEndStart": { "x": 258, "y": 252 }
+    }
+}

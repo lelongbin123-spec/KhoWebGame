@@ -1,0 +1,111 @@
+{
+  "type": "QUESTION_TYPES.GROUP",
+  "Text": "Thu hoạch thông minh",
+  "hint": "Hãy kéo và thả các vật phẩm vào giỏ tương ứng với loại của chúng. Ví dụ: \"Cà rốt\" vào giỏ \"Rau củ\", \"Chó\" vào giỏ \"Động vật\", \"Hoa hồng\" vào giỏ \"Hoa\".",
+  "note": "Bạn phải kéo vật phẩm vào đúng giỏ để được điểm. Nếu kéo sai, bạn sẽ bị trừ điểm. Hãy cố gắng hoàn thành bài tập trong thời gian nhanh nhất và đạt điểm tối đa!",
+  "rows": [
+    {
+      "Id": 1,
+      "Text": "cà rốt",
+      "src": "img/carot.png",
+      "category": "Rau củ",
+      "correctGroup": 1
+    },
+    {
+      "Id": 2,
+      "Text": "con chó",
+      "src": "img/concho.png",
+      "category": "Động vật",
+      "correctGroup": 2
+    },
+    {
+      "Id": 3,
+      "Text": "hoa hồng",
+      "src": "img/hoahong.png",
+      "category": "Hoa",
+      "correctGroup": 3
+    },
+    {
+      "Id": 4,
+      "Text": "súp lơ",
+      "src": "img/suplo.png",
+      "category": "Rau củ",
+      "correctGroup": 1
+    },
+    {
+      "Id": 5,
+      "Text": "con mèo",
+      "src": "img/conmeo.png",
+      "category": "Động vật",
+      "correctGroup": 2
+    },
+    {
+      "Id": 6,
+      "Text": "hướng dương",
+      "src": "img/huongduong.png",
+      "category": "Hoa",
+      "correctGroup": 3
+    },
+
+    {
+      "Id": 7,
+      "Text": "con gà",
+      "src": "img/conga.png",
+      "category": "Động vật",
+      "correctGroup": 2
+    },
+
+    {
+      "Id": 8,
+      "Text": "xà lách",
+      "src": "img/xalach.png",
+      "category": "Rau củ",
+      "correctGroup": 1
+    },
+    
+    {
+      "Id": 9,
+      "Text": "hoa cúc",
+      "src": "img/hoacuc.png",
+      "category": "Hoa",
+      "correctGroup": 3
+    },
+    {
+      "Id": 10,
+      "Text": "con thỏ",
+      "src": "img/contho.png",
+      "category": "Động vật",
+      "correctGroup": 2
+    },
+    {
+      "Id": 11,
+      "Text": "cải bắp",
+      "src": "img/caibap.png",
+      "category": "Rau củ",
+      "correctGroup": 1
+    },
+    {
+      "Id": 12,
+      "Text": "hoa lan",
+      "src": "img/hoalan.png",
+      "category": "Hoa",
+      "correctGroup": 3
+    }
+
+  ],
+  "groups": [
+    {
+      "Id": 1,
+      "name": "Rau củ"
+    },
+    {
+      "Id": 2,
+      "name": "Động vật"
+    },
+    {
+      "Id": 3,
+      "name": "Hoa "
+    }
+  ]
+  
+}

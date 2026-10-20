@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#d6f9f6">
+    <title>Mảnh ghép bí ẩn | Lớp học vui</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="header-main">
+        <div class="header-copy">
+          <div class="header-kicker">
+            <span aria-hidden="true">≋</span>
+            HÀNH TRÌNH KHÁM PHÁ
+          </div>
+          <h1>Mảnh ghép bí ẩn</h1>
+          <p>Giải đố đa môn – Đoán từ khóa</p>
+        </div>
+
+        <div class="header-actions">
+          <div class="header-stat">
+            <span class="stat-label">ĐIỂM</span>
+            <strong id="score">0</strong>
+          </div>
+          <div class="header-stat">
+            <span class="stat-label">CÂU ĐÚNG</span>
+            <strong id="correct-count">0</strong>
+          </div>
+          <div class="header-stat">
+            <span class="stat-label">ĐIỂM CAO</span>
+            <strong id="high-score">—</strong>
+          </div>
+          <button class="start-btn" id="start-game" type="button">
+            <span aria-hidden="true">▷</span>
+            <span id="start-label">Bắt đầu</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="explore-progress">
+        <div class="progress-label-row">
+          <span>Tiến độ khám phá</span>
+          <strong id="progress-label">0/5</strong>
+        </div>
+        <div class="progress-track">
+          <span id="progress"></span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="game-grid">
+        <div class="game-column">
+          <div class="mystery-scene" id="scene">
+            <img class="theme-image" src="assets/images/chude.png" alt="Tranh chủ đề đại dương được che bởi các mảnh ghép">
+            <div class="tile-grid" id="tiles"></div>
+            <div class="scene-caption" id="scene-caption"></div>
+
+            <div class="ready-overlay" id="ready-overlay">
+              <div class="ready-card">
+                <span class="ready-icon" aria-hidden="true">✧</span>
+                <h2>Sẵn sàng khám phá?</h2>
+                <p>Mỗi đáp án đúng sẽ mở một mảnh tranh và một chữ cái bí mật.</p>
+              </div>
+            </div>
+          </div>
+
+          <section class="keyword-card" aria-labelledby="keyword-heading">
+            <div class="keyword-topline">
+              <div>
+                <h2 id="keyword-heading">TỪ KHÓA BÍ ẨN</h2>
+                <p>Mở mảnh ghép để nhận chữ cái gợi ý.</p>
+              </div>
+              <button class="guess-btn" id="guess-open" type="button">
+                <span aria-hidden="true">⚿</span>
+                Dự đoán từ khóa
+              </button>
+            </div>
+            <div class="letter-slots" id="letters"></div>
+          </section>
+        </div>
+
+        <aside class="side-column">
+          <section class="assistant-card">
+            <div class="assistant-heading">
+              <span class="assistant-icon" aria-hidden="true">▣</span>
+              <div>
+                <h2>Trợ lý AI</h2>
+                <p>Bạn đồng hành suy luận</p>
+              </div>
+            </div>
+            <div class="assistant-message">
+              <p id="ai-hint">Chào nhà thám hiểm! Hãy nhấn Bắt đầu để tìm từ khóa đang ẩn sau bức tranh biển nhé.</p>
+            </div>
+          </section>
+
+          <section class="rules-card">
+            <h2><span aria-hidden="true">⊙</span> Cách chơi</h2>
+            <ul>
+              <li><span aria-hidden="true">⌁</span> Chọn mảnh ghép để nhận câu hỏi đa môn.</li>
+              <li><span aria-hidden="true">▦</span> Trả lời bằng cách chọn đáp án hoặc gõ câu trả lời ngắn.</li>
+              <li><span aria-hidden="true">♧</span> Có thể dự đoán từ khóa bất cứ lúc nào để nhận thưởng.</li>
+            </ul>
+          </section>
+        </aside>
+      </section>
+
+      <footer>
+        <span>✦ Hãy quan sát thật kỹ và kết nối những điều con biết nhé!</span>
+        <span>HỌC • CHƠI • KHÁM PHÁ</span>
+      </footer>
+    </main>
+
+    <div class="modal-backdrop" id="quiz-modal" hidden>
+      <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="question-title">
+        <button class="close-btn" id="close-quiz" aria-label="Đóng">×</button>
+        <div class="dialog-subject">
+          <span id="modal-icon">＋</span>
+          <span id="modal-subject">TOÁN HỌC</span>
+        </div>
+        <div class="question-count" id="question-count"></div>
+        <h2 id="question-title"></h2>
+        <div class="answer-mode" id="answer-mode"></div>
+        <div class="answer-area" id="answer-area"></div>
+        <div class="feedback" id="feedback" aria-live="polite"></div>
+        <button class="check-btn" id="check-answer" type="button">
+          Kiểm tra đáp án
+          <span>→</span>
+        </button>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="guess-modal" hidden>
+      <section class="dialog guess-dialog" role="dialog" aria-modal="true" aria-labelledby="guess-title">
+        <button class="close-btn" id="close-guess" aria-label="Đóng">×</button>
+        <div class="guess-emblem">🔎</div>
+        <div class="eyebrow">BẠN ĐÃ TÌM RA CHƯA?</div>
+        <h2 id="guess-title">Đoán từ khóa bí mật</h2>
+        <p>Gõ đáp án của con vào đây nhé!</p>
+        <form id="guess-form">
+          <input id="guess-input" autocomplete="off" placeholder="Nhập từ khóa" maxlength="24" aria-label="Nhập từ khóa">
+          <button class="check-btn" type="submit">
+            Gửi dự đoán
+            <span>→</span>
+          </button>
+        </form>
+        <div class="feedback" id="guess-feedback" aria-live="polite"></div>
+        <div class="hint-line">
+          ✧
+          <span id="guess-hint"></span>
+        </div>
+      </section>
+    </div>
+
+    <div class="win-toast" id="win-toast" hidden>
+      <span>🎉</span>
+      <div>
+        <b>Tuyệt vời!</b>
+        <small id="win-copy">Con đã khám phá xong bức tranh bí ẩn!</small>
+      </div>
+    </div>
+
+    <script src="js/game.js"></script>
+  </body>
+</html>

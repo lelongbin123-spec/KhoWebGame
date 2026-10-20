@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="referrer" content="no-referrer">
+  <title>Vệ Sĩ Thông Thái - Học An Toàn Bằng Hình Ảnh & Giọng Nói AI</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800;900&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Audio ẩn dùng để phát âm thanh Text-to-Speech (TTS) -->
+  <audio id="ttsAudioPlayer" class="hidden"></audio>
+
+  <!-- ─── SHELL: single full-screen flex column ─── -->
+  <!-- Khung bao bọc toàn bộ giao diện của ứng dụng, hiển thị toàn màn hình -->
+  <div class="shell">
+
+    <!-- HEADER -->
+    <!-- Phần Header chứa logo, tên ứng dụng, thanh tiến độ, điểm số sao và nút bật/tắt âm thanh -->
+    <header class="header">
+      <div class="logo">
+        <img src="assets/images/Robot_avatar.png" alt="Vệ sĩ nhí thông thái">
+        <div class="logo-text">
+          <h1>VỆ SĨ NHÍ THÔNG THÁI</h1>
+          <p>Học an toàn số bằng hình ảnh &amp; giọng nói AI</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="progress-box">
+          <div class="progress-text">Tiến độ: <span id="progressText">0 / 0</span></div>
+          <div class="progress-track" id="progressTrack" role="progressbar" aria-label="Tiến độ trò chơi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Chưa bắt đầu">
+            <div class="progress-fill" id="progressBar" style="width: 0%;"></div>
+          </div>
+        </div>
+        <div class="score-pill" role="status" aria-label="Số sao">
+          <i class="fa-solid fa-star" aria-hidden="true"></i>
+          <span id="starCounter">0</span>
+        </div>
+        <button id="soundToggleBtn" class="icon-btn" aria-label="Tắt tiếng">
+          <i id="soundIcon" class="fa-solid fa-volume-high" aria-hidden="true" style="color:var(--blue);"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <!-- Khu vực nội dung chính của ứng dụng chứa hình ảnh tình huống và các nút tương tác điều khiển -->
+    <main class="main-board">
+      
+      <!-- LEFT COLUMN -->
+      <!-- Bảng điều khiển bên trái: Hiển thị hình ảnh minh họa tình huống, thông tin mô tả và các hiệu ứng trực quan -->
+      <div class="left-panel">
+        <!-- SCENE CARD -->
+        <div class="scene-card" id="scenarioImageContainer">
+          <div class="scene-placeholder" id="scenarioImage">
+            <img src="assets/images/Pic1.jpg" alt="Người lạ đưa kẹo, em nhỏ giơ tay từ chối">
+            <div class="sr-only" aria-live="polite">
+              <span id="scenarioTitle">Đang tải...</span>
+              <span id="scenarioDialogue">Vui lòng chờ...</span>
+            </div>
+            <button class="btn-replay-small" id="replayVoiceBtn" aria-label="Nghe lại câu hỏi">
+              <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div id="feedbackEffects" class="feedback-effects hidden" aria-hidden="true">
+            <div class="shield-frame"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="shield-burst"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="attacker-repel"><i class="fa-solid fa-user-secret"></i><i class="fa-solid fa-wind repel-wind"></i></div>
+          </div>
+          <!-- speaking indicator -->
+          <!-- Hiệu ứng hiển thị khi nhân vật đang phát âm thanh (nói) -->
+          <div id="speakingBadge" class="speaking-badge hidden">
+            <i class="fa-solid fa-volume-high"></i>
+            <span class="wave-bar"></span><span class="wave-bar"></span>
+            <span class="wave-bar"></span><span class="wave-bar"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <!-- Bảng điều khiển bên phải: Chứa các nút thao tác chọn lựa (Đồng ý/Từ chối), khu vực thu âm qua micro và bảng thống kê kết quả -->
+      <div class="right-panel">
+        
+        <div class="controls-area">
+          <p class="hidden" id="transcriptPreview" aria-live="polite">Bé hãy lắng nghe và bấm nút nhé!</p>
+
+          <div class="controls-grid">
+            <!-- Green Shield: AGREE -->
+            <button class="btn-agree" id="agreeBtn" aria-label="Đồng ý, chọn an toàn">
+              <div class="btn-content">
+                <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                <span class="btn-label">Đồng ý / An toàn</span>
+              </div>
+            </button>
+            
+            <!-- Red Hand: REJECT -->
+            <button class="btn-reject" id="rejectBtn" aria-label="Từ chối, chọn không an toàn">
+              <div class="btn-content">
+                <i class="fa-solid fa-hand" aria-hidden="true"></i>
+                <span class="btn-label">Từ chối / Không an toàn</span>
+              </div>
+            </button>
+          </div>
+
+          <!--Voice prompt section--> 
+          <!-- Khu vực chức năng thu âm giọng nói, hỗ trợ người chơi trả lời bằng giọng nói -->
+          <div class="voice-prompt">
+            <div class="extra-tools">
+              <div class="mic-wrap-small">
+                <div id="micRing" class="mic-ring hidden"></div>
+                <button class="btn-mic-small" id="micBtn" aria-label="Nhấn giữ để nói">
+                  <img src="assets/images/Robot_avatar.png" alt="Mic Robot">
+                </button>
+              </div>
+            </div>
+            <p class="mic-hint"><i class="fa-solid fa-microphone" aria-hidden="true"></i> Bé hãy nói: “Không!” hoặc “Mách mẹ!”</p>
+          </div>
+          <p class="mic-status" id="micStatusText" role="status" aria-live="polite">Nhấn giữ Robot để nói</p>
+
+          <!--đếm câu đúng sai-->
+          <!-- Bảng thống kê hiển thị số lượng câu trả lời đúng và sai hiện tại -->
+          <div class="stats-row">
+            <div class="stat-box stat-correct" role="group" aria-label="Số câu trả lời đúng">
+              <div class="stat-num" id="correctCount">0</div>
+              <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+            </div>
+            <div class="stat-box stat-wrong" role="group" aria-label="Số câu trả lời sai">
+              <div class="stat-num" id="wrongCount">0</div>
+              <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div><!-- /shell -->
+
+  <!-- ─── RESULT MODAL ─── -->
+  <!-- Cửa sổ Modal hiển thị kết quả phản hồi ngay sau mỗi lựa chọn của người chơi (Đúng/Sai) và cho phép chuyển câu tiếp theo -->
+  <div id="resultModal" class="modal-backdrop hidden">
+    <div class="modal-box result-modal-box" id="resultModalBox">
+      <img id="resultRobotImg" src="assets/images/Robot_happy.jpg" alt="Robot" class="modal-robot">
+      <h3 id="resultTitle" class="modal-title safe" aria-live="polite">Chính xác!</h3>
+      <div class="stars-row" id="starAwardContainer" aria-label="Sao nhận được"></div>
+      <div class="feedback-box" id="resultFeedbackBox" role="status" aria-live="polite">
+        <p id="resultVoiceFeedback">Bé đã chọn cách an toàn!</p>
+      </div>
+      <div class="modal-btns">
+        <button class="btn-retry" id="retryBtn" aria-label="Thử lại"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></button>
+        <button class="btn-next" id="nextScenarioBtn" aria-label=" Câu tiếp theo">
+           Câu tiếp theo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ENDGAME MODAL ─── -->
+  <!-- Cửa sổ Modal hiển thị màn hình tổng kết cuối cùng khi người chơi hoàn thành tất cả các màn, hiển thị tổng điểm và tùy chọn chơi lại -->
+  <div id="endgameModal" class="modal-backdrop hidden">
+    <div class="modal-box" id="endgameModalBox" style="border-color: #34d399;">
+      <img src="assets/images/Robot_happy.jpg" alt="Robot" class="modal-robot" style="width: 120px; height: 120px;">
+      <h3 class="modal-title safe" style="font-size: 1.8rem;">Hoàn Thành! 🎉</h3>
+      <p style="font-size: 1.1rem; color: #475569; font-weight: 700; margin-bottom: 1rem;">
+        Bé đã xuất sắc vượt qua các tình huống!
+      </p>
+      
+      <div class="stats-row endgame-stats" style="margin-bottom: 1.5rem;">
+        <div class="stat-box stat-correct" role="group" aria-label="Số câu trả lời đúng">
+          <div class="stat-num" id="endCorrect">0</div>
+          <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+          <span class="stat-label">Đúng</span>
+        </div>
+        <div class="stat-box stat-stars" role="group" aria-label="Số sao">
+          <div class="stat-num" id="endStars">0</div>
+          <i class="fa-solid fa-star" aria-hidden="true"></i>
+          <span class="stat-label">Sao</span>
+        </div>
+        <div class="stat-box stat-wrong" role="group" aria-label="Số câu trả lời sai">
+          <div class="stat-num" id="endWrong">0</div>
+          <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+          <span class="stat-label">Sai</span>
+        </div>
+      </div>
+
+      <div class="modal-btns">
+        <button class="btn-next" id="restartGameBtn" aria-label="Chơi lại từ đầu" style="flex: 1;"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Chơi Lại Từ Đầu</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
