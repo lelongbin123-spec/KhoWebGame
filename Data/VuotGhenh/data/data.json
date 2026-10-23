@@ -1,0 +1,43 @@
+{
+  "Id": "VuotGhenh",
+  "type": "Vượt Ghềnh",
+  "Text": "Gõ chữ để nhảy qua ghềnh",
+  "settings": {
+    "baseFallSpeed": 12,
+    "rockVerticalGap": 100,
+    "jumpDuration": 0.52,
+    "dangerLineRatio": 0.85,
+    "Total": 10,
+    "timeDecrease": 0.15,
+    "minTypingTime": 6,
+    "startRockYRatio": 0.48,
+    "cameraThresholdRatio": 0.2
+  },
+  "data": [
+    {
+      "id": 1,
+      "name": "Bé tập gõ",
+      "typingMode": "letter",
+      "targets": ["A", "B", "C", "D", "E", "G", "H", "I", "K", "L", "M", "N", "O", "P", "T", "U"],
+      "speedMultiplier": 2,
+      "baseTypingTime": 10
+    },
+    {
+      "id": 2,
+      "name": "Từ quen thuộc",
+      "typingMode": "word",
+      "targets": ["BA", "ME", "BO", "CA", "GA", "BE", "LA", "NA", "BI", "TO", "CO", "DA"],
+      "speedMultiplier": 2.5,
+      "baseTypingTime": 8
+    },
+    {
+      "id": 3,
+      "name": "Từ thử thách",
+      "typingMode": "word",
+      "targets": ["MEO", "CHO", "HOA", "NHA", "SEN", "MUA", "SUA", "XE", "AO", "GAO", "BAN", "DEN"],
+      "speedMultiplier": 3,
+      "baseTypingTime": 6
+    }
+  ],
+  "maxScore": 100
+}

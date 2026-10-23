@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d4264">
+  <title>Vượt Ghềnh - Game Luyện Gõ Phím</title>
+  <link rel="preload" as="image" href="assets/images/Rock.png">
+  <link rel="preload" as="image" href="assets/images/player.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="app">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-text">
+          <h1 class="game-title">VƯỢT GHỀNH</h1>
+          <span class="game-tagline">Luyện gõ bàn phím</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="stat score-stat" aria-label="Điểm số của bạn">
+          <div class="stat-meta">
+            <span class="stat-label">ĐIỂM SỐ</span>
+            <strong id="score" class="stat-number">0</strong>
+          </div>
+        </div>
+        <button id="restartBtn" class="action-btn restart-btn" type="button" title="Chơi lại màn này" aria-label="Chơi lại màn này">
+          <span class="btn-text">Chơi lại</span>
+        </button>
+        <button id="soundBtn" class="icon-btn sound-btn" type="button" title="Tắt âm thanh" aria-label="Tắt âm thanh" aria-pressed="true">
+          <span id="soundIcon" aria-hidden="true">🔊</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN GAME LAYOUT -->
+    <section class="game-layout" aria-label="Khu vực trò chơi Vượt Ghềnh">
+      <!-- BẢNG ĐIỀU KHIỂN BÊN TRÁI -->
+      <aside class="info-panel">
+        <!-- Thẻ Màn chơi -->
+        <div class="info-card level-card">
+          <div class="level-info">
+            <span class="card-label">MÀN HIỆN TẠI</span>
+            <span id="levelSubtitle" class="card-subtitle">Khởi động</span>
+          </div>
+          <div class="level-badge">
+            <span class="badge-prefix">MÀN</span>
+            <strong id="levelLabel">01</strong>
+          </div>
+        </div>
+
+        <!-- Thẻ Thời gian -->
+        <div class="info-card timer-card">
+          <div class="timer-header">
+            <span class="timer-title">THỜI GIAN CÒN</span>
+            <strong id="timeText" class="timer-number">10.0s</strong>
+          </div>
+          <div class="time-track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div id="timeBar" class="time-bar">
+              <span class="time-bar-gloss"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thẻ Tiến độ vượt ghềnh (chỉ hiển thị bằng text) -->
+        <div class="info-card progress-card">
+          <div class="progress-meta">
+            <span class="card-label">TIẾN ĐỘ BẬC ĐÁ</span>
+            <strong id="passedCount" class="progress-count">0/10</strong>
+          </div>
+          <p id="passedWords" class="passed-words" aria-live="polite">Bắt đầu vượt ghềnh</p>
+        </div>
+
+        <!-- Thẻ Nhập Liệu Người Chơi -->
+        <div class="input-card">
+          <div class="input-header">
+            <span class="card-label input-title">BẠN GÕ VÀO ĐÂY</span>
+          </div>
+          <div class="input-display" id="inputDisplay">
+            <div id="typedValue" class="typed-value" aria-live="polite">_</div>
+            <span class="typing-cursor" aria-hidden="true"></span>
+          </div>
+          <div class="feedback-bubble">
+            <p id="feedback" class="feedback" aria-live="polite">Gõ chữ trên đá rồi nhấn Enter để nhảy</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- KHUNG CẢNH GAME BÊN PHẢI -->
+      <section class="scene-panel" aria-label="Đường vượt ghềnh">
+        <div class="scene">
+          <!-- Cảnh báo vùng nguy hiểm -->
+          <div class="danger-badge">
+            <span class="danger-text">KHU VỰC NGUY HIỂM</span>
+          </div>
+          <div class="danger-line" aria-hidden="true"></div>
+
+          <!-- Tầng chứa các bậc đá -->
+          <div id="rocksLayer" class="rocks-layer" aria-label="Các bậc đá"></div>
+
+          <!-- Nhân vật -->
+          <div id="player" class="player" aria-label="Nhân vật của bạn">
+            <div class="player-shadow"></div>
+            <img class="player-img" src="assets/images/player.png" alt="Nhân vật" draggable="false">
+            <div id="playerBubble" class="player-bubble hidden" aria-live="polite">
+              <span class="bubble-text"></span>
+              <span class="bubble-cursor">|</span>
+            </div>
+          </div>
+
+          <!-- Hiệu ứng Toast thông báo -->
+          <div id="toast" class="toast" aria-live="polite"></div>
+
+          <!-- OVERLAY MODAL -->
+          <div id="overlay" class="overlay">
+            <div class="modal" id="modal">
+              <!-- GIAO DIỆN CHỌN MÀN CHƠI -->
+              <div id="levelSelectView">
+                <div class="modal-banner">
+                  <p class="eyebrow">Vượt Ghềnh</p>
+                  <h2 class="modal-heading">CHỌN MÀN CHƠI</h2>
+                </div>
+                <div id="levelCards" class="level-cards"></div>
+              </div>
+
+              <!-- GIAO DIỆN KẾT THÚC / THÀNH TÍCH -->
+              <div id="endView" class="hidden">
+                <div class="end-mascot-container">
+                  <div class="mascot-ring">
+                    <img id="endMascotImg" class="end-mascot-img" alt="Robot chúc mừng" draggable="false">
+                  </div>
+                </div>
+                <div id="endStars" class="end-stars" aria-hidden="true"></div>
+                <h2 id="modalTitle" class="end-title">Giỏi quá!</h2>
+                <p id="modalMessage" class="end-message">Con đã về đích xuất sắc!</p>
+                <div class="modal-actions">
+                  <button id="startBtn" class="primary-btn replay-btn" type="button">
+                    <span>Chơi lại</span>
+                  </button>
+                  <button id="backToLevelsBtn" class="secondary-btn levels-btn" type="button">
+                    <span>Đổi màn</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

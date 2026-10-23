@@ -1,0 +1,8 @@
+Game : Vượt ghềnh ( nhảy bậc thang ). luyện tập gõ phím
+
+Thao tác. Người chơi gõ chữ trên được hiển thị (có thời gian),
+Mô tả: gềnh được rơi chậm xuống hình bậc thang
+Khi người chơi gõ xong > enter > đúng thì nhân vật nhảy lên bật gềnh, Khi sai thì đứng yên
+Khi gềnh rơi xuống thì thua đến mặt đất thì thua.
+Gềnh được thiết kế dạng bậc thang cách nhau 1 khoảng cách.
+Càng về sau tốc độ gềnh rơi càng nhanh

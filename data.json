@@ -102,5 +102,13 @@
     "tag": "Môn Âm nhạc / Tự nhiên & Xã hội",
     "icon": "🎧",
     "url": "Data/ThamTuAmThanh/index.html"
+  },
+  {
+    "id": 14,
+    "title": "Vượt ghềnh",
+    "description": "Luyện gõ bàn phím",
+    "tag": "Từ vựng",
+    "icon": "⌨️",
+    "url": "Data/VuotGhenh/index.html"
   }
 ]
